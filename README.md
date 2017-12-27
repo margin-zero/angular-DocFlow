@@ -1,2 +1,8 @@
 # DocFlow (Obieg dokumentów)
-Aplikacja "Obieg dokumentów" (Angular).
+Aplikacja wspierająca zarządzanie obiegiem dokumentów w organizacji.
+
+# Technologie
+SQLite 3
+PHP (API)
+Angular
+Bootstrap
