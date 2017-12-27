@@ -1,2 +1,2 @@
-# angular-DocFlow
-Aplikacja "Obieg dokumentów" (Angular)
+# DocFlow (Obieg dokumentów)
+Aplikacja "Obieg dokumentów" (Angular).
