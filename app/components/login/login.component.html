@@ -1,5 +1,3 @@
-
-
 <div class="container">
 
     <div class="form-signin">
@@ -12,24 +10,5 @@
         <button (click)="login()" class="btn btn-lg btn-primary btn-block" tabindex="3">Sign in</button>
 
     </div>
-
-    <div *ngIf="authenticationService.isAuthenticated()">
-        <h1>{{authenticationService.getUser().username}}</h1>
-    </div>
-
-    <div *ngIf="user">
-        <p>id: {{user.id}}</p>
-        <p>username: {{user.username}}</p>
-        <p>password: {{user.password}}</p>
-        <p>full_name: {{user.full_name}}</p>
-        <p>phone_number: {{user.phone_number}}</p>
-        <p>email_address: {{user.email_address}}</p>
-        <p>additional_info: {{user.additional_info}}</p>
-        <p>expiration_date: {{user.expiration_date}}</p>
-        <p>is_active: {{user.is_active}}</p>
-        <p>is_user: {{user.is_user}}</p> 
-        <p>is_admin: {{user.is_admin}}</p>
-    </div>
-
 
 </div> <!-- /container -->
