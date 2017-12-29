@@ -1,0 +1,19 @@
+.form-signin {
+    max-width: 330px;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+.form-signin>input {
+    margin-bottom: 10px;
+}
+
+.form-signin>h2 {
+    margin-bottom: 10px;
+    color: rgba(0,0,0,0.75);
+    font-size: 1.5rem;
+}
+
+.form-signin>button {
+    margin-top: 30px;
+}
