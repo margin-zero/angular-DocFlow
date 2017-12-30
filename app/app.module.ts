@@ -1,22 +1,25 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule }   from '@angular/forms';
-import { HttpClientModule }    from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
 
 import { LoginComponent } from './components/login/login.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { UserComponent } from './components/user/user.component';
 
 
-
-import { AppRoutingModule }     from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { UserListComponent } from './user-list/user-list.component';
 
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { BackendApiService } from './services/backend-api/backend-api.service';
-import { AdminComponent } from './components/admin/admin.component';
-import { UserComponent } from './components/user/user.component';
+import { IsAdminGuard, IsUserGuard } from './services/router-guards/router-guards.service';
+import { AdminUserlistComponent } from './components/admin-userlist/admin-userlist.component';
+import { AdminGrouplistComponent } from './components/admin-grouplist/admin-grouplist.component';
+import { AdminPathlistComponent } from './components/admin-pathlist/admin-pathlist.component';
 
 
 @NgModule({
@@ -25,7 +28,10 @@ import { UserComponent } from './components/user/user.component';
     LoginComponent,
     UserListComponent,
     AdminComponent,
-    UserComponent
+    UserComponent,
+    AdminUserlistComponent,
+    AdminGrouplistComponent,
+    AdminPathlistComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +39,7 @@ import { UserComponent } from './components/user/user.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthenticationService, BackendApiService],
+  providers: [AuthenticationService, BackendApiService, IsAdminGuard, IsUserGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
