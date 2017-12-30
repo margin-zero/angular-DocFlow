@@ -20,7 +20,9 @@ export class AuthenticationService implements OnInit {
   }
 
   setUser(user: User): void {
+
     this.user = user;
+
     if (user) {
       this.authenticated = true;
     } else {
@@ -37,15 +39,20 @@ export class AuthenticationService implements OnInit {
   }
 
   isUser(): boolean {
-    return this.user.is_user;
+    return ( this.user.is_user.toLowerCase().trim() === 'true' );
   }
 
   isAdmin(): boolean {
-    return this.user.is_admin;
+    return ( this.user.is_admin.toLowerCase().trim() === 'true' );
   }
 
   isActive(): boolean {
-    return this.user.is_active;
+    return ( this.user.is_active.toLowerCase().trim() === 'true' );
+  }
+
+  logout(): void {
+    this.user = null;
+    this.authenticated = false;
   }
 
 }
