@@ -7,9 +7,9 @@
     
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="#">Users <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="#">User groups</a>
-            <a class="nav-item nav-link" href="#">Doc paths</a>
+            <a [routerLink]="['userlist']" class="nav-item nav-link active">Users <span class="sr-only">(current)</span></a>
+            <a [routerLink]="['grouplist']" class="nav-item nav-link">User groups</a>
+            <a [routerLink]="['pathlist']" class="nav-item nav-link">Doc paths</a>
         </div>
     </div>
 
@@ -17,11 +17,12 @@
         <div class="navbar-nav">
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPersonality" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                My account
+                  ({{authenticationService.getUser().username}}) account
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPersonality">
-                  <a class="dropdown-item" href="#">change password</a>
-                  <button class="dropdown-item" (click)="logout()">logout</button>
+                    <button *ngIf="authenticationService.isUser()" class="dropdown-item" (click)="router.navigate(['/user'])">go to User panel</button>
+                    <a class="dropdown-item" href="#">change password</a>
+                    <button class="dropdown-item" (click)="logout()">logout</button>
                 </div>
             </div>
         </div>
@@ -30,5 +31,10 @@
 
 <div>
   <p>logged?: {{authenticationService.isAuthenticated()}}</p>
-  <p *ngIf="authenticationService.getUser()">username: {{authenticationService.getUser().username}}</p>
+  <p *ngIf="authenticationService.getUser()">
+      username: {{authenticationService.getUser().username}}<br />
+      isAdmin: {{authenticationService.isAdmin()}}
+    </p>
 </div>
+
+<router-outlet></router-outlet>
