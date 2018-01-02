@@ -1,4 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -12,7 +13,9 @@ export class AuthenticationService implements OnInit {
   private authenticated: boolean;
   private user: User;
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.authenticated = false;
@@ -53,6 +56,7 @@ export class AuthenticationService implements OnInit {
   logout(): void {
     this.user = null;
     this.authenticated = false;
+    this.router.navigate(['/']);
   }
 
 }
