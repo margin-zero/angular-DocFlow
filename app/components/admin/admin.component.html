@@ -1,5 +1,6 @@
 <nav class="navbar navbar-dark bg-dark navbar-expand-md sticky-top">
-    <span class="navbar-brand mb-0 h1">DocFlow - ADMIN AREA</span>
+
+    <a class="navbar-brand" [routerLink]="['home']">DocFlow (administracja)</a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -7,9 +8,9 @@
     
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a [routerLink]="['userlist']" class="nav-item nav-link active">Users <span class="sr-only">(current)</span></a>
-            <a [routerLink]="['grouplist']" class="nav-item nav-link">User groups</a>
-            <a [routerLink]="['pathlist']" class="nav-item nav-link">Doc paths</a>
+            <a [routerLink]="['userlist']" class="nav-item nav-link">Użytkownicy</a>
+            <a [routerLink]="['grouplist']" class="nav-item nav-link">Role</a>
+            <a [routerLink]="['pathlist']" class="nav-item nav-link">Ścieżki</a>
         </div>
     </div>
 
@@ -17,24 +18,16 @@
         <div class="navbar-nav">
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPersonality" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  ({{authenticationService.getUser().username}}) account
+                  ({{authenticationService.getUser().username}}) konto
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPersonality">
-                    <button *ngIf="authenticationService.isUser()" class="dropdown-item" (click)="router.navigate(['/user'])">go to User panel</button>
-                    <a class="dropdown-item" href="#">change password</a>
-                    <button class="dropdown-item" (click)="logout()">logout</button>
+                    <button *ngIf="authenticationService.isUser()" class="dropdown-item app-cursor-pointer" (click)="router.navigate(['/user'])">przejdź do panelu Użytkownika</button>
+                    <a class="dropdown-item" href="#">zmień hasło</a>
+                    <button class="dropdown-item app-cursor-pointer" (click)="logout()">wyloguj się</button>
                 </div>
             </div>
         </div>
     </div>
 </nav>
-
-<div>
-  <p>logged?: {{authenticationService.isAuthenticated()}}</p>
-  <p *ngIf="authenticationService.getUser()">
-      username: {{authenticationService.getUser().username}}<br />
-      isAdmin: {{authenticationService.isAdmin()}}
-    </p>
-</div>
 
 <router-outlet></router-outlet>
