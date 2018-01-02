@@ -1,3 +1,19 @@
-<p>
-  admin-pathlist works!
-</p>
+<div class="container-fluid">
+  <h5>Doc paths:</h5>
+
+  <table class="table table-sm">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Path name</th>
+        <th scope="col">Path info</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let path of paths">
+        <td>{{path.path_name}}</td>
+        <td>{{path.path_info}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
