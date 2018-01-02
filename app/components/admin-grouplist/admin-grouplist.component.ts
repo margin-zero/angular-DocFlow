@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { Role } from '../../datatypes/role';
+
+import { BackendApiService } from '../../services/backend-api/backend-api.service';
 
 @Component({
   selector: 'dcf-admin-grouplist',
@@ -7,7 +12,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminGrouplistComponent implements OnInit {
 
-  constructor() { }
+  roles: Role[];
+
+  constructor(
+    private router: Router,
+    private backendApiService: BackendApiService
+  ) { }
 
   ngOnInit() {
   }

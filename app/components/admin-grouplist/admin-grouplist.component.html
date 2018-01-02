@@ -1,3 +1,17 @@
-<p>
-  admin-grouplist works!
-</p>
+<div class="container-fluid">
+  <h5>Roles:</h5>
+
+  <table class="table table-sm">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Role name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let role of roles">
+        <td>{{role.role_name}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
