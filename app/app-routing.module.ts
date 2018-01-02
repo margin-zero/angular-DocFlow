@@ -5,9 +5,11 @@ import { LoginComponent }   from './components/login/login.component';
 
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminUserlistComponent } from './components/admin-userlist/admin-userlist.component';
+import { AdminUserEditComponent } from './components/admin-user-edit/admin-user-edit.component';
+
 import { AdminPathlistComponent } from './components/admin-pathlist/admin-pathlist.component';
 import { AdminGrouplistComponent } from './components/admin-grouplist/admin-grouplist.component';
-
+import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 
 import { UserComponent } from './components/user/user.component';
 
@@ -19,7 +21,11 @@ const routes: Routes = [
     { path: 'login',  component: LoginComponent },
     { path: 'admin', component: AdminComponent, canActivate: [IsAdminGuard],
         children: [
-          { path: 'userlist', component: AdminUserlistComponent },
+          { path: 'home', component: AdminHomeComponent },
+          { path: 'userlist', component: AdminUserlistComponent,
+              children: [
+                { path: 'useredit/:userId', component: AdminUserEditComponent }
+              ] },
           { path: 'pathlist', component: AdminPathlistComponent },
           { path: 'grouplist', component: AdminGrouplistComponent }
         ]
