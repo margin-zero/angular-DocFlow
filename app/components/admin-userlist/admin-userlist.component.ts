@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { User } from '../../datatypes/user';
+
+import { BackendApiService } from '../../services/backend-api/backend-api.service';
 
 @Component({
   selector: 'dcf-admin-userlist',
@@ -7,9 +12,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminUserlistComponent implements OnInit {
 
-  constructor() { }
+  users: User[];
+  selectedUser: User;
+
+  constructor(
+    private router: Router,
+    private backendApiService: BackendApiService
+  ) { }
 
   ngOnInit() {
+    this.getUsers();
+    this.selectedUser = null;
+  }
+
+  getUsers(): void {
+    this.backendApiService
+    .getUsers()
+    .then(users => this.users = users);
   }
 
 }
