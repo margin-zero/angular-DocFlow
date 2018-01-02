@@ -2,12 +2,12 @@
 
     <div class="form-signin">
 
-        <h2 class="form-signin-heading">Please sign in</h2>
+        <h2 class="form-signin-heading">Zaloguj się</h2>
         <label for="inputUser" class="sr-only">Username</label>
-        <input [(ngModel)]="username" name="inputUser" type="text" id="inputUser" class="form-control" placeholder="Username" required autofocus tabindex="1">
+        <input [(ngModel)]="username" name="inputUser" type="text" id="inputUser" class="form-control" placeholder="Nazwa użytkownika (wymagana)" required autofocus tabindex="1">
         <label for="inputPassword" class="sr-only">Password</label>
-        <input [(ngModel)]="password" name="inputPassword" type="password" id="inputPassword" class="form-control" placeholder="Password" required tabindex="2">
-        <button (click)="login()" class="btn btn-lg btn-primary btn-block" tabindex="3">Sign in</button>
+        <input [(ngModel)]="password" name="inputPassword" type="password" id="inputPassword" class="form-control" placeholder="Hasło (wymagane)" required tabindex="2">
+        <button (click)="login()" class="btn btn-lg btn-primary btn-block" tabindex="3">Zaloguj się</button>
 
     </div>
 
