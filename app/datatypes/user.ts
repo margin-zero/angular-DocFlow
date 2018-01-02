@@ -6,7 +6,6 @@ export class User {
     phone_number: string;
     email_address: string;
     additional_info: string;
-    expiration_date: string;
     is_active: string;
     is_user: string;
     is_admin: string;
