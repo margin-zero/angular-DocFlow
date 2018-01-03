@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { User } from '../../datatypes/user';
 
@@ -17,6 +17,7 @@ export class AdminUserlistComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private currentRoute: ActivatedRoute,
     private backendApiService: BackendApiService
   ) { }
 

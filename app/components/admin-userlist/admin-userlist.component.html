@@ -2,20 +2,18 @@
     
     <div class="row">
     
-        <div class="col-3">
+        <div class="col-sm-5 col-md-4 col-lg-3">
             <section class="app-selection-list">
                 <h1 class="app-content-area-header">Użytkownicy:</h1>
                 <ul>
-                    <li *ngFor="let user of users" class="app-clickable" (click)="selectedUser = user">
+                    <li *ngFor="let user of users" class="app-clickable" (click)="selectedUser = user; router.navigate(['view',selectedUser.id], { relativeTo: currentRoute })">
                         {{user.username}}
                     </li>
                 </ul>
             </section>
         </div>
 
-        <div class="col-9">
-
-            <div class="container-fluid">
+        <div class="col-sm-7 col-md-8 col-lg-9">
 
                 <ng-container *ngIf="!selectedUser">
                     <p>Wybierz użytkownika z listy aby obejrzeć szczegóły...</p>
@@ -23,53 +21,9 @@
             
                 <ng-container *ngIf="selectedUser">
 
-
-                <table class="table table-sm  table-bordered">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col" colspan="2" class="app-content-area-header">{{selectedUser.username}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td [ngClass]="{'app-color-green': selectedUser.is_active === 'TRUE', 'app-color-red': selectedUser.is_active === 'FALSE' }" class="app-content-label">konto aktywne:</td>
-                            <td [ngClass]="{'app-color-green': selectedUser.is_active === 'TRUE', 'app-color-red': selectedUser.is_active === 'FALSE' }" class="app-content-data">{{selectedUser.is_active === 'TRUE' ? 'TAK' : 'NIE'}}</td>
-                        </tr>
-                        <tr>
-                            <td [ngClass]="{'app-color-green': selectedUser.is_user === 'TRUE', 'app-color-red': selectedUser.is_user === 'FALSE' }" class="app-content-label">użytkownik:</td>
-                            <td [ngClass]="{'app-color-green': selectedUser.is_user === 'TRUE', 'app-color-red': selectedUser.is_user === 'FALSE' }" class="app-content-data">{{selectedUser.is_user === 'TRUE' ? 'TAK' : 'NIE'}}</td>
-                        </tr>
-                        <tr>
-                            <td [ngClass]="{'app-color-green': selectedUser.is_admin === 'TRUE', 'app-color-red': selectedUser.is_admin === 'FALSE' }" class="app-content-label">administrator:</td>
-                            <td [ngClass]="{'app-color-green': selectedUser.is_admin === 'TRUE', 'app-color-red': selectedUser.is_admin === 'FALSE' }" class="app-content-data">{{selectedUser.is_admin === 'TRUE' ? 'TAK' : 'NIE'}}</td>
-                        </tr>
-                        <tr>
-                            <td class="app-content-label">pełna nazwa:</td>
-                            <td class="app-content-data">{{selectedUser.full_name}}</td>
-                        </tr>
-                        <tr>
-                            <td class="app-content-label">telefon:</td>
-                            <td class="app-content-data">{{selectedUser.phone_number}}</td>
-                        </tr>
-                        <tr>
-                            <td class="app-content-label">email:</td>
-                            <td class="app-content-data"><a href="mailto:{{selectedUser.email_address}}">{{selectedUser.email_address}}</a></td>
-                        </tr>
-                        <tr>
-                            <td class="app-content-label">informacje dodatkowe:</td>
-                            <td class="app-content-data">{{selectedUser.additional_info}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <button class="btn btn-primary" (click)="router.navigate(['/admin/userlist/useredit',selectedUser.id])">edycja użytkownika</button>
-                <button class="btn btn-primary">zmień hasło</button>
-                <a [routerLink]="['useredit',selectedUser.id]" class="nav-item nav-link">Edycja</a>
-
                 <router-outlet></router-outlet>
                 
-            </ng-container>
-            </div>
+                </ng-container>
 
         </div>
 
