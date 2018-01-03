@@ -19,9 +19,16 @@
     color: red;
 }
 
+.app-font-muted {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: rgba(73, 80, 87, 0.5);
+}
+
 .app-selection-list {
     padding: 0;
     margin: 0;
+    margin-bottom: 2rem;
 }
 
 .app-content-area-header {
@@ -31,7 +38,7 @@
     line-height: 1.5rem;
     margin: 0;
     background: #e9ecef;
-    color: #495057;
+    color: rgb(73, 80, 87);
 }
 
 .app-selection-list>ul {
