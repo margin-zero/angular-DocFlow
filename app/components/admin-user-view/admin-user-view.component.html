@@ -1,0 +1,43 @@
+<ng-container *ngIf="user">
+    <table class="table table-sm  table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col" colspan="2" class="app-content-area-header">{{user.username}} <span class="app-font-muted">(szczegóły)</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td [ngClass]="{'app-color-green': user.is_active === 'TRUE', 'app-color-red': user.is_active === 'FALSE' }" class="app-content-label">konto aktywne:</td>
+                <td [ngClass]="{'app-color-green': user.is_active === 'TRUE', 'app-color-red': user.is_active === 'FALSE' }" class="app-content-data">{{user.is_active === 'TRUE' ? 'TAK' : 'NIE'}}</td>
+            </tr>
+            <tr>
+                <td [ngClass]="{'app-color-green': user.is_user === 'TRUE', 'app-color-red': user.is_user === 'FALSE' }" class="app-content-label">użytkownik:</td>
+                <td [ngClass]="{'app-color-green': user.is_user === 'TRUE', 'app-color-red': user.is_user === 'FALSE' }" class="app-content-data">{{user.is_user === 'TRUE' ? 'TAK' : 'NIE'}}</td>
+            </tr>
+            <tr>
+                <td [ngClass]="{'app-color-green': user.is_admin === 'TRUE', 'app-color-red': user.is_admin === 'FALSE' }" class="app-content-label">administrator:</td>
+                <td [ngClass]="{'app-color-green': user.is_admin === 'TRUE', 'app-color-red': user.is_admin === 'FALSE' }" class="app-content-data">{{user.is_admin === 'TRUE' ? 'TAK' : 'NIE'}}</td>
+            </tr>
+            <tr>
+                <td class="app-content-label">pełna nazwa:</td>
+                <td class="app-content-data">{{user.full_name}}</td>
+            </tr>
+            <tr>
+                <td class="app-content-label">telefon:</td>
+                <td class="app-content-data">{{user.phone_number}}</td>
+            </tr>
+            <tr>
+                <td class="app-content-label">email:</td>
+                <td class="app-content-data"><a href="mailto:{{user.email_address}}">{{user.email_address}}</a></td>
+            </tr>
+            <tr>
+                <td class="app-content-label">informacje dodatkowe:</td>
+                <td class="app-content-data">{{user.additional_info}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button class="btn btn-primary" (click)="router.navigate(['../../edit',user.id], { relativeTo: currentRoute })">edycja użytkownika</button>
+    <button class="btn btn-primary">zmień hasło</button>
+    <a [routerLink]="['../../edit',user.id]" class="nav-item nav-link">UserEdit</a>
+</ng-container>
