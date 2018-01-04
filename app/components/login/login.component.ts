@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+
   login(): void {
 
     this.username = this.username.trim();
@@ -42,5 +43,6 @@ export class LoginComponent implements OnInit {
       });
 
   }
+
 
 }
