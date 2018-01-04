@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 // DATATYPES
 import { User } from '../../datatypes/user';
 import { Role } from '../../datatypes/role';
 import { Path } from '../../datatypes/path';
 
-import { ResponseUser } from '../../datatypes/response-classes';
+import { ResponseUser, ResponseData } from '../../datatypes/response-classes';
 
 
 // CONSTANTS
@@ -17,6 +17,7 @@ import { API_URL } from '../../constants/global-constants';
 export class BackendApiService {
 
   user: User;
+  private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
   constructor(private http: HttpClient) { }
 
@@ -31,6 +32,7 @@ export class BackendApiService {
     return password;
   }
 
+/* ===================== Stara werja metody .LOGIN wykorzystującej request GET
 
   login(username: string, password: string): Promise<User> {
 
@@ -41,7 +43,19 @@ export class BackendApiService {
         .then(apiResponse => apiResponse.data[0] as User)
         .catch(this.handleError);
   }
+*/
 
+  login(username: string, password: string): Promise<User> {
+
+    const URL = API_URL + 'login';
+
+    return this.http
+    .post<ResponseUser>(URL, JSON.stringify({'username': username, 'password': this.hashUserPassword(password)}), {headers: this.headers})
+    .toPromise()
+    .then(apiResponse => apiResponse.data[0] as User)
+    .catch(this.handleError);
+
+  }
 
 // -----------------------------------------------------------------------------------------------
 //          USER API
@@ -67,6 +81,17 @@ getUser(userId: number): Promise<User> {
         .catch(this.handleError);
   }
 
+updateUser(user: User): Promise<ResponseData> {
+
+  const URL = API_URL + 'user/' + user.id;
+
+  return this.http
+        .post<ResponseData>(URL, JSON.stringify(user), {headers: this.headers})
+        .toPromise()
+        .then(apiResponse => apiResponse as ResponseData)
+        .catch(this.handleError);
+
+}
 
 
 // -----------------------------------------------------------------------------------------------
