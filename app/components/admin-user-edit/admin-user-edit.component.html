@@ -2,40 +2,79 @@
 
     <div class="row">
         <div class="col-12">
-            <h1 class="app-content-area-header">{{user.username}} (edycja)</h1>
+            <h1 class="app-content-area-header">{{user.username}} <span class="app-font-muted">(edycja konta)</span></h1>
         </div>
     </div>
 
     <form class="app-content-form">
+
+    <div class="form-group row">
+        <label for="inputIsActive" class="col-lg-2 col-form-label">aktywne?</label>
+        <div class="col">
+            <select [(ngModel)]="user.is_active" *ngIf="!loggedUser" name="is_active" class="col-sm-4 col-md-3 col-lg-2 form-control" id="inputIsActive">
+                <option value="TRUE">TAK</option>
+                <option value="FALSE">NIE</option>
+            </select>
+            <p *ngIf="loggedUser" class="col-form-label app-color-red">Nie możesz dezaktywować własnego konta</p>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="inputIsUser" class="col-lg-2 col-form-label">użytkownik?</label>
+        <div class="col">
+            <select [(ngModel)]="user.is_user" name="is_user" class="col-sm-4 col-md-3 col-lg-2 form-control" id="inputIsUser">
+                <option value="TRUE">TAK</option>
+                <option value="FALSE">NIE</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="inputIsAdmin" class="col-lg-2 col-form-label">administrator?</label>
+        <div class="col">
+            <select [(ngModel)]="user.is_admin" *ngIf="!loggedUser" name="is_admin" class="col-sm-4 col-md-3 col-lg-2 form-control" id="inputIsAdmin">
+                <option value='TRUE'>TAK</option>
+                <option value='FALSE'>NIE</option>
+            </select>
+            <p *ngIf="loggedUser" class="col-form-label app-color-red">Nie możesz odebrać sobie praw administratora</p>
+        </div>
+    </div>
             
     <div class="form-group row">
-        <label for="inputFullName" class="col-sm-2 col-form-label">pełna nazwa</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputFullName" placeholder="pełna nazwa">
+        <label for="inputFullName" class="col-lg-2 col-form-label">pełna nazwa</label>
+        <div class="col">
+            <input [(ngModel)]="user.full_name" name="full_name" type="text" class="form-control" id="inputFullName" placeholder="pełna nazwa">
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+        <label for="inputPhoneNumber" class="col-lg-2 col-form-label">telefon</label>
+        <div class="col">
+            <input [(ngModel)]="user.phone_number" name="phone_number" type="text" class="form-control" id="inputPhoneNumber" placeholder="telefon">
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="inputPhoneNumber" class="col-sm-2 col-form-label">telefon</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputPhoneNumber" placeholder="telefon">
+        <label for="inputEmail" class="col-lg-2 col-form-label">email</label>
+        <div class="col">
+            <input [(ngModel)]="user.email_address" name="email_address" type="text" class="form-control" id="inputEmail" placeholder="email">
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="inputEmail" class="col-sm-2 col-form-label">email</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputEmail" placeholder="email">
+        <label for="inputAdditionalInfo" class="col-lg-2 col-form-label">dodatkowe informacje</label>
+        <div class="col">
+            <textarea [(ngModel)]="user.additional_info" name="additional_info" class="form-control" id="inputAdditionalInfo" rows="3"></textarea>
         </div>
     </div>
 
-    <div class="form-group row">
-        <label for="inputAdditionalInfo" class="col-sm-2 col-form-label">dodatkowe informacje</label>
-        <div class="col-sm-10">
-            <textarea class="form-control" id="inputAdditionalInfo" rows="3"></textarea>
-        </div>
+
+    <div *ngIf="isChanged()" class="text-right">
+        <button class="btn btn-primary" (click)="handleClick()">zapisz zmiany</button>
     </div>
     
+
     </form>
 
 </ng-container>
