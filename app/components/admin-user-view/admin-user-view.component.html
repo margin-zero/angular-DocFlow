@@ -37,7 +37,9 @@
         </tbody>
     </table>
 
-    <button class="btn btn-primary" (click)="router.navigate(['../../edit',user.id], { relativeTo: currentRoute })">edycja użytkownika</button>
-    <button class="btn btn-primary">zmień hasło</button>
-    <a [routerLink]="['../../edit',user.id]" class="nav-item nav-link">UserEdit</a>
+    <div class="text-right">
+        <button class="btn btn-primary" (click)="router.navigate(['../../edit',user.id], { relativeTo: currentRoute })">edycja użytkownika</button>
+        <button class="btn btn-primary">zmień hasło</button>
+    </div>
+
 </ng-container>
