@@ -1,7 +1,7 @@
 import { User } from './user';
 
 
-class ResponseData {
+export class ResponseData {
     status: string;
     message: string;
 }
