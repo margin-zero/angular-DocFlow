@@ -3,6 +3,7 @@
     <div class="row">
         <div class="col-12">
             <h1 class="app-content-area-header">{{user.username}} <span class="app-font-muted">(edycja konta)</span></h1>
+            <p *ngIf="responseMessage" class="app-response-message">{{responseMessage}}</p>
         </div>
     </div>
 
