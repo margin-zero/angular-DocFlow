@@ -23,9 +23,12 @@ import { BackendApiService } from './services/backend-api/backend-api.service';
 import { UserService } from './services/user/user.service';
 
 import { IsAdminGuard, IsUserGuard } from './services/router-guards/router-guards.service';
+import { PendingChangesGuard } from './services/router-guards/router-guards.service';
+
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 import { AdminUserEditComponent } from './components/admin-user-edit/admin-user-edit.component';
 import { AdminUserViewComponent } from './components/admin-user-view/admin-user-view.component';
+import { AdminUserResetpasswordComponent } from './components/admin-user-resetpassword/admin-user-resetpassword.component';
 
 
 
@@ -41,7 +44,8 @@ import { AdminUserViewComponent } from './components/admin-user-view/admin-user-
     AdminPathlistComponent,
     AdminHomeComponent,
     AdminUserEditComponent,
-    AdminUserViewComponent
+    AdminUserViewComponent,
+    AdminUserResetpasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +58,10 @@ import { AdminUserViewComponent } from './components/admin-user-view/admin-user-
     BackendApiService,
     UserService,
     IsAdminGuard,
-    IsUserGuard],
+    IsUserGuard,
+    PendingChangesGuard
+  ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
