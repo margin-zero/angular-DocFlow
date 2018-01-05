@@ -39,7 +39,7 @@
 
     <div class="text-right">
         <button class="btn btn-primary" (click)="router.navigate(['../../edit',user.id], { relativeTo: currentRoute })">edycja użytkownika</button>
-        <button class="btn btn-primary">zmień hasło</button>
+        <button class="btn btn-primary" (click)="router.navigate(['../../resetpassword',user.id], { relativeTo: currentRoute })">resetuj hasło</button>
     </div>
 
 </ng-container>
