@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   password = '';
 
   user: User;
+  responseMessage: string;
 
   constructor(
     private backendApiService: BackendApiService,
@@ -31,14 +32,15 @@ export class LoginComponent implements OnInit {
   login(): void {
 
     this.username = this.username.trim();
-    this.password = this.password.trim();
+    // this.password = this.password.trim();
 
     if ( this.username.length === 0 || this.password.length === 0) { return; }
 
     this.backendApiService.login(this.username, this.password)
-      .then(user => {
-        this.user = user;
-        this.authenticationService.setUser(user);
+      .then(responseUser => {
+        this.user = responseUser.data[0];
+        this.authenticationService.setUser(responseUser.data[0]);
+        this.responseMessage = responseUser.message;
         this.router.navigate(['admin']);
       });
 
