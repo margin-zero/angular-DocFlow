@@ -70,3 +70,7 @@
     padding: 0.4rem;
 }
 
+.app-response-message {
+    color: red;
+    margin: 1rem 0;
+}
