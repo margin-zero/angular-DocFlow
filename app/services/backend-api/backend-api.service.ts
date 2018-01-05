@@ -32,27 +32,15 @@ export class BackendApiService {
     return password;
   }
 
-/* ===================== Stara werja metody .LOGIN wykorzystującej request GET
 
-  login(username: string, password: string): Promise<User> {
-
-    const URL = API_URL + 'login/' + username + '/' + this.hashUserPassword(password);
-
-    return this.http.get<ResponseUser>(URL)
-        .toPromise()
-        .then(apiResponse => apiResponse.data[0] as User)
-        .catch(this.handleError);
-  }
-*/
-
-  login(username: string, password: string): Promise<User> {
+  login(username: string, password: string): Promise<ResponseUser> {
 
     const URL = API_URL + 'login';
 
     return this.http
     .post<ResponseUser>(URL, JSON.stringify({'username': username, 'password': this.hashUserPassword(password)}), {headers: this.headers})
     .toPromise()
-    .then(apiResponse => apiResponse.data[0] as User)
+    .then(apiResponse => apiResponse as ResponseUser)
     .catch(this.handleError);
 
   }
@@ -61,7 +49,7 @@ export class BackendApiService {
 //          USER API
 // -----------------------------------------------------------------------------------------------
 
-getUsers(): Promise<User[]> {
+  getUsers(): Promise<User[]> {
 
     const URL = API_URL + 'users';
 
@@ -71,7 +59,7 @@ getUsers(): Promise<User[]> {
         .catch(this.handleError);
   }
 
-getUser(userId: number): Promise<User> {
+  getUser(userId: number): Promise<User> {
 
     const URL = API_URL + 'user/' + userId;
 
@@ -81,18 +69,47 @@ getUser(userId: number): Promise<User> {
         .catch(this.handleError);
   }
 
-updateUser(user: User): Promise<ResponseData> {
+  updateUser(user: User): Promise<ResponseData> {
 
-  const URL = API_URL + 'user/' + user.id;
+    const URL = API_URL + 'user/' + user.id;
 
-  return this.http
+    return this.http
         .post<ResponseData>(URL, JSON.stringify(user), {headers: this.headers})
         .toPromise()
         .then(apiResponse => apiResponse as ResponseData)
         .catch(this.handleError);
+  }
 
-}
+  resetPassword(userId: number, newPassword: string, retypedPassword: string): Promise<ResponseData> {
 
+    const URL = API_URL + 'resetpassword';
+
+    if (newPassword === retypedPassword && newPassword.length > 0) {
+
+      return this.http
+          .post<ResponseData>(URL, JSON.stringify({'password': this.hashUserPassword(newPassword), 'id': userId}), {headers: this.headers})
+          .toPromise()
+          .then(apiResponse => apiResponse as ResponseData)
+          .catch(this.handleError);
+
+    } else {
+
+      if (newPassword.length === 0) {
+
+        const promise = new Promise((resolve, reject) =>
+            resolve({'status': 'ERROR', 'message': 'Hasło nie może być puste. Hasło nie zostało zmienione.'} ));
+        return promise.then(data => data as ResponseData);
+
+      } else {
+
+        const promise = new Promise((resolve, reject) =>
+            resolve({'status': 'ERROR', 'message': 'Powtórzone hasło niezgodne. Hasło nie zostało zmienione.'} ));
+        return promise.then(data => data as ResponseData);
+      }
+
+    }
+
+  }
 
 // -----------------------------------------------------------------------------------------------
 //          ROLE API
