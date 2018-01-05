@@ -7,6 +7,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { AdminUserlistComponent } from './components/admin-userlist/admin-userlist.component';
 import { AdminUserEditComponent } from './components/admin-user-edit/admin-user-edit.component';
 import { AdminUserViewComponent } from './components/admin-user-view/admin-user-view.component';
+import { AdminUserResetpasswordComponent } from './components/admin-user-resetpassword/admin-user-resetpassword.component';
 
 import { AdminPathlistComponent } from './components/admin-pathlist/admin-pathlist.component';
 import { AdminGrouplistComponent } from './components/admin-grouplist/admin-grouplist.component';
@@ -15,7 +16,8 @@ import { AdminHomeComponent } from './components/admin-home/admin-home.component
 import { UserComponent } from './components/user/user.component';
 
 import { AuthenticationService } from './services/authentication/authentication.service';
-import { IsAdminGuard, IsUserGuard } from './services/router-guards/router-guards.service';
+import { IsAdminGuard, IsUserGuard, PendingChangesGuard } from './services/router-guards/router-guards.service';
+
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -25,8 +27,9 @@ const routes: Routes = [
           { path: 'home', component: AdminHomeComponent },
           { path: 'user', component: AdminUserlistComponent,
               children: [
-                { path: 'edit/:userId', component: AdminUserEditComponent },
-                { path: 'view/:userId', component: AdminUserViewComponent }
+                { path: 'edit/:userId', component: AdminUserEditComponent, canDeactivate: [PendingChangesGuard] },
+                { path: 'view/:userId', component: AdminUserViewComponent },
+                { path: 'resetpassword/:userId', component: AdminUserResetpasswordComponent, canDeactivate: [PendingChangesGuard] }
               ] },
           { path: 'pathlist', component: AdminPathlistComponent },
           { path: 'grouplist', component: AdminGrouplistComponent }
