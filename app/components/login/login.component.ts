@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   user: User;
   responseMessage: string;
+  isFormValidated = false;
 
   constructor(
     private backendApiService: BackendApiService,
@@ -31,8 +32,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
 
-    this.username = this.username.trim();
-    // this.password = this.password.trim();
+    this.isFormValidated = true;
 
     if ( this.username.length === 0 || this.password.length === 0) { return; }
 
