@@ -80,6 +80,20 @@ export class BackendApiService {
         .catch(this.handleError);
   }
 
+  createUser(user: User): Promise<ResponseData> {
+
+    const URL = API_URL + 'user';
+
+    return this.http
+        .put<ResponseData>(URL, JSON.stringify(user), {headers: this.headers})
+        .toPromise()
+        .then(apiResponse => apiResponse as ResponseData)
+        .catch(this.handleError);
+  }
+
+
+
+
   resetPassword(userId: number, newPassword: string, retypedPassword: string): Promise<ResponseData> {
 
     const URL = API_URL + 'resetpassword';
