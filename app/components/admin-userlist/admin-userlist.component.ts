@@ -32,4 +32,9 @@ export class AdminUserlistComponent implements OnInit {
     .then(users => this.users = users);
   }
 
+  newUser(): User {
+    return new User;
+
+  }
+
 }
