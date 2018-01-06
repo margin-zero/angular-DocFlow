@@ -29,6 +29,7 @@ import { AdminHomeComponent } from './components/admin-home/admin-home.component
 import { AdminUserEditComponent } from './components/admin-user-edit/admin-user-edit.component';
 import { AdminUserViewComponent } from './components/admin-user-view/admin-user-view.component';
 import { AdminUserResetpasswordComponent } from './components/admin-user-resetpassword/admin-user-resetpassword.component';
+import { AdminUserNewComponent } from './components/admin-user-new/admin-user-new.component';
 
 
 
@@ -45,7 +46,8 @@ import { AdminUserResetpasswordComponent } from './components/admin-user-resetpa
     AdminHomeComponent,
     AdminUserEditComponent,
     AdminUserViewComponent,
-    AdminUserResetpasswordComponent
+    AdminUserResetpasswordComponent,
+    AdminUserNewComponent
   ],
   imports: [
     BrowserModule,
