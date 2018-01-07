@@ -94,35 +94,15 @@ export class BackendApiService {
 
 
 
-  resetPassword(userId: number, newPassword: string, retypedPassword: string): Promise<ResponseData> {
+  resetPassword(userId: number, newPassword: string): Promise<ResponseData> {
 
     const URL = API_URL + 'resetpassword';
 
-    if (newPassword === retypedPassword && newPassword.length > 0) {
-
-      return this.http
-          .post<ResponseData>(URL, JSON.stringify({'password': this.hashUserPassword(newPassword), 'id': userId}), {headers: this.headers})
-          .toPromise()
-          .then(apiResponse => apiResponse as ResponseData)
-          .catch(this.handleError);
-
-    } else {
-
-      if (newPassword.length === 0) {
-
-        const promise = new Promise((resolve, reject) =>
-            resolve({'status': 'ERROR', 'message': 'Hasło nie może być puste. Hasło nie zostało zmienione.'} ));
-        return promise.then(data => data as ResponseData);
-
-      } else {
-
-        const promise = new Promise((resolve, reject) =>
-            resolve({'status': 'ERROR', 'message': 'Powtórzone hasło niezgodne. Hasło nie zostało zmienione.'} ));
-        return promise.then(data => data as ResponseData);
-      }
-
-    }
-
+    return this.http
+        .post<ResponseData>(URL, JSON.stringify({'password': this.hashUserPassword(newPassword), 'id': userId}), {headers: this.headers})
+        .toPromise()
+        .then(apiResponse => apiResponse as ResponseData)
+        .catch(this.handleError);
   }
 
 // -----------------------------------------------------------------------------------------------
