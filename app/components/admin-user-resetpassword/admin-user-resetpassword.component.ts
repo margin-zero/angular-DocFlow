@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 
 import { User } from '../../datatypes/user';
+import { FormModelResetPassword } from '../../datatypes/form-model-classes';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 import { ComponentCanDeactivate } from '../../services/router-guards/router-guards.service';
@@ -21,8 +22,8 @@ export class AdminUserResetpasswordComponent implements OnInit, OnDestroy, Compo
   username: string;
   private sub: any;
   responseMessage: string;
-  newPassword: string;
-  retypedPassword: string;
+
+  formModel: FormModelResetPassword;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,9 +33,13 @@ export class AdminUserResetpasswordComponent implements OnInit, OnDestroy, Compo
 
   ngOnInit() {
 
-    this.newPassword = '';
-    this.retypedPassword = '';
     this.responseMessage = null;
+
+    this.formModel = {
+      password: '',
+      confirmPassword: ''
+    };
+
 
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['userId'];
@@ -64,17 +69,28 @@ export class AdminUserResetpasswordComponent implements OnInit, OnDestroy, Compo
 
 
   isChanged(): boolean {
-    return (this.newPassword.length > 0 || this.retypedPassword.length > 0);
+    if ((this.formModel.password && this.formModel.password.length > 0) ||
+        (this.formModel.confirmPassword && this.formModel.confirmPassword.length > 0)) {
+          return true;
+        } else {
+          return false;
+    }
+
   }
 
-  handleClick() {
+  resetPassword(formData: FormModelResetPassword, isValid: boolean) {
 
-    this.backendApiService.resetPassword(this.id, this.newPassword, this.retypedPassword)
+    if (!isValid) { return; }
+
+    alert('jestem w resetPassword');
+
+    this.backendApiService.resetPassword(this.id, formData.password)
     .then(apiResponse => {
       if (apiResponse.status === 'OK') {
-        this.newPassword = '';
-        this.retypedPassword = '';
+        alert('Hasło użytkownika zostało zmienione.');
         this.responseMessage = null;
+        this.formModel.password = '';
+        this.formModel.confirmPassword = '';
         this.location.back();
       } else {
         this.responseMessage = apiResponse.message;
@@ -85,8 +101,8 @@ export class AdminUserResetpasswordComponent implements OnInit, OnDestroy, Compo
 
 
   handleCancel() {
-    this.newPassword = '';
-    this.retypedPassword = '';
     this.location.back();
   }
+
+
 }
