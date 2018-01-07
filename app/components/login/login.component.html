@@ -12,8 +12,7 @@
                 <label for="inputUsername" class="sr-only">Nazwa użytkownika</label>
                 <input type="text" class="form-control" id="inputUsername" required
                     [(ngModel)]="username" name="inputUsername" placeholder="Nazwa użytkownika (wymagana)"
-                    tabindex="1" autofocus (focus)="responseMessage = null"
-                    #inputUsername="ngModel">
+                    tabindex="1" autofocus (focus)="responseMessage = null">
 
                 <div class="invalid-feedback">
                     Wprowadź nazwę użytkownika.
@@ -25,8 +24,7 @@
                 <label for="inputPassword" class="sr-only">Hasło</label>
                 <input type="password" class="form-control" id="inputPassword" required
                     [(ngModel)]="password" name="inputPassword" placeholder="Hasło (wymagane)"
-                    tabindex="2" (focus)="responseMessage = null"
-                    #inputPassword="ngModel">
+                    tabindex="2" (focus)="responseMessage = null">
                     
                 <div class="invalid-feedback">
                     Wprowadź hasło.
