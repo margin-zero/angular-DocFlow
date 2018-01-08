@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Observable } from 'rxjs/Observable';
@@ -28,7 +28,8 @@ export class AdminUserResetpasswordComponent implements OnInit, OnDestroy, Compo
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private backendApiService: BackendApiService
+    private backendApiService: BackendApiService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -82,8 +83,6 @@ export class AdminUserResetpasswordComponent implements OnInit, OnDestroy, Compo
 
     if (!isValid) { return; }
 
-    alert('jestem w resetPassword');
-
     this.backendApiService.resetPassword(this.id, formData.password)
     .then(apiResponse => {
       if (apiResponse.status === 'OK') {
@@ -91,7 +90,7 @@ export class AdminUserResetpasswordComponent implements OnInit, OnDestroy, Compo
         this.responseMessage = null;
         this.formModel.password = '';
         this.formModel.confirmPassword = '';
-        this.location.back();
+        this.router.navigate(['../../view', this.id], { relativeTo: this.route });
       } else {
         this.responseMessage = apiResponse.message;
       }
@@ -99,10 +98,9 @@ export class AdminUserResetpasswordComponent implements OnInit, OnDestroy, Compo
 
   }
 
-
   handleCancel() {
-    this.location.back();
-  }
+    this.router.navigate(['../../view', this.id], { relativeTo: this.route });
 
+  }
 
 }
