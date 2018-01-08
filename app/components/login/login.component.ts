@@ -38,10 +38,15 @@ export class LoginComponent implements OnInit {
 
     this.backendApiService.login(this.username, this.password)
       .then(responseUser => {
-        this.user = responseUser.data[0];
-        this.authenticationService.setUser(responseUser.data[0]);
-        this.responseMessage = responseUser.message;
-        this.router.navigate(['admin']);
+        if (responseUser.status === 'OK') {
+          this.user = responseUser.data[0];
+          this.authenticationService.setUser(responseUser.data[0]);
+          this.responseMessage = responseUser.message;
+          this.router.navigate(['admin']);
+        } else {
+          this.responseMessage = responseUser.message;
+          return;
+        }
       });
 
   }
