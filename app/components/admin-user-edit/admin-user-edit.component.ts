@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Observable } from 'rxjs/Observable';
 
 import { User } from '../../datatypes/user';
+import { FormModelEditUser } from '../../datatypes/form-model-classes';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
@@ -21,14 +22,17 @@ export class AdminUserEditComponent implements OnInit, OnDestroy, ComponentCanDe
 
   id: number;
   user: User;
-  oldUser: User;
   private sub: any;
   loggedUser: boolean;
   responseMessage: string;
 
-  
+  formModel: FormModelEditUser;
+
+  emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$';
+
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private location: Location,
     private backendApiService: BackendApiService,
     private authenticationService: AuthenticationService
@@ -45,8 +49,8 @@ export class AdminUserEditComponent implements OnInit, OnDestroy, ComponentCanDe
 
     this.backendApiService.getUser(this.id)
       .then(user => {
-        this.user = user;
-        this.oldUser = Object.assign({}, user);
+        this.formModel = user;
+        this.user = Object.assign({}, user);
         if (this.user.id === this.authenticationService.getUser().id) { this.loggedUser = true; } else { this.loggedUser = false; }
       });
 
@@ -67,23 +71,31 @@ export class AdminUserEditComponent implements OnInit, OnDestroy, ComponentCanDe
   }
 
 
-
   isChanged(): boolean {
-    return (JSON.stringify(this.user) !== JSON.stringify(this.oldUser) );
+    return (JSON.stringify(this.formModel) !== JSON.stringify(this.user) );
   }
 
-  handleClick() {
+  editUser(formData: FormModelEditUser, isValid: boolean) {
 
-    this.backendApiService.updateUser(this.user)
+    if (!isValid) { return; }
+
+    if (!formData.is_user) { this.formModel.is_user = 'FALSE'; }
+
+    this.backendApiService.updateUser(this.formModel)
     .then(apiResponse => {
       if (apiResponse.status === 'OK') {
-        this.oldUser = Object.assign({}, this.user);
+        this.user = Object.assign({}, this.formModel);
         this.responseMessage = null;
-        this.location.back();
+        this.router.navigate(['../../view', this.id], { relativeTo: this.route });
       } else {
         this.responseMessage = apiResponse.message;
       }
     });
+
+  }
+
+  handleCancel() {
+    this.router.navigate(['../../view', this.id], { relativeTo: this.route });
 
   }
 }

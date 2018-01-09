@@ -7,75 +7,84 @@
         </div>
     </div>
 
-    <form class="app-content-form">
-
-    <div class="form-group row">
-        <label for="inputIsActive" class="col-lg-2 col-form-label">aktywne?</label>
-        <div class="col">
-            <select [(ngModel)]="user.is_active" *ngIf="!loggedUser" name="is_active" class="col-sm-4 col-md-3 col-lg-2 form-control" id="inputIsActive">
-                <option value="TRUE">TAK</option>
-                <option value="FALSE">NIE</option>
-            </select>
-            <p *ngIf="loggedUser" class="col-form-label app-color-red">Nie możesz dezaktywować własnego konta</p>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="inputIsUser" class="col-lg-2 col-form-label">użytkownik?</label>
-        <div class="col">
-            <select [(ngModel)]="user.is_user" name="is_user" class="col-sm-4 col-md-3 col-lg-2 form-control" id="inputIsUser">
-                <option value="TRUE">TAK</option>
-                <option value="FALSE">NIE</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="inputIsAdmin" class="col-lg-2 col-form-label">administrator?</label>
-        <div class="col">
-            <select [(ngModel)]="user.is_admin" *ngIf="!loggedUser" name="is_admin" class="col-sm-4 col-md-3 col-lg-2 form-control" id="inputIsAdmin">
-                <option value='TRUE'>TAK</option>
-                <option value='FALSE'>NIE</option>
-            </select>
-            <p *ngIf="loggedUser" class="col-form-label app-color-red">Nie możesz odebrać sobie praw administratora</p>
-        </div>
-    </div>
+    <form #f="ngForm" novalidate (ngSubmit)="editUser(f.value, f.valid)" id="myForm" name="myForm" class="app-content-form">
             
-    <div class="form-group row">
-        <label for="inputFullName" class="col-lg-2 col-form-label">pełna nazwa</label>
-        <div class="col">
-            <input [(ngModel)]="user.full_name" name="full_name" type="text" class="form-control" id="inputFullName" placeholder="pełna nazwa">
+        <div class="form-group row">
+            <label for="is_active" class="col-lg-2 col-form-label">aktywne?</label>
+            <div class="col">
+                <select [(ngModel)]="formModel.is_active" *ngIf="!loggedUser" name="is_active" class="col-sm-4 col-md-3 col-lg-2 form-control" id="is_active" tabindex="1">
+                    <option value="FALSE">NIE</option>
+                    <option value="TRUE">TAK</option>
+                </select>
+                <p *ngIf="loggedUser" class="col-form-label app-color-red">Nie możesz dezaktywować własnego konta</p>
+            </div>
         </div>
 
-    </div>
 
-    <div class="form-group row">
-        <label for="inputPhoneNumber" class="col-lg-2 col-form-label">telefon</label>
-        <div class="col">
-            <input [(ngModel)]="user.phone_number" name="phone_number" type="text" class="form-control" id="inputPhoneNumber" placeholder="telefon">
+        <div class="form-group row">
+            <label for="is_user" class="col-lg-2 col-form-label">użytkownik?</label>
+            <div class="col">
+                <select [(ngModel)]="formModel.is_user" name="is_user" class="col-sm-4 col-md-3 col-lg-2 form-control" id="is_user" tabindex="2">
+                    <option value="FALSE">NIE</option>
+                    <option value="TRUE">TAK</option>
+                </select>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group row">
-        <label for="inputEmail" class="col-lg-2 col-form-label">email</label>
-        <div class="col">
-            <input [(ngModel)]="user.email_address" name="email_address" type="text" class="form-control" id="inputEmail" placeholder="email">
+
+        <div class="form-group row">
+            <label for="is_admin" class="col-lg-2 col-form-label">administrator?</label>
+            <div class="col">
+                <select [(ngModel)]="formModel.is_admin" *ngIf="!loggedUser" name="is_admin" class="col-sm-4 col-md-3 col-lg-2 form-control" id="is_admin" tabindex="3">
+                    <option value='FALSE'>NIE</option>
+                    <option value='TRUE'>TAK</option>
+                </select>
+                <p *ngIf="loggedUser" class="col-form-label app-color-red">Nie możesz odebrać sobie praw administratora</p>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group row">
-        <label for="inputAdditionalInfo" class="col-lg-2 col-form-label">dodatkowe informacje</label>
-        <div class="col">
-            <textarea [(ngModel)]="user.additional_info" name="additional_info" class="form-control" id="inputAdditionalInfo" rows="3"></textarea>
+        <div class="form-group row">
+            <label for="full_name" class="col-lg-2 col-form-label">pełna nazwa</label>
+            <div class="col">
+                <input [(ngModel)]="formModel.full_name" name="full_name" type="text" class="form-control" id="full_name" placeholder="pełna nazwa" tabindex="4">
+            </div>
         </div>
-    </div>
 
-
-    <div *ngIf="isChanged()" class="text-right">
-        <button class="btn btn-primary" (click)="handleClick()">zapisz zmiany</button>
-    </div>
+        <div class="form-group row">
+            <label for="phone_number" class="col-lg-2 col-form-label">telefon</label>
+            <div class="col">
+                <input [(ngModel)]="formModel.phone_number" name="phone_number" type="text" class="form-control" id="phone_number" placeholder="telefon" tabindex="5">
+            </div>
+        </div>
+    
+        <div class="form-group row">
+            <label for="email" class="col-lg-2 col-form-label">email</label>
+            <div class="col">
+                <input [(ngModel)]="formModel.email_address" #email="ngModel" name="email_address" [pattern]="emailPattern" type="text" class="form-control" id="email" placeholder="adres email" tabindex="6">
+                <small class="text-danger" [hidden]="email.valid">
+                    Niepoprawny adres email.
+                </small>
+            </div>
+        </div>
+    
+        <div class="form-group row">
+            <label for="additional_info" class="col-lg-2 col-form-label">dodatkowe informacje</label>
+            <div class="col">
+                <textarea [(ngModel)]="formModel.additional_info" name="additional_info" class="form-control" id="additional_info" rows="3"  tabindex="7"></textarea>
+            </div>
+        </div>
     
 
-    </form>
 
+
+        <div class="form-group row">
+            <div class="col-lg-2"></div>
+            <div class="col-12 col-lg-10">
+                <input type="submit" [disabled]="!f.valid || !isChanged()" value="zatwierdź" class="btn btn-primary mb-1 col-12 col-md-3 col-lg-2 float-md-right" tabindex="8">
+                <input type="button" class="btn btn-danger mb-1 col-12 col-md-3 col-lg-2" (click)="handleCancel()" tabindex="9" value="anuluj">
+                <input type="reset" value="resetuj" class="btn btn-outline-secondary mb-1 col-12 col-md-3 col-lg-2" tabindex="10">
+            </div>
+        </div>
+
+    </form>
 </ng-container>
