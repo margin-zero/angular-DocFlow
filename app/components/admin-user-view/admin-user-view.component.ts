@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../datatypes/user';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
 
 @Component({
   selector: 'dcf-admin-user-view',
@@ -15,21 +16,30 @@ export class AdminUserViewComponent implements OnInit, OnDestroy {
   id: number;
   user: User;
   private sub: any;
+  loggedUser: boolean;
 
   constructor(
     private currentRoute: ActivatedRoute,
+    private router: Router,
     private backendApiService: BackendApiService,
-    private router: Router
+    private authenticationService: AuthenticationService
   ) { }
 
   ngOnInit() {
+
+    this.loggedUser = true;
+
     this.sub = this.currentRoute.params.subscribe(params => {
       this.id = +params['userId'];
       this.backendApiService.getUser(this.id)
         .then(user => { this.user = user; });
+
+      this.backendApiService.getUser(this.id)
+        .then(user => {
+        this.user = user;
+        if (this.user.id === this.authenticationService.getUser().id) { this.loggedUser = true; } else { this.loggedUser = false; }
+      });
     });
-
-
   }
 
   ngOnDestroy() {

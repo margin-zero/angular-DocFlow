@@ -37,9 +37,13 @@
         </tbody>
     </table>
 
-    <div class="text-right">
-        <button class="btn btn-primary" (click)="router.navigate(['../../edit',user.id], { relativeTo: currentRoute })">edycja użytkownika</button>
-        <button class="btn btn-primary" (click)="router.navigate(['../../resetpassword',user.id], { relativeTo: currentRoute })">resetuj hasło</button>
+    <div class="form-group row">
+        <div class="col-12">
+            <button class="btn btn-primary col-12 col-md-auto mb-1 float-md-right" (click)="router.navigate(['../../edit',user.id], { relativeTo: currentRoute })" tabindex="1">edycja użytkownika</button>
+            <button class="btn btn-primary col-12 col-md-auto mb-1 mr-1 float-md-right" (click)="router.navigate(['../../resetpassword',user.id], { relativeTo: currentRoute })" tabindex="2">resetuj hasło</button>
+            <button  *ngIf="!loggedUser" class="btn btn-danger  col-12 col-md-auto mb-1 float-md-left" (click)="router.navigate(['../../delete',user.id], { relativeTo: currentRoute })" tabindex="3">usuń użytkownika</button>
+        </div>
     </div>
+
 
 </ng-container>
