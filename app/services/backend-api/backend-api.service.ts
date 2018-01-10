@@ -1,5 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
 
 // DATATYPES
 import { User } from '../../datatypes/user';
@@ -13,13 +19,22 @@ import { ResponseUser, ResponseData } from '../../datatypes/response-classes';
 import { API_URL } from '../../constants/global-constants';
 
 
-@Injectable()
-export class BackendApiService {
 
+@Injectable()
+export class BackendApiService implements OnInit {
+
+  // users: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
   user: User;
+
+  usersObservable = new Subject<any>();
+
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.refreshUsersObservable();
+  }
+
+  ngOnInit() { }
 
   private handleError(error: any): Promise<any> {
     console.error('UWAGA !!! An error occurred', error); // for demo purposes only
@@ -58,6 +73,17 @@ export class BackendApiService {
         .then(apiResponse => apiResponse.data as User[])
         .catch(this.handleError);
   }
+
+  refreshUsersObservable(): any {
+    this.getUsers()
+    .then(users => this.usersObservable.next(users));
+  }
+
+  getUsersObservable(): Observable<any> {
+    return this.usersObservable.asObservable();
+  }
+
+
 
   getUser(userId: number): Promise<User> {
 
