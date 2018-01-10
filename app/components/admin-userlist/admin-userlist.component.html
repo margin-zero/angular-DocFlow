@@ -17,15 +17,9 @@
 
         <div class="col-sm-7 col-md-8 col-lg-9">
 
-                <ng-container *ngIf="!selectedUser">
-                    <p>Wybierz użytkownika z listy aby obejrzeć szczegóły...</p>
-                </ng-container>
-            
-                <ng-container *ngIf="selectedUser">
+            <p *ngIf="!selectedUser">Wybierz użytkownika z listy aby obejrzeć szczegóły...</p>
 
-                    <router-outlet></router-outlet>                
-                
-                </ng-container>
+            <router-outlet></router-outlet>
 
         </div>
 

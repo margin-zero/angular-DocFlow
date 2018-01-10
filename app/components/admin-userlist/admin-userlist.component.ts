@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+
+import { AsyncPipe } from '@angular/common';
+
+import { Observable } from 'rxjs/Rx';
 
 import { User } from '../../datatypes/user';
 
@@ -10,10 +14,13 @@ import { BackendApiService } from '../../services/backend-api/backend-api.servic
   templateUrl: './admin-userlist.component.html',
   styleUrls: ['./admin-userlist.component.css']
 })
-export class AdminUserlistComponent implements OnInit {
+export class AdminUserlistComponent implements OnInit, OnDestroy {
 
   users: User[];
-  selectedUser: User;
+  selectedUser: User = new User;
+
+  private sub: any;
+
 
   constructor(
     private router: Router,
@@ -21,20 +28,19 @@ export class AdminUserlistComponent implements OnInit {
     private backendApiService: BackendApiService
   ) { }
 
+
   ngOnInit() {
-    this.getUsers();
     this.selectedUser = null;
+
+    this.sub = this.backendApiService.getUsersObservable().subscribe(users => { this.users = users; });
+    this.backendApiService.refreshUsersObservable();
   }
 
-  getUsers(): void {
-    this.backendApiService
-    .getUsers()
-    .then(users => this.users = users);
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   newUser(): User {
     return new User;
-
   }
-
 }
