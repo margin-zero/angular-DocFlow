@@ -31,7 +31,7 @@ const routes: Routes = [
                 { path: 'edit/:userId', component: AdminUserEditComponent, canDeactivate: [PendingChangesGuard] },
                 { path: 'view/:userId', component: AdminUserViewComponent },
                 { path: 'resetpassword/:userId', component: AdminUserResetpasswordComponent, canDeactivate: [PendingChangesGuard] },
-                { path: 'new', component: AdminUserNewComponent }
+                { path: 'new', component: AdminUserNewComponent, canDeactivate: [PendingChangesGuard] }
               ] },
           { path: 'pathlist', component: AdminPathlistComponent },
           { path: 'grouplist', component: AdminGrouplistComponent }
