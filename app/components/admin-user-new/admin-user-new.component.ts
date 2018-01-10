@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+
+import { Observable } from 'rxjs/Observable';
 
 import { User } from '../../datatypes/user';
 
@@ -18,6 +20,8 @@ export class AdminUserNewComponent implements OnInit {
   users: User[];
   responseMessage = null;
   formModel: FormModelEditUser;
+  formModelOld: FormModelEditUser;
+
 
   constructor(
     private backendApiService: BackendApiService,
@@ -25,6 +29,7 @@ export class AdminUserNewComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) { }
+
 
   ngOnInit() {
     this.formModel = new FormModelEditUser;
@@ -39,7 +44,10 @@ export class AdminUserNewComponent implements OnInit {
     this.formModel.email_address = '';
     this.formModel.phone_number = '';
     this.getUsers();
+
+    this.formModelOld = Object.assign({}, this.formModel);
   }
+
 
   getUsers(): void {
     this.backendApiService
@@ -47,71 +55,44 @@ export class AdminUserNewComponent implements OnInit {
     .then(users => this.users = users);
   }
 
-  isUsernameValid(username: string): boolean {
-
-    username = username.trim();
-    let returnValue = true;
-
-    if ( username.length < 1 ) { returnValue = false; }
-
-    for (let i = 0; i < this.users.length; i++) {
-      if (this.users[i].username === username) { returnValue = false; }
-    }
-
-    return returnValue;
+  // @HostListener allows us to also guard against browser refresh, close, etc.
+  @HostListener('window:beforeunload')
+  canDeactivate(): Observable<boolean> | boolean {
+    // insert logic to check if there are pending changes here;
+    // returning true will navigate without confirmation
+    // returning false will show a confirm dialog before navigating away
+    return !this.isChanged();
   }
-
 
 
   isChanged(): boolean {
-    return true;
+    return (JSON.stringify(this.formModel) !== JSON.stringify(this.formModelOld) );
   }
 
-  /*
-  handleClick() {
-    if (this.isUsernameValid() && this.isPasswordValid()) {
-
-      this.backendApiService.createUser(this.user)
-      .then(apiResponse => {
-        if (apiResponse.status === 'OK') {
-          this.responseMessage = null;
-          this.router.navigate(['/admin/user'], { relativeTo: this.currentRoute });
-        } else {
-          this.responseMessage = apiResponse.message;
-        }
-      });
-
-    } else {
-      if (!this.isUsernameValid()) {
-        this.responseMessage = 'Nazwa użytkownika jest pusta lub użytkownik o takiej nazwie już istnieje. Podaj inną nazwę użytkownika.';
-      } else {
-        this.responseMessage = 'Hasło nie może być puste. Wprowadź hasło użytkownika.';
-      }
-
-    }
-  }
-*/
 
 
   newUser(model: FormModelEditUser, isValid: boolean) {
-
     if (!isValid) { return; }
-    if (!this.isUsernameValid(model.username)) { return; }
 
     this.backendApiService.createUser(model)
       .then(apiResponse => {
         if (apiResponse.status === 'OK') {
+          this.formModel = null;
+          this.formModelOld = null;
           this.responseMessage = null;
+          this.backendApiService.refreshUsersObservable();
           this.router.navigate(['/admin/user/']);
         } else {
           this.responseMessage = apiResponse.message;
         }
       });
-
   }
+
 
   handleCancel() {
-    this.router.navigate(['../'], { relativeTo: this.route });
-
+    this.router.navigate(['/admin/user'], { relativeTo: this.route });
   }
+
+
+
 }
