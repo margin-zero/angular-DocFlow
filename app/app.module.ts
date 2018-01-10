@@ -45,6 +45,7 @@ import { UserService } from './services/user/user.service';
 
 // directive imports --------------------------------------------------------------------
 import { EqualValidatorDirective } from './directives/equal-validator.directive';
+import { UniqueUsernameValidatorDirective } from './directives/unique-username-validator.directive';
 
 
 @NgModule({
@@ -61,7 +62,9 @@ import { EqualValidatorDirective } from './directives/equal-validator.directive'
     AdminUserViewComponent,
     AdminUserResetpasswordComponent,
     AdminUserNewComponent,
-    EqualValidatorDirective
+    EqualValidatorDirective,
+    UniqueUsernameValidatorDirective
+
   ],
   imports: [
     BrowserModule,
