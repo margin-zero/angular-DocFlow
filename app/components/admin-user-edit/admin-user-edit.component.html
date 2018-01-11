@@ -2,12 +2,12 @@
 
     <div class="row">
         <div class="col-12">
-            <h1 class="app-content-area-header">{{user.username}} <span class="app-font-muted">(edycja konta)</span></h1>
-            <p *ngIf="responseMessage" class="app-response-message">{{responseMessage}}</p>
+            <dcf-ui-admin-content-header [headerText]='componentHeader' [subheaderText]='componentSubheader'></dcf-ui-admin-content-header>
+            <p *ngIf="responseMessage" class="text-danger m-0 my-3">{{responseMessage}}</p>
         </div>
     </div>
 
-    <form #f="ngForm" novalidate (ngSubmit)="editUser(f.value, f.valid)" id="myForm" name="myForm" class="app-content-form">
+    <form #f="ngForm" novalidate (ngSubmit)="editUser(f.value, f.valid)" id="myForm" name="myForm" class="p-2 mt-2">
             
         <div class="form-group row">
             <label for="is_active" class="col-lg-2 col-form-label">aktywne?</label>
@@ -16,7 +16,7 @@
                     <option value="FALSE">NIE</option>
                     <option value="TRUE">TAK</option>
                 </select>
-                <p *ngIf="loggedUser" class="col-form-label app-color-red">Nie możesz dezaktywować własnego konta</p>
+                <p *ngIf="loggedUser" class="col-form-label text-danger">Nie możesz dezaktywować własnego konta</p>
             </div>
         </div>
 
@@ -39,7 +39,7 @@
                     <option value='FALSE'>NIE</option>
                     <option value='TRUE'>TAK</option>
                 </select>
-                <p *ngIf="loggedUser" class="col-form-label app-color-red">Nie możesz odebrać sobie praw administratora</p>
+                <p *ngIf="loggedUser" class="col-form-label text-danger">Nie możesz odebrać sobie praw administratora</p>
             </div>
         </div>
 
@@ -80,9 +80,9 @@
         <div class="form-group row">
             <div class="col-lg-2"></div>
             <div class="col-12 col-lg-10">
-                <input type="submit" [disabled]="!f.valid || !isChanged()" value="zatwierdź" class="btn btn-primary mb-1 col-12 col-md-3 col-lg-2 float-md-right" tabindex="8">
-                <input type="button" class="btn btn-danger mb-1 col-12 col-md-3 col-lg-2" (click)="handleCancel()" tabindex="9" value="anuluj">
-                <input type="reset" value="resetuj" class="btn btn-outline-secondary mb-1 col-12 col-md-3 col-lg-2" tabindex="10">
+                <input type="submit" [disabled]="!f.valid || !isChanged()" value="zatwierdź" [ngClass]="{'app-cursor-pointer': f.valid && isChanged(), 'app-cursor-not-allowed': !f.valid || !isChanged()}" class="btn btn-primary mb-1 col-12 col-md-3 col-lg-2 float-md-right" tabindex="8">
+                <input type="button" class="app-cursor-pointer btn btn-danger mb-1 col-12 col-md-3 col-lg-2" (click)="handleCancel()" tabindex="9" value="anuluj">
+                <input type="reset" value="resetuj" class="app-cursor-pointer btn btn-outline-secondary mb-1 col-12 col-md-3 col-lg-2" tabindex="10">
             </div>
         </div>
 

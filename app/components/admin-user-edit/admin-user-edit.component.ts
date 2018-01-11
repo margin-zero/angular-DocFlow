@@ -30,6 +30,9 @@ export class AdminUserEditComponent implements OnInit, OnDestroy, ComponentCanDe
 
   emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$';
 
+  componentHeader: string;
+  componentSubheader = 'edycja konta';
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -51,6 +54,7 @@ export class AdminUserEditComponent implements OnInit, OnDestroy, ComponentCanDe
       .then(user => {
         this.formModel = user;
         this.user = Object.assign({}, user);
+        this.componentHeader = this.user.username;
         if (this.user.id === this.authenticationService.getUser().id) { this.loggedUser = true; } else { this.loggedUser = false; }
       });
 
