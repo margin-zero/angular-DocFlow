@@ -1,49 +1,46 @@
 <ng-container *ngIf="user">
+
+    <dcf-ui-admin-content-header [headerText]='componentHeader' [subheaderText]='componentSubheader'></dcf-ui-admin-content-header>
+
     <table class="table table-sm  table-bordered">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col" colspan="2" class="app-content-area-header">{{user.username}} <span class="app-font-muted">(szczegóły)</span></th>
-            </tr>
-        </thead>
         <tbody>
             <tr>
-                <td [ngClass]="{'app-color-green': user.is_active === 'TRUE', 'app-color-red': user.is_active === 'FALSE' }" class="app-content-label">konto aktywne:</td>
-                <td [ngClass]="{'app-color-green': user.is_active === 'TRUE', 'app-color-red': user.is_active === 'FALSE' }" class="app-content-data">{{user.is_active === 'TRUE' ? 'TAK' : 'NIE'}}</td>
+                <td [ngClass]="{'text-success': user.is_active === 'TRUE', 'text-danger': user.is_active === 'FALSE' }" class="app-col-narrow">konto aktywne:</td>
+                <td [ngClass]="{'text-success': user.is_active === 'TRUE', 'text-danger': user.is_active === 'FALSE' }" class="app-col-wide">{{user.is_active === 'TRUE' ? 'TAK' : 'NIE'}}</td>
             </tr>
             <tr>
-                <td [ngClass]="{'app-color-green': user.is_user === 'TRUE', 'app-color-red': user.is_user === 'FALSE' }" class="app-content-label">użytkownik:</td>
-                <td [ngClass]="{'app-color-green': user.is_user === 'TRUE', 'app-color-red': user.is_user === 'FALSE' }" class="app-content-data">{{user.is_user === 'TRUE' ? 'TAK' : 'NIE'}}</td>
+                <td [ngClass]="{'text-success': user.is_user === 'TRUE', 'text-danger': user.is_user === 'FALSE' }" class="app-col-narrow">użytkownik:</td>
+                <td [ngClass]="{'text-success': user.is_user === 'TRUE', 'text-danger': user.is_user === 'FALSE' }" class="app-col-wide">{{user.is_user === 'TRUE' ? 'TAK' : 'NIE'}}</td>
             </tr>
             <tr>
-                <td [ngClass]="{'app-color-green': user.is_admin === 'TRUE', 'app-color-red': user.is_admin === 'FALSE' }" class="app-content-label">administrator:</td>
-                <td [ngClass]="{'app-color-green': user.is_admin === 'TRUE', 'app-color-red': user.is_admin === 'FALSE' }" class="app-content-data">{{user.is_admin === 'TRUE' ? 'TAK' : 'NIE'}}</td>
+                <td [ngClass]="{'text-success': user.is_admin === 'TRUE', 'text-danger': user.is_admin === 'FALSE' }" class="app-col-narrow">administrator:</td>
+                <td [ngClass]="{'text-success': user.is_admin === 'TRUE', 'text-danger': user.is_admin === 'FALSE' }" class="app-col-wide">{{user.is_admin === 'TRUE' ? 'TAK' : 'NIE'}}</td>
             </tr>
             <tr>
-                <td class="app-content-label">pełna nazwa:</td>
-                <td class="app-content-data">{{user.full_name}}</td>
+                <td class="app-col-narrow">pełna nazwa:</td>
+                <td class="app-col-wide">{{user.full_name}}</td>
             </tr>
             <tr>
-                <td class="app-content-label">telefon:</td>
-                <td class="app-content-data">{{user.phone_number}}</td>
+                <td class="app-col-narrow">telefon:</td>
+                <td class="app-col-wide">{{user.phone_number}}</td>
             </tr>
             <tr>
-                <td class="app-content-label">email:</td>
-                <td class="app-content-data"><a href="mailto:{{user.email_address}}">{{user.email_address}}</a></td>
+                <td class="app-col-narrow">email:</td>
+                <td class="app-col-wide"><a href="mailto:{{user.email_address}}">{{user.email_address}}</a></td>
             </tr>
             <tr>
-                <td class="app-content-label">informacje dodatkowe:</td>
-                <td class="app-content-data">{{user.additional_info}}</td>
+                <td class="app-col-narrow">informacje dodatkowe:</td>
+                <td class="app-col-wide">{{user.additional_info}}</td>
             </tr>
         </tbody>
     </table>
 
     <div class="form-group row">
         <div class="col-12">
-            <button class="btn btn-primary col-12 col-md-auto mb-1 float-md-right" (click)="router.navigate(['../../edit',user.id], { relativeTo: currentRoute })" tabindex="1">edycja użytkownika</button>
-            <button class="btn btn-primary col-12 col-md-auto mb-1 mr-1 float-md-right" (click)="router.navigate(['../../resetpassword',user.id], { relativeTo: currentRoute })" tabindex="2">resetuj hasło</button>
-            <button  *ngIf="!loggedUser" class="btn btn-danger  col-12 col-md-auto mb-1 float-md-left" (click)="router.navigate(['../../delete',user.id], { relativeTo: currentRoute })" tabindex="3">usuń użytkownika</button>
+            <button class="app-cursor-pointer btn btn-primary col-12 col-md-auto mb-1 float-md-right" (click)="router.navigate(['../../edit',user.id], { relativeTo: currentRoute })" tabindex="1">edycja użytkownika</button>
+            <button class="app-cursor-pointer btn btn-primary col-12 col-md-auto mb-1 mr-1 float-md-right" (click)="router.navigate(['../../resetpassword',user.id], { relativeTo: currentRoute })" tabindex="2">resetuj hasło</button>
+            <button  *ngIf="!loggedUser" class="app-cursor-pointer btn btn-danger  col-12 col-md-auto mb-1 float-md-left" (click)="router.navigate(['../../delete',user.id], { relativeTo: currentRoute })" tabindex="3">usuń użytkownika</button>
         </div>
     </div>
-
 
 </ng-container>

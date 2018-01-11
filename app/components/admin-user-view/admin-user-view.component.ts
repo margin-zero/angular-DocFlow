@@ -18,6 +18,9 @@ export class AdminUserViewComponent implements OnInit, OnDestroy {
   private sub: any;
   loggedUser: boolean;
 
+  componentHeader: string;
+  componentSubheader = 'dane użytkownika';
+
   constructor(
     private currentRoute: ActivatedRoute,
     private router: Router,
@@ -31,12 +34,11 @@ export class AdminUserViewComponent implements OnInit, OnDestroy {
 
     this.sub = this.currentRoute.params.subscribe(params => {
       this.id = +params['userId'];
-      this.backendApiService.getUser(this.id)
-        .then(user => { this.user = user; });
 
       this.backendApiService.getUser(this.id)
         .then(user => {
         this.user = user;
+        this.componentHeader = this.user.username;
         if (this.user.id === this.authenticationService.getUser().id) { this.loggedUser = true; } else { this.loggedUser = false; }
       });
     });
