@@ -12,10 +12,10 @@
             <a [routerLink]="['grouplist']" class="nav-item nav-link">Role</a>
             <a [routerLink]="['pathlist']" class="nav-item nav-link">Ścieżki</a>
         </div>
-    </div>
+    <!-- </div> -->
 
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
+        
+        <div class="ml-auto navbar-nav justify-content-end">
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPersonality" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   ({{authenticationService.getUser().username}}) konto
@@ -27,7 +27,9 @@
                 </div>
             </div>
         </div>
+        
     </div>
+
 </nav>
 
 <router-outlet></router-outlet>
