@@ -21,6 +21,7 @@ export class AdminUserlistComponent implements OnInit, OnDestroy {
 
   private sub: any;
 
+  componentHeader = 'Użytkownicy';
 
   constructor(
     private router: Router,
@@ -34,6 +35,7 @@ export class AdminUserlistComponent implements OnInit, OnDestroy {
 
     this.sub = this.backendApiService.getUsersObservable().subscribe(users => { this.users = users; });
     this.backendApiService.refreshUsersObservable();
+
   }
 
   ngOnDestroy() {

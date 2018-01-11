@@ -1,17 +1,19 @@
-<section class="container-fluid app-content-area">
+<section class="container-fluid mt-3">
     
     <div class="row">
     
         <div class="col-sm-5 col-md-4 col-lg-3">
-            <section class="app-selection-list">
-                <h1 class="app-content-area-header">Użytkownicy: 
-                    <button class="btn btn-primary" (click)="selectedUser = newUser(); router.navigate(['new'], { relativeTo: currentRoute })">nowy</button>
-                </h1>
-                <ul>
-                    <li *ngFor="let user of users" class="app-clickable" (click)="selectedUser = user; router.navigate(['view',selectedUser.id], { relativeTo: currentRoute })">
+            <section class="m-0 p-0 mb-2">
+
+                <dcf-ui-admin-list-header [headerText]='componentHeader'></dcf-ui-admin-list-header>
+                
+                <ul class="list-unstyled">
+                    <li *ngFor="let user of users" class="p-2 border border-top-0 app-hover-darker app-cursor-pointer" (click)="selectedUser = user; router.navigate(['view',selectedUser.id], { relativeTo: currentRoute })">
                         {{user.username}}
                     </li>
                 </ul>
+
+                <button class="btn btn-primary app-cursor-pointer btn-block mt-2" (click)="selectedUser = newUser(); router.navigate(['new'], { relativeTo: currentRoute })">nowy użytkownik</button>
             </section>
         </div>
 
