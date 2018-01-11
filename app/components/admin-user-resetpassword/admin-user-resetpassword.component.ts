@@ -25,6 +25,9 @@ export class AdminUserResetpasswordComponent implements OnInit, OnDestroy, Compo
 
   formModel: FormModelResetPassword;
 
+  componentHeader: string;
+  componentSubheader = 'resetowanie hasła';
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
@@ -49,6 +52,7 @@ export class AdminUserResetpasswordComponent implements OnInit, OnDestroy, Compo
     this.backendApiService.getUser(this.id)
       .then(user => {
         this.username = user.username;
+        this.componentHeader = user.username;
       });
 
   }
