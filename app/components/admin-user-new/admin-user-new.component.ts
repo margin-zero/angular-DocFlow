@@ -22,6 +22,8 @@ export class AdminUserNewComponent implements OnInit {
   formModel: FormModelEditUser;
   formModelOld: FormModelEditUser;
 
+  componentHeader = 'nowy-użytkownik';
+  componentSubheader = 'wprowadzanie nowego użytkownika';
 
   constructor(
     private backendApiService: BackendApiService,
@@ -90,7 +92,7 @@ export class AdminUserNewComponent implements OnInit {
 
 
   handleCancel() {
-    this.router.navigate(['/admin/user'], { relativeTo: this.route });
+    this.location.back();
   }
 
 
