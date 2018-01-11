@@ -28,6 +28,10 @@ import { AdminPathlistComponent } from './components/admin-pathlist/admin-pathli
 import { UserComponent } from './components/user/user.component';
 
 
+// UI component imports --------------------------------------------------------------
+import { UiAdminContentHeaderComponent } from './ui-components/admin/ui-admin-content-header/ui-admin-content-header.component';
+
+
 // routing import ---------------------------------------------------------------------
 import { AppRoutingModule } from './app-routing.module';
 
@@ -46,6 +50,8 @@ import { UserService } from './services/user/user.service';
 // directive imports --------------------------------------------------------------------
 import { EqualValidatorDirective } from './directives/equal-validator.directive';
 import { UniqueUsernameValidatorDirective } from './directives/unique-username-validator.directive';
+import { UiAdminListHeaderComponent } from './ui-components/admin/ui-admin-list-header/ui-admin-list-header.component';
+
 
 
 @NgModule({
@@ -63,7 +69,9 @@ import { UniqueUsernameValidatorDirective } from './directives/unique-username-v
     AdminUserResetpasswordComponent,
     AdminUserNewComponent,
     EqualValidatorDirective,
-    UniqueUsernameValidatorDirective
+    UniqueUsernameValidatorDirective,
+    UiAdminContentHeaderComponent,
+    UiAdminListHeaderComponent
 
   ],
   imports: [
