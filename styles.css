@@ -1,9 +1,4 @@
-.app-content-area {
-    margin-top: 10px;
-}
-
-.app-clickable:hover {
-    cursor: pointer;
+.app-hover-darker:hover {
     background: rgba(0,0,0,0.05);
 }
 
@@ -11,66 +6,19 @@
     cursor: pointer;
 }
 
-.app-color-green {
-    color: green;
+.app-cursor-not-allowed {
+    cursor: not-allowed;
 }
 
-.app-color-red {
-    color: red;
-}
-
-.app-font-muted {
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: rgba(73, 80, 87, 0.5);
-}
-
-.app-selection-list {
-    padding: 0;
-    margin: 0;
-    margin-bottom: 2rem;
-}
-
-.app-content-area-header {
-    padding: 0.4rem;
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.5rem;
-    margin: 0;
+.app-bgcolor-lightgray {
     background: #e9ecef;
-    color: rgb(73, 80, 87);
 }
 
-.app-selection-list>ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.app-selection-list>ul>li {
-    line-height: 1.5rem;
-    padding: 0.4rem;
-    margin: 0;
-    border-bottom: 1px solid rgba(0,0,0,0.075);
-}
-
-.app-content-label {
-    text-align: left;
-    font-weight: 600;
+.app-col-narrow {
     width: 20%;
 }
 
-.app-content-data {
-    text-align: left;
-    font-weight: normal;
+.app-col-wide {
     width: 80%;
 }
 
-.app-content-form {
-    padding: 0.4rem;
-}
-
-.app-response-message {
-    color: red;
-    margin: 1rem 0;
-}
