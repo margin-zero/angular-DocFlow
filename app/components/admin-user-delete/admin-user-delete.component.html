@@ -1,0 +1,27 @@
+<ng-container *ngIf="username">
+
+    <div class="row">
+        <div class="col-12">
+            <dcf-ui-admin-content-header [headerText]='componentHeader' [subheaderText]='componentSubheader'></dcf-ui-admin-content-header>
+            <p *ngIf="responseMessage" class="text-danger m-0 my-3">{{responseMessage}}</p>
+        </div>
+
+        <div class="col-12 my-3">
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Uwaga!</h4>
+                <p>Potwierdź zamiar usunięcia konta użytkownika.</p>
+                <hr>
+                <p class="mb-0">Jeśli usuniesz konto użytkownika straci on dostęp do systemu. Wszystkie dokumenty, które użytkownik pobrał 
+                  ale nie zakończył ich przetwarzania, zostaną skierowane do ponownego przetworzenia.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <button class="btn btn-primary mb-1 col-12 col-md-3 col-lg-2 float-md-right app-cursor-pointer" (click)="deleteUser()" tabindex="1">usuń</button>
+            <button class="btn btn-danger mb-1 col-12 col-md-3 col-lg-2 app-cursor-pointer" (click)="handleCancel()" tabindex="2">nie usuwaj</button>
+        </div>
+    </div>
+
+
+</ng-container>
