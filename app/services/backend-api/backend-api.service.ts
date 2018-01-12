@@ -119,6 +119,17 @@ export class BackendApiService implements OnInit {
   }
 
 
+  deleteUser(id: number): Promise<ResponseData> {
+
+    const URL = API_URL + 'user/' + id;
+
+    return this.http
+        .delete<ResponseData>(URL)
+        .toPromise()
+        .then(apiResponse => apiResponse as ResponseData)
+        .catch(this.handleError);
+
+  }
 
 
   resetPassword(userId: number, newPassword: string): Promise<ResponseData> {
