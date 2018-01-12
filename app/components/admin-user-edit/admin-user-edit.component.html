@@ -73,16 +73,13 @@
                 <textarea [(ngModel)]="formModel.additional_info" name="additional_info" class="form-control" id="additional_info" rows="3"  tabindex="7"></textarea>
             </div>
         </div>
-    
+       
+        
 
-
-
-        <div class="form-group row">
+        <div *ngIf="formValidationToController(f.valid)" class="form-group row">
             <div class="col-lg-2"></div>
             <div class="col-12 col-lg-10">
-                <input type="submit" [disabled]="!f.valid || !isChanged()" value="zatwierdź" [ngClass]="{'app-cursor-pointer': f.valid && isChanged(), 'app-cursor-not-allowed': !f.valid || !isChanged()}" class="btn btn-primary mb-1 col-12 col-md-3 col-lg-2 float-md-right" tabindex="8">
-                <input type="button" class="app-cursor-pointer btn btn-danger mb-1 col-12 col-md-3 col-lg-2" (click)="handleCancel()" tabindex="9" value="anuluj">
-                <input type="reset" value="resetuj" class="app-cursor-pointer btn btn-outline-secondary mb-1 col-12 col-md-3 col-lg-2" tabindex="10">
+                <dcf-ui-admin-form-buttons  [formButtons]="formButtonConfiguration"></dcf-ui-admin-form-buttons>
             </div>
         </div>
 

@@ -11,7 +11,10 @@ import { BackendApiService } from '../../services/backend-api/backend-api.servic
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { ComponentCanDeactivate } from '../../services/router-guards/router-guards.service';
 
-// import { PACKAGE_ROOT_URL } from '@angular/core/src/application_tokens';
+
+// UI Form Buttons Component
+import { UiAdminFormButtonConfiguration, UiAdminFormButtonConfigurationFactory } from '../../datatypes/ui-element-classes';
+
 
 @Component({
   selector: 'dcf-admin-user-edit',
@@ -33,13 +36,16 @@ export class AdminUserEditComponent implements OnInit, OnDestroy, ComponentCanDe
   componentHeader: string;
   componentSubheader = 'edycja konta';
 
+  formButtonConfiguration: UiAdminFormButtonConfiguration = UiAdminFormButtonConfigurationFactory();
+
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
     private backendApiService: BackendApiService,
     private authenticationService: AuthenticationService
-  ) { }
+  ) {}
 
   ngOnInit() {
 
@@ -60,17 +66,18 @@ export class AdminUserEditComponent implements OnInit, OnDestroy, ComponentCanDe
 
   }
 
+
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
 
-  // @HostListener allows us to also guard against browser refresh, close, etc.
+  // @HostListener Pozwala na wykrycie opuszczenia danej lokalizacji nie tylko w efekcie zmiany nawigacji ale
+  //               również poprzez zamknięcie okna, wpisanie innego adresu itp.
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
-    // insert logic to check if there are pending changes here;
-    // returning true will navigate without confirmation
-    // returning false will show a confirm dialog before navigating away
+    // return true - pozwala nawigować bez potwierdzenia
+    // return false - pokazuje dialog potwierdzenia przez nawigacją
     return !this.isChanged();
   }
 
@@ -78,6 +85,7 @@ export class AdminUserEditComponent implements OnInit, OnDestroy, ComponentCanDe
   isChanged(): boolean {
     return (JSON.stringify(this.formModel) !== JSON.stringify(this.user) );
   }
+
 
   editUser(formData: FormModelEditUser, isValid: boolean) {
 
@@ -98,8 +106,11 @@ export class AdminUserEditComponent implements OnInit, OnDestroy, ComponentCanDe
 
   }
 
-  handleCancel() {
-    this.router.navigate(['../../view', this.id], { relativeTo: this.route });
 
+  // ta funkcja służy wyłącznie do tego, żeby w czasie rzeczywistym pobrać stan walidacji formularza,
+  // i przekazać go do komponentu wyświetlającego buttony pod formularzem
+  formValidationToController(formIsValid: boolean): boolean {
+    this.formButtonConfiguration.submit.disabled = !formIsValid || !this.isChanged();
+    return (true);
   }
 }
