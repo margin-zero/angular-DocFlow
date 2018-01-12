@@ -6,6 +6,7 @@ import { User } from '../../datatypes/user';
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 
+
 @Component({
   selector: 'dcf-admin-user-view',
   templateUrl: './admin-user-view.component.html',
@@ -21,12 +22,14 @@ export class AdminUserViewComponent implements OnInit, OnDestroy {
   componentHeader: string;
   componentSubheader = 'dane użytkownika';
 
+
   constructor(
     private currentRoute: ActivatedRoute,
     private router: Router,
     private backendApiService: BackendApiService,
     private authenticationService: AuthenticationService
   ) { }
+
 
   ngOnInit() {
 
@@ -43,6 +46,7 @@ export class AdminUserViewComponent implements OnInit, OnDestroy {
       });
     });
   }
+
 
   ngOnDestroy() {
     this.sub.unsubscribe();
