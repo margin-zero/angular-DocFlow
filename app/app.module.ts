@@ -30,7 +30,7 @@ import { UserComponent } from './components/user/user.component';
 
 // UI component imports --------------------------------------------------------------
 import { UiAdminContentHeaderComponent } from './ui-components/admin/ui-admin-content-header/ui-admin-content-header.component';
-
+import { UiAdminFormButtonsComponent } from './ui-components/admin/ui-admin-form-buttons/ui-admin-form-buttons.component';
 
 // routing import ---------------------------------------------------------------------
 import { AppRoutingModule } from './app-routing.module';
@@ -51,6 +51,8 @@ import { UserService } from './services/user/user.service';
 import { EqualValidatorDirective } from './directives/equal-validator.directive';
 import { UniqueUsernameValidatorDirective } from './directives/unique-username-validator.directive';
 import { UiAdminListHeaderComponent } from './ui-components/admin/ui-admin-list-header/ui-admin-list-header.component';
+import { AdminUserDeleteComponent } from './components/admin-user-delete/admin-user-delete.component';
+
 
 
 
@@ -71,7 +73,9 @@ import { UiAdminListHeaderComponent } from './ui-components/admin/ui-admin-list-
     EqualValidatorDirective,
     UniqueUsernameValidatorDirective,
     UiAdminContentHeaderComponent,
-    UiAdminListHeaderComponent
+    UiAdminListHeaderComponent,
+    AdminUserDeleteComponent,
+    UiAdminFormButtonsComponent
 
   ],
   imports: [
