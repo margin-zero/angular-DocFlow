@@ -28,12 +28,14 @@ export class AdminUserResetpasswordComponent implements OnInit, OnDestroy, Compo
   componentHeader: string;
   componentSubheader = 'resetowanie hasła';
 
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private backendApiService: BackendApiService,
     private router: Router
   ) { }
+
 
   ngOnInit() {
 
@@ -44,7 +46,6 @@ export class AdminUserResetpasswordComponent implements OnInit, OnDestroy, Compo
       confirmPassword: ''
     };
 
-
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['userId'];
     });
@@ -54,23 +55,22 @@ export class AdminUserResetpasswordComponent implements OnInit, OnDestroy, Compo
         this.username = user.username;
         this.componentHeader = user.username;
       });
-
   }
+
 
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
 
-  // @HostListener allows us to also guard against browser refresh, close, etc.
+  // @HostListener Pozwala na wykrycie opuszczenia danej lokalizacji nie tylko w efekcie zmiany nawigacji ale
+  //               również poprzez zamknięcie okna, wpisanie innego adresu itp.
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
-    // insert logic to check if there are pending changes here;
-    // returning true will navigate without confirmation
-    // returning false will show a confirm dialog before navigating away
+    // return true - pozwala nawigować bez potwierdzenia
+    // return false - pokazuje dialog potwierdzenia przez nawigacją
     return !this.isChanged();
   }
-
 
 
   isChanged(): boolean {
@@ -80,8 +80,8 @@ export class AdminUserResetpasswordComponent implements OnInit, OnDestroy, Compo
         } else {
           return false;
     }
-
   }
+
 
   resetPassword(formData: FormModelResetPassword, isValid: boolean) {
 
@@ -102,9 +102,9 @@ export class AdminUserResetpasswordComponent implements OnInit, OnDestroy, Compo
 
   }
 
+
   handleCancel() {
     this.router.navigate(['../../view', this.id], { relativeTo: this.route });
-
   }
 
 }
