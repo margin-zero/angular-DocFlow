@@ -1,0 +1,3 @@
+<input type="submit" value="{{formButtons.submit.value}}" [disabled]="formButtons.submit.disabled" [ngClass]="{'app-cursor-pointer': !formButtons.submit.disabled, 'app-cursor-not-allowed': formButtons.submit.disabled}" class="btn btn-primary mb-1 col-12 col-md-3 col-lg-2 float-md-right" tabindex="8">
+<input type="button" value="{{formButtons.cancel.value}}" class="app-cursor-pointer btn btn-danger mb-1 col-12 col-md-3 col-lg-2" (click)="handleCancel()" tabindex="9">
+<input type="reset"  value="{{formButtons.reset.value}}"  class="app-cursor-pointer btn btn-outline-secondary mb-1 col-12 col-md-3 col-lg-2" tabindex="10">
