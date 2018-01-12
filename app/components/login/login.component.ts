@@ -5,6 +5,7 @@ import { BackendApiService } from '../../services/backend-api/backend-api.servic
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 
 import { User } from '../../datatypes/user';
+import { FormModelLogin } from '../../datatypes/form-model-classes';
 
 @Component({
   selector: 'dcf-login',
@@ -20,6 +21,8 @@ export class LoginComponent implements OnInit {
   responseMessage: string;
   isFormValidated = false;
 
+  formModel: FormModelLogin = { username: '', password: '' };
+
   constructor(
     private backendApiService: BackendApiService,
     private authenticationService: AuthenticationService,
@@ -27,6 +30,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
   }
 
 
@@ -51,5 +55,23 @@ export class LoginComponent implements OnInit {
 
   }
 
+  login2(formData: FormModelLogin, isValid: boolean): void {
+
+    if ( !isValid ) { return; }
+
+    this.backendApiService.login(formData.username, formData.password)
+      .then(responseUser => {
+        if (responseUser.status === 'OK') {
+          this.user = responseUser.data[0];
+          this.authenticationService.setUser(responseUser.data[0]);
+          this.responseMessage = responseUser.message;
+          this.router.navigate(['admin']);
+        } else {
+          this.responseMessage = responseUser.message;
+          return;
+        }
+      });
+
+  }
 
 }

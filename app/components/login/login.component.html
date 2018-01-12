@@ -1,43 +1,42 @@
 <div class="container">
 
-    <div class="form-signin">
+    <div class="row justify-content-center">
 
-        <form (submit)="login()" novalidate [ngClass]="{'was-validated': isFormValidated }">
-        
+    <div class="col-sm-8 col-md-6 col-lg-4">
+
+        <form #f="ngForm" novalidate (ngSubmit)="login2(f.value, f.valid)" id="myForm" name="myForm" [ngClass]="{'was-validated': isFormValidated }">
+
             <div class="form-group">
-                <h2 class="form-signin-heading">Zaloguj się</h2>
+                <h2>Zaloguj się</h2>
             </div>
 
             <div class="form-group">
-                <label for="inputUsername" class="sr-only">Nazwa użytkownika</label>
-                <input type="text" class="form-control" id="inputUsername" required
-                    [(ngModel)]="username" name="inputUsername" placeholder="Nazwa użytkownika (wymagana)"
-                    tabindex="1" autofocus (focus)="responseMessage = null">
-
-                <div class="invalid-feedback">
-                    Wprowadź nazwę użytkownika.
-                </div>
+                <label for="username" class="sr-only">Nazwa użytkownika</label>
+                <input type="text" class="form-control" name="username" [(ngModel)]="formModel.username" required #username="ngModel"
+                        placeholder="Nazwa użytkownika (wymagana)" tabindex="1" autofocus (focus)="responseMessage = null">
+                    <small class="text-danger" [hidden]="username.valid || (username.pristine && !f.submitted)">
+                        Nazwa użytkownika jest wymagana.
+                    </small>
             </div>
-
 
             <div class="form-group">
-                <label for="inputPassword" class="sr-only">Hasło</label>
-                <input type="password" class="form-control" id="inputPassword" required
-                    [(ngModel)]="password" name="inputPassword" placeholder="Hasło (wymagane)"
-                    tabindex="2" (focus)="responseMessage = null">
-                    
-                <div class="invalid-feedback">
-                    Wprowadź hasło.
-                </div>
-            </div>
-        
-            <div class="form-group">
-                <input type="submit" value="Zaloguj się" class="btn btn-lg btn-primary btn-block app-cursor-pointer" tabindex="3">        
+                <label for="password" class="sr-only">Hasło</label>
+                <input type="password" class="form-control" name="password" [(ngModel)]="formModel.password" required #password="ngModel"
+                        placeholder="Hasło (wymagane)" tabindex="2" (focus)="responseMessage = null">
+                    <small class="text-danger" [hidden]="password.valid || (password.pristine && !f.submitted)">
+                        Hasło jest wymagane.
+                    </small>
             </div>
 
+            <div class="form-group">
+                <input type="submit" [disabled]="!f.valid" value="Zaloguj się" [ngClass]="{'app-cursor-pointer': f.valid, 'app-cursor-not-allowed': !f.valid}" class="btn btn-primary btn-block" tabindex="3">
+            </div>
         </form>
-
+    
         <p *ngIf="responseMessage" class="text-danger m-0 my-3">{{responseMessage}}</p>
+
+    </div>
+
     </div>
 
 </div> <!-- /container -->
