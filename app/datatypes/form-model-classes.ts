@@ -8,3 +8,8 @@ export class FormModelResetPassword {
 export class FormModelEditUser extends User {
 // for now we have FormModelEditUser === User
 }
+
+export class FormModelLogin {
+    username: string;
+    password: string;
+}
