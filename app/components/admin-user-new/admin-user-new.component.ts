@@ -9,6 +9,7 @@ import { User } from '../../datatypes/user';
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 import { FormModelEditUser } from '../../datatypes/form-model-classes';
 
+
 @Component({
   selector: 'dcf-admin-user-new',
   templateUrl: './admin-user-new.component.html',
@@ -24,6 +25,7 @@ export class AdminUserNewComponent implements OnInit {
 
   componentHeader = 'nowy-użytkownik';
   componentSubheader = 'wprowadzanie nowego użytkownika';
+
 
   constructor(
     private backendApiService: BackendApiService,
@@ -57,12 +59,13 @@ export class AdminUserNewComponent implements OnInit {
     .then(users => this.users = users);
   }
 
-  // @HostListener allows us to also guard against browser refresh, close, etc.
+
+  // @HostListener Pozwala na wykrycie opuszczenia danej lokalizacji nie tylko w efekcie zmiany nawigacji ale
+  //               również poprzez zamknięcie okna, wpisanie innego adresu itp.
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
-    // insert logic to check if there are pending changes here;
-    // returning true will navigate without confirmation
-    // returning false will show a confirm dialog before navigating away
+    // return true - pozwala nawigować bez potwierdzenia
+    // return false - pokazuje dialog potwierdzenia przez nawigacją
     return !this.isChanged();
   }
 
@@ -72,8 +75,8 @@ export class AdminUserNewComponent implements OnInit {
   }
 
 
-
   newUser(model: FormModelEditUser, isValid: boolean) {
+
     if (!isValid) { return; }
 
     this.backendApiService.createUser(model)
@@ -94,7 +97,5 @@ export class AdminUserNewComponent implements OnInit {
   handleCancel() {
     this.location.back();
   }
-
-
 
 }
