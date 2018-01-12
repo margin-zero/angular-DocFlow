@@ -9,6 +9,7 @@ import { AdminUserEditComponent } from './components/admin-user-edit/admin-user-
 import { AdminUserViewComponent } from './components/admin-user-view/admin-user-view.component';
 import { AdminUserResetpasswordComponent } from './components/admin-user-resetpassword/admin-user-resetpassword.component';
 import { AdminUserNewComponent } from './components/admin-user-new/admin-user-new.component';
+import { AdminUserDeleteComponent } from './components/admin-user-delete/admin-user-delete.component';
 
 import { AdminPathlistComponent } from './components/admin-pathlist/admin-pathlist.component';
 import { AdminGrouplistComponent } from './components/admin-grouplist/admin-grouplist.component';
@@ -31,7 +32,8 @@ const routes: Routes = [
                 { path: 'edit/:userId', component: AdminUserEditComponent, canDeactivate: [PendingChangesGuard] },
                 { path: 'view/:userId', component: AdminUserViewComponent },
                 { path: 'resetpassword/:userId', component: AdminUserResetpasswordComponent, canDeactivate: [PendingChangesGuard] },
-                { path: 'new', component: AdminUserNewComponent, canDeactivate: [PendingChangesGuard] }
+                { path: 'new', component: AdminUserNewComponent, canDeactivate: [PendingChangesGuard] },
+                { path: 'delete/:userId', component: AdminUserDeleteComponent }
               ] },
           { path: 'pathlist', component: AdminPathlistComponent },
           { path: 'grouplist', component: AdminGrouplistComponent }
