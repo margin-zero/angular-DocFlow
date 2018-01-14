@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -9,75 +9,75 @@ import { FormModelEditUser } from '../../datatypes/form-model-classes';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
-import { ComponentCanDeactivate } from '../../services/router-guards/router-guards.service';
 
+import { ComponentSubscriptionManager } from '../../common-classes/component-subscription-manager.class';
+import { UiAdminFormButtonConfiguration, UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
 
-// UI Form Buttons Component
-import { UiAdminFormButtonConfiguration, UiAdminFormButtonConfigurationFactory } from '../../datatypes/ui-element-classes';
 
 
 @Component({
   selector: 'dcf-admin-user-edit',
   templateUrl: './admin-user-edit.component.html',
-  styleUrls: ['./admin-user-edit.component.css']
+  styleUrls: ['./admin-user-edit.component.css'],
+  providers: [ ComponentSubscriptionManager ]
 })
-export class AdminUserEditComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
+export class AdminUserEditComponent implements OnInit {
 
-  id: number;
+  @ViewChild('f') form: any;
+
   user: User;
-  private sub: any;
-  loggedUser: boolean;
   responseMessage: string;
 
-  formModel: FormModelEditUser;
-
+  formModel: FormModelEditUser = new FormModelEditUser();
   emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$';
 
-  componentHeader: string;
-  componentSubheader = 'edycja konta';
-
-  formButtonConfiguration: UiAdminFormButtonConfiguration = UiAdminFormButtonConfigurationFactory();
-
+  formButtonConfiguration: UiAdminFormButtonConfiguration = new UiAdminFormButtonConfiguration({});
+  headerConfiguration: UiAdminHeaderConfiguration = new UiAdminHeaderConfiguration( {
+    subheaderText: 'edycja konta'
+    } );
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
     private backendApiService: BackendApiService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private subscriptionManager: ComponentSubscriptionManager
   ) {}
+
 
   ngOnInit() {
 
-    this.loggedUser = false;
     this.responseMessage = null;
 
-    this.sub = this.route.params.subscribe(params => {
-      this.id = +params['userId'];
-    });
+    this.subscriptionManager.add(
+      this.route.params.subscribe(params => {
+        this.backendApiService.getUser(+params['userId'])
+          .then(user => {
 
-    this.backendApiService.getUser(this.id)
-      .then(user => {
-        this.formModel = user;
-        this.user = Object.assign({}, user);
-        this.componentHeader = this.user.username;
-        if (this.user.id === this.authenticationService.getUser().id) { this.loggedUser = true; } else { this.loggedUser = false; }
-      });
+            this.headerConfiguration.headerText = user.username;
+            this.formModel = user;
+            this.user = Object.assign({}, user);
+
+          });
+        })
+    );
+
+    this.subscriptionManager.add(
+      this.form.statusChanges.subscribe(value => {
+        this.formButtonConfiguration.submit.disabled = (value !== 'VALID') || !this.isChanged();
+      })
+    );
 
   }
 
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
-
-
-  // @HostListener Pozwala na wykrycie opuszczenia danej lokalizacji nie tylko w efekcie zmiany nawigacji ale
-  //               również poprzez zamknięcie okna, wpisanie innego adresu itp.
+  // @HostListener detects navigating out of your current location via router but also
+  //               by closing browser's window, typing in new url etc.
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
-    // return true - pozwala nawigować bez potwierdzenia
-    // return false - pokazuje dialog potwierdzenia przez nawigacją
+    // return true - change location without user confirmation
+    // return false - shows "OK/Cancel" dialog before navigation
     return !this.isChanged();
   }
 
@@ -87,7 +87,7 @@ export class AdminUserEditComponent implements OnInit, OnDestroy, ComponentCanDe
   }
 
 
-  editUser(formData: FormModelEditUser, isValid: boolean) {
+  saveForm(formData: FormModelEditUser, isValid: boolean) {
 
     if (!isValid) { return; }
 
@@ -98,7 +98,7 @@ export class AdminUserEditComponent implements OnInit, OnDestroy, ComponentCanDe
       if (apiResponse.status === 'OK') {
         this.user = Object.assign({}, this.formModel);
         this.responseMessage = null;
-        this.router.navigate(['../../view', this.id], { relativeTo: this.route });
+        this.router.navigate(['../../view', this.user.id], { relativeTo: this.route });
       } else {
         this.responseMessage = apiResponse.message;
       }
@@ -106,11 +106,4 @@ export class AdminUserEditComponent implements OnInit, OnDestroy, ComponentCanDe
 
   }
 
-
-  // ta funkcja służy wyłącznie do tego, żeby w czasie rzeczywistym pobrać stan walidacji formularza,
-  // i przekazać go do komponentu wyświetlającego buttony pod formularzem
-  formValidationToController(formIsValid: boolean): boolean {
-    this.formButtonConfiguration.submit.disabled = !formIsValid || !this.isChanged();
-    return (true);
-  }
 }
