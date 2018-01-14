@@ -1,14 +1,12 @@
-<ng-container *ngIf="formModel">
-
   <div class="row">
     <div class="col-12">
-        <dcf-ui-admin-content-header [headerText]='componentHeader' [subheaderText]='componentSubheader'></dcf-ui-admin-content-header>
+        <dcf-ui-admin-content-header [headerConfiguration]='headerConfiguration'></dcf-ui-admin-content-header>
         <p *ngIf="responseMessage" class="text-danger m-0 my-3">{{responseMessage}}</p>
     </div>
   </div>
 
 
-  <form #f="ngForm" novalidate (ngSubmit)="newUser(f.value, f.valid)" id="myForm" name="myForm" class="p-2 mt-2">
+  <form #f="ngForm" novalidate (ngSubmit)="saveForm(f.value, f.valid)" id="myForm" name="myForm" class="p-2 mt-2">
 
         <div class="form-group row">
             <label for="username" class="col-lg-2 col-form-label">nazwa użytkownika</label>
@@ -104,12 +102,10 @@
         <div class="form-group row">
             <div class="col-lg-2"></div>
             <div class="col-12 col-lg-10">
-                <input type="submit" [disabled]="!f.valid || !isChanged()" value="zatwierdź" [ngClass]="{'app-cursor-pointer': f.valid, 'app-cursor-not-allowed': !f.valid}"  class="btn btn-primary mb-1 col-12 col-md-3 col-lg-2 float-md-right" tabindex="10">
-                <input type="button" class="app-cursor-pointer btn btn-danger mb-1 col-12 col-md-3 col-lg-2" (click)="handleCancel()" tabindex="12" value="anuluj">
-                <input type="reset" value="resetuj" class="app-cursor-pointer btn btn-outline-secondary mb-1 col-12 col-md-3 col-lg-2" tabindex="11">
+                <dcf-ui-admin-form-buttons  [formButtons]="formButtonConfiguration"></dcf-ui-admin-form-buttons>
             </div>
         </div>
 
     </form>
 
-</ng-container>
+
