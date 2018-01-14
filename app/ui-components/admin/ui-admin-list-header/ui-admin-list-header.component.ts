@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { UiAdminHeaderConfiguration } from '../../../datatypes/ui-element-classes';
 
 @Component({
   selector: 'dcf-ui-admin-list-header',
@@ -7,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class UiAdminListHeaderComponent implements OnInit {
 
-  @Input() headerText: string;
+  @Input() headerConfiguration: UiAdminHeaderConfiguration;
 
   constructor() { }
 
