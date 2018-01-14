@@ -53,6 +53,10 @@ export class AuthenticationService implements OnInit {
     return ( this.user.is_active.toLowerCase().trim() === 'true' );
   }
 
+  isLogged(user: User): boolean {
+    return (JSON.stringify(this.user) === JSON.stringify(user));
+  }
+
   logout(): void {
     this.user = null;
     this.authenticated = false;
