@@ -1,6 +1,6 @@
 <ng-container *ngIf="user">
 
-    <dcf-ui-admin-content-header [headerText]='componentHeader' [subheaderText]='componentSubheader'></dcf-ui-admin-content-header>
+    <dcf-ui-admin-content-header [headerConfiguration]='headerConfiguration'></dcf-ui-admin-content-header>
 
     <table class="table table-sm  table-bordered">
         <tbody>
@@ -39,7 +39,7 @@
         <div class="col-12">
             <button class="app-cursor-pointer btn btn-primary col-12 col-md-auto mb-1 float-md-right" (click)="router.navigate(['../../edit',user.id], { relativeTo: currentRoute })" tabindex="1">edycja użytkownika</button>
             <button class="app-cursor-pointer btn btn-primary col-12 col-md-auto mb-1 mr-1 float-md-right" (click)="router.navigate(['../../resetpassword',user.id], { relativeTo: currentRoute })" tabindex="2">resetuj hasło</button>
-            <button  *ngIf="!loggedUser" class="app-cursor-pointer btn btn-danger  col-12 col-md-auto mb-1 float-md-left" (click)="router.navigate(['../../delete',user.id], { relativeTo: currentRoute })" tabindex="3">usuń użytkownika</button>
+            <button  *ngIf="!authenticationService.isLogged(user)" class="app-cursor-pointer btn btn-danger  col-12 col-md-auto mb-1 float-md-left" (click)="router.navigate(['../../delete',user.id], { relativeTo: currentRoute })" tabindex="3">usuń użytkownika</button>
         </div>
     </div>
 

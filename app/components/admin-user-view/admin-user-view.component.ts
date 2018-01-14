@@ -6,50 +6,50 @@ import { User } from '../../datatypes/user';
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 
+import { ComponentSubscriptionManager } from '../../common-classes/component-subscription-manager.class';
+import { UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
+
 
 @Component({
   selector: 'dcf-admin-user-view',
   templateUrl: './admin-user-view.component.html',
-  styleUrls: ['./admin-user-view.component.css']
+  styleUrls: ['./admin-user-view.component.css'],
+  providers: [ ComponentSubscriptionManager ],
 })
-export class AdminUserViewComponent implements OnInit, OnDestroy {
+export class AdminUserViewComponent implements OnInit {
 
-  id: number;
   user: User;
-  private sub: any;
-  loggedUser: boolean;
-
-  componentHeader: string;
-  componentSubheader = 'dane użytkownika';
-
+  headerConfiguration = new UiAdminHeaderConfiguration({ subheaderText: 'dane użytkownika'});
 
   constructor(
     private currentRoute: ActivatedRoute,
     private router: Router,
     private backendApiService: BackendApiService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private subscriptionManager: ComponentSubscriptionManager
   ) { }
 
 
   ngOnInit() {
 
-    this.loggedUser = true;
+    this.subscriptionManager.add(
 
-    this.sub = this.currentRoute.params.subscribe(params => {
-      this.id = +params['userId'];
+      this.currentRoute.params.subscribe(params => {
+        this.backendApiService.getUser(+params['userId'])
+          .then(user => {
+            this.user = user;
+            this.headerConfiguration.headerText = this.user.username;
+        });
+      })
 
-      this.backendApiService.getUser(this.id)
-        .then(user => {
-        this.user = user;
-        this.componentHeader = this.user.username;
-        if (this.user.id === this.authenticationService.getUser().id) { this.loggedUser = true; } else { this.loggedUser = false; }
-      });
-    });
+    );
+
   }
 
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
+  onUserDataLoaded(user: User): void {
+    this.user = user;
+    this.headerConfiguration.headerText = this.user.username;
   }
 
 }
