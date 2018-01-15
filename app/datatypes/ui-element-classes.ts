@@ -12,16 +12,20 @@
 // cancel.isRelative set to 'true' means that cancel.navigate parameter will be set relative to current route
 // submit.disabled is used for setting state of 'submit' button to 'disabled' (submit.disabled=true) or
 // 'not disabled' (submit.disabled=false)
+// reset.isVisible says if reset button is visible or not.
 
 export class UiAdminFormButtonConfiguration {
-    reset: { value: string };
-    cancel: { value: string, goBack: true, navigate: string, isRelative: boolean };
+    reset: { value: string, isVisible: boolean };
+    cancel: { value: string, goBack: boolean, navigate: string, isRelative: boolean };
     submit: { value: string, disabled: boolean};
 
     constructor( params: any) {
 
         // first we set default values to every parameter
-        this.reset = { value: 'resetuj'};
+        this.reset = {
+            value: 'resetuj',
+            isVisible: true
+        };
         this.cancel = {
             value: 'anuluj',
             goBack: true,
