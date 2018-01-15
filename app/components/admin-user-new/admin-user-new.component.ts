@@ -77,7 +77,7 @@ export class AdminUserNewComponent implements OnInit {
   }
 
 
-  saveForm(formData: FormModelEditUser, isValid: boolean) {
+  submitForm(formData: FormModelEditUser, isValid: boolean) {
 
     if (!isValid) { return; }
 
