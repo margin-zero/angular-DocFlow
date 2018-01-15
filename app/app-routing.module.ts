@@ -1,7 +1,7 @@
-import { NgModule }             from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LoginComponent }   from './components/login/login.component';
+import { LoginComponent } from './components/login/login.component';
 
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminUserlistComponent } from './components/admin-userlist/admin-userlist.component';
@@ -11,8 +11,12 @@ import { AdminUserResetpasswordComponent } from './components/admin-user-resetpa
 import { AdminUserNewComponent } from './components/admin-user-new/admin-user-new.component';
 import { AdminUserDeleteComponent } from './components/admin-user-delete/admin-user-delete.component';
 
-import { AdminPathlistComponent } from './components/admin-pathlist/admin-pathlist.component';
 import { AdminGrouplistComponent } from './components/admin-grouplist/admin-grouplist.component';
+import { AdminGroupNewComponent } from './components/admin-group-new/admin-group-new.component';
+
+
+import { AdminPathlistComponent } from './components/admin-pathlist/admin-pathlist.component';
+
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 
 import { UserComponent } from './components/user/user.component';
@@ -27,6 +31,7 @@ const routes: Routes = [
     { path: 'admin', component: AdminComponent, canActivate: [IsAdminGuard],
         children: [
           { path: 'home', component: AdminHomeComponent },
+
           { path: 'user', component: AdminUserlistComponent,
               children: [
                 { path: 'edit/:userId', component: AdminUserEditComponent, canDeactivate: [PendingChangesGuard] },
@@ -35,8 +40,14 @@ const routes: Routes = [
                 { path: 'new', component: AdminUserNewComponent, canDeactivate: [PendingChangesGuard] },
                 { path: 'delete/:userId', component: AdminUserDeleteComponent }
               ] },
-          { path: 'pathlist', component: AdminPathlistComponent },
-          { path: 'grouplist', component: AdminGrouplistComponent }
+
+          { path: 'group', component: AdminGrouplistComponent,
+              children: [
+                { path: 'new', component: AdminGroupNewComponent, canDeactivate: [PendingChangesGuard] }
+              ] },
+
+          { path: 'pathlist', component: AdminPathlistComponent }
+
         ]
     },
 
