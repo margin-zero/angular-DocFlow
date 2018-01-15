@@ -9,10 +9,10 @@ import { Subject } from 'rxjs/Subject';
 
 // DATATYPES
 import { User } from '../../datatypes/user';
-import { Role } from '../../datatypes/role';
+import { Group } from '../../datatypes/group';
 import { Path } from '../../datatypes/path';
 
-import { ResponseUser, ResponseData } from '../../datatypes/response-classes';
+import { ResponseUser, ResponseGroup, ResponseData } from '../../datatypes/response-classes';
 
 
 // CONSTANTS
@@ -23,11 +23,10 @@ import { API_URL } from '../../constants/global-constants';
 @Injectable()
 export class BackendApiService implements OnInit {
 
-  // users: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
   user: User;
 
   usersObservable = new Subject<any>();
-
+  groupsObservable = new Subject<any>();
 
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
@@ -75,15 +74,16 @@ export class BackendApiService implements OnInit {
         .catch(this.handleError);
   }
 
-  refreshUsersObservable(): any {
-    this.getUsers()
-    .then(users => this.usersObservable.next(users));
-  }
 
   getUsersObservable(): Observable<any> {
     return this.usersObservable.asObservable();
   }
 
+
+  refreshUsersObservable(): any {
+    this.getUsers()
+    .then(users => this.usersObservable.next(users));
+  }
 
 
   getUser(userId: number): Promise<User> {
@@ -144,16 +144,39 @@ export class BackendApiService implements OnInit {
   }
 
 // -----------------------------------------------------------------------------------------------
-//          ROLE API
+//          GROUP API
 // -----------------------------------------------------------------------------------------------
 
-getRoles(): Promise<Role[]> {
+getGroups(): Promise<Group[]> {
 
-  const URL = API_URL + 'roles';
+  const URL = API_URL + 'groups';
 
-  return this.http.get<Role[]>(URL)
+  return this.http.get<ResponseGroup>(URL)
       .toPromise()
-      .then(apiResponse => apiResponse as Role[])
+      .then(apiResponse => apiResponse.data as Group[])
+      .catch(this.handleError);
+}
+
+
+getGroupsObservable(): Observable<any> {
+  return this.groupsObservable.asObservable();
+}
+
+
+refreshGroupsObservable(): any {
+  this.getGroups()
+  .then(groups => this.groupsObservable.next(groups));
+}
+
+
+createGroup(group: Group): Promise<ResponseData> {
+
+  const URL = API_URL + 'group';
+
+  return this.http
+      .put<ResponseData>(URL, JSON.stringify(group), {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
       .catch(this.handleError);
 }
 
