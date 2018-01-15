@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -8,7 +8,9 @@ import { User } from '../../datatypes/user';
 import { FormModelResetPassword } from '../../datatypes/form-model-classes';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
-import { ComponentCanDeactivate } from '../../services/router-guards/router-guards.service';
+
+import { ComponentSubscriptionManager } from '../../common-classes/component-subscription-manager.class';
+import { UiAdminFormButtonConfiguration, UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
 
 
 @Component({
@@ -16,59 +18,63 @@ import { ComponentCanDeactivate } from '../../services/router-guards/router-guar
   templateUrl: './admin-user-resetpassword.component.html',
   styleUrls: ['./admin-user-resetpassword.component.css']
 })
-export class AdminUserResetpasswordComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
+export class AdminUserResetpasswordComponent implements OnInit {
 
-  id: number;
-  username: string;
-  private sub: any;
-  responseMessage: string;
+  @ViewChild('f') form: any;
 
-  formModel: FormModelResetPassword;
+  userId: number;
+  returnPath: string;
+  responseMessage: string = null;
 
-  componentHeader: string;
-  componentSubheader = 'resetowanie hasła';
+  formModel: FormModelResetPassword = new FormModelResetPassword();
+
+  formButtonConfiguration: UiAdminFormButtonConfiguration = new UiAdminFormButtonConfiguration({});
+
+  headerConfiguration: UiAdminHeaderConfiguration = new UiAdminHeaderConfiguration( {
+    subheaderText: 'resetowanie hasła'
+  });
 
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private backendApiService: BackendApiService,
-    private router: Router
+    private router: Router,
+    private subscriptionManager: ComponentSubscriptionManager
   ) { }
 
 
   ngOnInit() {
 
-    this.responseMessage = null;
+    this.subscriptionManager.add(this.route.params.subscribe(params => {
 
-    this.formModel = {
-      password: '',
-      confirmPassword: ''
-    };
+      this.userId = params['userId'];
+      this.backendApiService.getUser(+params['userId'])
+        .then(user => {this.headerConfiguration.headerText = user.username; });
 
-    this.sub = this.route.params.subscribe(params => {
-      this.id = +params['userId'];
-    });
+      this.returnPath = '../../view/' + params['userId'];
 
-    this.backendApiService.getUser(this.id)
-      .then(user => {
-        this.username = user.username;
-        this.componentHeader = user.username;
-      });
+      this.formButtonConfiguration.cancel.goBack = false;
+      this.formButtonConfiguration.cancel.navigate = this.returnPath;
+      this.formButtonConfiguration.cancel.isRelative = true;
+      })
+    );
+
+    this.subscriptionManager.add(
+      this.form.statusChanges.subscribe(value => {
+        this.formButtonConfiguration.submit.disabled = (value !== 'VALID') || !this.isChanged();
+      })
+    );
+
   }
 
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
-
-
-  // @HostListener Pozwala na wykrycie opuszczenia danej lokalizacji nie tylko w efekcie zmiany nawigacji ale
-  //               również poprzez zamknięcie okna, wpisanie innego adresu itp.
+  // @HostListener detects navigating out of your current location via router but also
+  //               by closing browser's window, typing in new url etc.
   @HostListener('window:beforeunload')
   canDeactivate(): Observable<boolean> | boolean {
-    // return true - pozwala nawigować bez potwierdzenia
-    // return false - pokazuje dialog potwierdzenia przez nawigacją
+    // return true - change location without user confirmation
+    // return false - shows "OK/Cancel" dialog before navigation
     return !this.isChanged();
   }
 
@@ -83,28 +89,22 @@ export class AdminUserResetpasswordComponent implements OnInit, OnDestroy, Compo
   }
 
 
-  resetPassword(formData: FormModelResetPassword, isValid: boolean) {
+  submitForm(formData: FormModelResetPassword, isValid: boolean) {
 
     if (!isValid) { return; }
 
-    this.backendApiService.resetPassword(this.id, formData.password)
+    this.backendApiService.resetPassword(this.userId, formData.password)
     .then(apiResponse => {
       if (apiResponse.status === 'OK') {
         alert('Hasło użytkownika zostało zmienione.');
         this.responseMessage = null;
-        this.formModel.password = '';
-        this.formModel.confirmPassword = '';
-        this.router.navigate(['../../view', this.id], { relativeTo: this.route });
+        this.formModel = new FormModelResetPassword();
+        this.router.navigate([this.returnPath], { relativeTo: this.route });
       } else {
         this.responseMessage = apiResponse.message;
       }
     });
 
-  }
-
-
-  handleCancel() {
-    this.router.navigate(['../../view', this.id], { relativeTo: this.route });
   }
 
 }
