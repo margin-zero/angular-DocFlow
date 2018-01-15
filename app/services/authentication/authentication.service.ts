@@ -54,7 +54,7 @@ export class AuthenticationService implements OnInit {
   }
 
   isLogged(user: User): boolean {
-    return (JSON.stringify(this.user) === JSON.stringify(user));
+    return (this.user.id === user.id && this.user.username === user.username);
   }
 
   logout(): void {
