@@ -4,27 +4,40 @@ import { Location } from '@angular/common';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 
+import { ComponentSubscriptionManager } from '../../common-classes/component-subscription-manager.class';
+import { UiAdminFormButtonConfiguration, UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
+
 @Component({
   selector: 'dcf-admin-user-delete',
   templateUrl: './admin-user-delete.component.html',
-  styleUrls: ['./admin-user-delete.component.css']
+  styleUrls: ['./admin-user-delete.component.css'],
+  providers: [ ComponentSubscriptionManager ]
 })
-export class AdminUserDeleteComponent implements OnInit, OnDestroy {
+export class AdminUserDeleteComponent implements OnInit {
+
 
   id: number;
+  returnPath: string;
   username: string;
-  private sub: any;
+
   responseMessage: string;
 
-  componentHeader: string;
-  componentSubheader = 'usuwanie użytkownika';
+  formButtonConfiguration: UiAdminFormButtonConfiguration = new UiAdminFormButtonConfiguration({
+    reset: {isVisible: false},
+    cancel: { value: 'nie usuwaj', goBack: false},
+    submit: { value: 'usuń', disabled: false}
+  });
 
+  headerConfiguration: UiAdminHeaderConfiguration = new UiAdminHeaderConfiguration( {
+    subheaderText: 'usuwanie konta użytkownika'
+    } );
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private backendApiService: BackendApiService,
-    private router: Router
+    private router: Router,
+    private subscriptionManager: ComponentSubscriptionManager
   ) { }
 
 
@@ -32,29 +45,25 @@ export class AdminUserDeleteComponent implements OnInit, OnDestroy {
 
     this.responseMessage = null;
 
-    this.sub = this.route.params.subscribe(params => {
-      this.id = +params['userId'];
-    });
+    this.subscriptionManager.add(
+      this.route.params.subscribe(params => {
 
-    this.backendApiService.getUser(this.id)
-      .then(user => {
-        this.username = user.username;
-        this.componentHeader = user.username;
-      });
+        this.id = +params['userId'];
+        this.returnPath = '../../view/' + params['userId'];
+        this.formButtonConfiguration.cancel.navigate = this.returnPath;
+        this.formButtonConfiguration.cancel.isRelative = true;
+
+        this.backendApiService.getUser(params['userId'])
+        .then(user => {
+          this.headerConfiguration.headerText = user.username;
+        });
+
+      })
+    );
   }
 
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
-
-
-  handleCancel() {
-    this.router.navigate(['../../view', this.id], { relativeTo: this.route });
-  }
-
-
-  deleteUser() {
+  submitForm() {
 
     this.backendApiService.deleteUser(this.id)
     .then(apiResponse => {
