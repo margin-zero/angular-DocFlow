@@ -20,10 +20,12 @@ import { AdminUserEditComponent } from './components/admin-user-edit/admin-user-
 import { AdminUserViewComponent } from './components/admin-user-view/admin-user-view.component';
 import { AdminUserResetpasswordComponent } from './components/admin-user-resetpassword/admin-user-resetpassword.component';
 import { AdminUserNewComponent } from './components/admin-user-new/admin-user-new.component';
+import { AdminUserDeleteComponent } from './components/admin-user-delete/admin-user-delete.component';
 
 import { AdminGrouplistComponent } from './components/admin-grouplist/admin-grouplist.component';
-import { AdminPathlistComponent } from './components/admin-pathlist/admin-pathlist.component';
+import { AdminGroupNewComponent } from './components/admin-group-new/admin-group-new.component';
 
+import { AdminPathlistComponent } from './components/admin-pathlist/admin-pathlist.component';
 
 import { UserComponent } from './components/user/user.component';
 
@@ -31,6 +33,8 @@ import { UserComponent } from './components/user/user.component';
 // UI component imports --------------------------------------------------------------
 import { UiAdminContentHeaderComponent } from './ui-components/admin/ui-admin-content-header/ui-admin-content-header.component';
 import { UiAdminFormButtonsComponent } from './ui-components/admin/ui-admin-form-buttons/ui-admin-form-buttons.component';
+import { UiAdminListHeaderComponent } from './ui-components/admin/ui-admin-list-header/ui-admin-list-header.component';
+
 
 // routing import ---------------------------------------------------------------------
 import { AppRoutingModule } from './app-routing.module';
@@ -44,15 +48,13 @@ import { PendingChangesGuard } from './services/router-guards/router-guards.serv
 // services imports --------------------------------------------------------------------
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { BackendApiService } from './services/backend-api/backend-api.service';
-import { UserService } from './services/user/user.service';
+
 
 
 // directive imports --------------------------------------------------------------------
 import { EqualValidatorDirective } from './directives/equal-validator.directive';
 import { UniqueUsernameValidatorDirective } from './directives/unique-username-validator.directive';
-import { UiAdminListHeaderComponent } from './ui-components/admin/ui-admin-list-header/ui-admin-list-header.component';
-import { AdminUserDeleteComponent } from './components/admin-user-delete/admin-user-delete.component';
-
+import { UniqueGroupNameValidatorDirective } from './directives/unique-group-name-validator.directive';
 
 
 
@@ -72,11 +74,12 @@ import { AdminUserDeleteComponent } from './components/admin-user-delete/admin-u
     AdminUserNewComponent,
     EqualValidatorDirective,
     UniqueUsernameValidatorDirective,
+    UniqueGroupNameValidatorDirective,
     UiAdminContentHeaderComponent,
     UiAdminListHeaderComponent,
     AdminUserDeleteComponent,
-    UiAdminFormButtonsComponent
-
+    UiAdminFormButtonsComponent,
+    AdminGroupNewComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +90,6 @@ import { AdminUserDeleteComponent } from './components/admin-user-delete/admin-u
   providers: [
     AuthenticationService,
     BackendApiService,
-    UserService,
     IsAdminGuard,
     IsUserGuard,
     PendingChangesGuard
