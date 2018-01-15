@@ -25,7 +25,7 @@ export class AdminUserEditComponent implements OnInit {
 
   @ViewChild('f') form: any;
 
-  user: User;
+  user: User = new User();
   responseMessage: string;
 
   formModel: FormModelEditUser = new FormModelEditUser();
@@ -87,15 +87,19 @@ export class AdminUserEditComponent implements OnInit {
   }
 
 
-  saveForm(formData: FormModelEditUser, isValid: boolean) {
+  submitForm(formData: FormModelEditUser, isValid: boolean) {
 
     if (!isValid) { return; }
 
-    if (!formData.is_user) { this.formModel.is_user = 'FALSE'; }
+    if (!this.formModel.is_user) { this.formModel.is_user = 'FALSE'; }
 
     this.backendApiService.updateUser(this.formModel)
     .then(apiResponse => {
       if (apiResponse.status === 'OK') {
+
+        if (this.formModel.id === this.authenticationService.getUser().id) {
+          this.authenticationService.setUser(this.formModel);
+        }
         this.user = Object.assign({}, this.formModel);
         this.responseMessage = null;
         this.router.navigate(['../../view', this.user.id], { relativeTo: this.route });
