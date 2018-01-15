@@ -1,9 +1,21 @@
 import { User } from './user';
+import { Group } from './group';
 
 export class FormModelResetPassword {
     password: string;
     confirmPassword: string;
+    constructor() {
+        this.password = '';
+        this.confirmPassword = '';
+    }
 }
+
+
+export class FormModelLogin {
+    username: string;
+    password: string;
+}
+
 
 export class FormModelEditUser extends User {
 // for now we have FormModelEditUser === User
@@ -22,7 +34,12 @@ export class FormModelEditUser extends User {
     }
 }
 
-export class FormModelLogin {
-    username: string;
-    password: string;
+
+export class FormModelEditGroup extends Group {
+// for now we have FormModelEditGroup === Group
+    constructor() {
+        super();
+        this.id = 0;
+        this.name = '';
+    }
 }
