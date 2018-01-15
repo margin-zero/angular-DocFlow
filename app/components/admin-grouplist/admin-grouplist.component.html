@@ -1,17 +1,29 @@
-<div class="container-fluid">
-  <h5>Roles:</h5>
+<section class="container-fluid mt-3">
+    
+  <div class="row">
+  
+      <div class="col-sm-5 col-md-4 col-lg-3">
+          <section class="m-0 p-0 mb-2">
 
-  <table class="table table-sm">
-    <thead class="thead-light">
-      <tr>
-        <th scope="col">Role name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let role of roles">
-        <td>{{role.role_name}}</td>
-      </tr>
-    </tbody>
-  </table>
+              <dcf-ui-admin-list-header [headerConfiguration]='headerConfiguration'></dcf-ui-admin-list-header>
+              
+              <ul class="list-unstyled">
+                  <li *ngFor="let group of groups" class="p-2 border border-top-0 app-hover-darker app-cursor-pointer" (click)="selectedGroup = group; router.navigate(['view',selectedGroup.id], { relativeTo: currentRoute })">
+                      {{group.name}}
+                  </li>
+              </ul>
 
-</div>
+              <button class="btn btn-primary app-cursor-pointer btn-block mt-2" (click)="selectedUser = {}; router.navigate(['new'], { relativeTo: currentRoute })">nowa grupa</button>
+          </section>
+      </div>
+
+      <div class="col-sm-7 col-md-8 col-lg-9">
+
+          <p *ngIf="!selectedUser">Wybierz grupę z listy aby obejrzeć szczegóły...</p>
+
+          <router-outlet></router-outlet>
+
+      </div>
+
+  </div>
+</section>
