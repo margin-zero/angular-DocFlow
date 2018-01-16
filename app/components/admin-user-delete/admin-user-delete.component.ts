@@ -15,7 +15,6 @@ import { UiAdminFormButtonConfiguration, UiAdminHeaderConfiguration } from '../.
 })
 export class AdminUserDeleteComponent implements OnInit {
 
-
   id: number;
   returnPath: string;
   username: string;
