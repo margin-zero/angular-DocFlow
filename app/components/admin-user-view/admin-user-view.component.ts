@@ -45,11 +45,4 @@ export class AdminUserViewComponent implements OnInit {
     );
 
   }
-
-
-  onUserDataLoaded(user: User): void {
-    this.user = user;
-    this.headerConfiguration.headerText = this.user.username;
-  }
-
 }
