@@ -24,6 +24,9 @@ import { AdminUserDeleteComponent } from './components/admin-user-delete/admin-u
 
 import { AdminGrouplistComponent } from './components/admin-grouplist/admin-grouplist.component';
 import { AdminGroupNewComponent } from './components/admin-group-new/admin-group-new.component';
+import { AdminGroupViewComponent } from './components/admin-group-view/admin-group-view.component';
+import { AdminGroupDeleteComponent } from './components/admin-group-delete/admin-group-delete.component';
+import { AdminGroupEditComponent } from './components/admin-group-edit/admin-group-edit.component';
 
 import { AdminPathlistComponent } from './components/admin-pathlist/admin-pathlist.component';
 
@@ -79,7 +82,10 @@ import { UniqueGroupNameValidatorDirective } from './directives/unique-group-nam
     UiAdminListHeaderComponent,
     AdminUserDeleteComponent,
     UiAdminFormButtonsComponent,
-    AdminGroupNewComponent
+    AdminGroupNewComponent,
+    AdminGroupViewComponent,
+    AdminGroupDeleteComponent,
+    AdminGroupEditComponent
   ],
   imports: [
     BrowserModule,
