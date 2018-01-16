@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { User } from '../../datatypes/user';
+import { Group } from '../../datatypes/group';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
@@ -19,6 +20,8 @@ import { UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
 export class AdminUserViewComponent implements OnInit {
 
   user: User;
+  groups: Group[];
+
   headerConfiguration = new UiAdminHeaderConfiguration({ subheaderText: 'dane użytkownika'});
 
   constructor(
@@ -39,10 +42,20 @@ export class AdminUserViewComponent implements OnInit {
           .then(user => {
             this.user = user;
             this.headerConfiguration.headerText = this.user.username;
+
+            // ---- do przeniesienia
+            this.backendApiService.getUserGroups(this.user.id)
+            .then(groups => {
+              this.groups = groups;
+            });
+
+            this.backendApiService.refreshNotUserGroupsObservable(user.id);
+            // ---- koniec do przeniesienia
         });
       })
 
     );
+
 
   }
 }
