@@ -27,6 +27,8 @@ export class BackendApiService implements OnInit {
 
   usersObservable = new Subject<any>();
   groupsObservable = new Subject<any>();
+  userGroupsObservable = new Subject<any>();
+  notUserGroupsObservable = new Subject<any>();
 
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
@@ -216,6 +218,49 @@ updateGroup(group: Group): Promise<ResponseData> {
       .catch(this.handleError);
 }
 
+
+getUserGroups(userId: number): Promise<Group[]> {
+
+  const URL = API_URL + 'usergroups/' + userId;
+
+  return this.http.get<ResponseGroup>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data as Group[])
+      .catch(this.handleError);
+}
+
+
+getUserGroupsObservable(): Observable<any> {
+  return this.userGroupsObservable.asObservable();
+}
+
+
+refreshUserGroupsObservable(userId: number): any {
+  this.getUserGroups(userId)
+  .then(groups => this.userGroupsObservable.next(groups));
+}
+
+
+getNotUserGroups(userId: number): Promise<Group[]> {
+
+  const URL = API_URL + 'notusergroups/' + userId;
+
+  return this.http.get<ResponseGroup>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data as Group[])
+      .catch(this.handleError);
+}
+
+
+getNotUserGroupsObservable(): Observable<any> {
+  return this.notUserGroupsObservable.asObservable();
+}
+
+
+refreshNotUserGroupsObservable(userId: number): any {
+  this.getNotUserGroups(userId)
+  .then(groups => this.notUserGroupsObservable.next(groups));
+}
 
 // -----------------------------------------------------------------------------------------------
 //          PATH API
