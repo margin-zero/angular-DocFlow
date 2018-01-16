@@ -58,6 +58,7 @@ import { BackendApiService } from './services/backend-api/backend-api.service';
 import { EqualValidatorDirective } from './directives/equal-validator.directive';
 import { UniqueUsernameValidatorDirective } from './directives/unique-username-validator.directive';
 import { UniqueGroupNameValidatorDirective } from './directives/unique-group-name-validator.directive';
+import { AdminUserGroupsComponent } from './components/admin-user-groups/admin-user-groups.component';
 
 
 
@@ -85,7 +86,8 @@ import { UniqueGroupNameValidatorDirective } from './directives/unique-group-nam
     AdminGroupNewComponent,
     AdminGroupViewComponent,
     AdminGroupDeleteComponent,
-    AdminGroupEditComponent
+    AdminGroupEditComponent,
+    AdminUserGroupsComponent
   ],
   imports: [
     BrowserModule,
