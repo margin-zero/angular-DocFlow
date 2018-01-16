@@ -181,6 +181,42 @@ createGroup(group: Group): Promise<ResponseData> {
 }
 
 
+getGroup(groupId: number): Promise<Group> {
+
+  const URL = API_URL + 'group/' + groupId;
+
+  return this.http.get<ResponseGroup>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data[0] as Group)
+      .catch(this.handleError);
+}
+
+
+deleteGroup(id: number): Promise<ResponseData> {
+
+  const URL = API_URL + 'group/' + id;
+
+  return this.http
+      .delete<ResponseData>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+
+}
+
+
+updateGroup(group: Group): Promise<ResponseData> {
+
+  const URL = API_URL + 'group/' + group.id;
+
+  return this.http
+      .post<ResponseData>(URL, JSON.stringify(group), {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+}
+
+
 // -----------------------------------------------------------------------------------------------
 //          PATH API
 // -----------------------------------------------------------------------------------------------
