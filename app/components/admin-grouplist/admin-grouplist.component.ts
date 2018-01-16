@@ -19,8 +19,9 @@ import { ComponentSubscriptionManager } from '../../common-classes/component-sub
 export class AdminGrouplistComponent implements OnInit {
 
   groups: Group[];
-  selectedUser: Group = null;
+  selectedGroup: Group = new Group();
   headerConfiguration = new UiAdminHeaderConfiguration( { headerText: 'Grupy' } );
+
 
   constructor(
     private router: Router,
@@ -32,10 +33,11 @@ export class AdminGrouplistComponent implements OnInit {
 
   ngOnInit() {
 
+    this.selectedGroup = null;
+
     this.subscriptionManager.add(
       this.backendApiService.getGroupsObservable().subscribe(groups => { this.groups = groups; })
     );
-
     this.backendApiService.refreshGroupsObservable();
   }
 
