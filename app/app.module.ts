@@ -60,6 +60,7 @@ import { UniqueUsernameValidatorDirective } from './directives/unique-username-v
 import { UniqueGroupNameValidatorDirective } from './directives/unique-group-name-validator.directive';
 import { AdminUserGroupsComponent } from './components/admin-user-groups/admin-user-groups.component';
 import { AdminUserGroupsDeleteComponent } from './components/admin-user-groups-delete/admin-user-groups-delete.component';
+import { AdminGroupUsersComponent } from './components/admin-group-users/admin-group-users.component';
 
 
 
@@ -89,7 +90,8 @@ import { AdminUserGroupsDeleteComponent } from './components/admin-user-groups-d
     AdminGroupDeleteComponent,
     AdminGroupEditComponent,
     AdminUserGroupsComponent,
-    AdminUserGroupsDeleteComponent
+    AdminUserGroupsDeleteComponent,
+    AdminGroupUsersComponent
   ],
   imports: [
     BrowserModule,
