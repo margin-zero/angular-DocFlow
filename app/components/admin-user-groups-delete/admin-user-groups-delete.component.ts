@@ -76,7 +76,8 @@ export class AdminUserGroupsDeleteComponent implements OnInit {
       if (apiResponse.status === 'OK') {
         this.responseMessage = null;
         this.backendApiService.refreshUserGroupsObservable(this.userId);
-        this.router.navigate(['../../../view/', this.userId], { relativeTo: this.route });
+        // this.router.navigate(['../../../view/', this.userId], { relativeTo: this.route });
+        this.location.back();
       } else {
         this.responseMessage = apiResponse.message;
       }
