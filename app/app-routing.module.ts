@@ -25,6 +25,7 @@ import { UserComponent } from './components/user/user.component';
 
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { IsAdminGuard, IsUserGuard, PendingChangesGuard } from './services/router-guards/router-guards.service';
+import { AdminUserGroupsDeleteComponent } from './components/admin-user-groups-delete/admin-user-groups-delete.component';
 
 
 const routes: Routes = [
@@ -40,7 +41,8 @@ const routes: Routes = [
                 { path: 'view/:userId', component: AdminUserViewComponent },
                 { path: 'resetpassword/:userId', component: AdminUserResetpasswordComponent, canDeactivate: [PendingChangesGuard] },
                 { path: 'new', component: AdminUserNewComponent, canDeactivate: [PendingChangesGuard] },
-                { path: 'delete/:userId', component: AdminUserDeleteComponent }
+                { path: 'delete/:userId', component: AdminUserDeleteComponent },
+                { path: 'deletefromgroup/:userId/:groupId', component: AdminUserGroupsDeleteComponent }
               ] },
 
           { path: 'group', component: AdminGrouplistComponent,
