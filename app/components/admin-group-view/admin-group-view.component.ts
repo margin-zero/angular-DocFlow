@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Group } from '../../datatypes/group';
+import { User } from '../../datatypes/user';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
@@ -18,6 +19,8 @@ import { UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
 export class AdminGroupViewComponent implements OnInit {
 
   group: Group;
+  users: User[] = [];
+
   headerConfiguration = new UiAdminHeaderConfiguration({ subheaderText: 'użytkownicy w grupie'});
 
   constructor(
@@ -32,12 +35,21 @@ export class AdminGroupViewComponent implements OnInit {
   ngOnInit() {
 
     this.subscriptionManager.add(
+      this.backendApiService.getGroupUsersObservable().subscribe( users => {
+        this.users = users;
+      })
+    );
+
+    this.subscriptionManager.add(
 
       this.currentRoute.params.subscribe(params => {
         this.backendApiService.getGroup(+params['groupId'])
           .then(group => {
             this.group = group;
             this.headerConfiguration.headerText = this.group.name;
+
+            this.backendApiService.refreshGroupUsersObservable(group.id);
+            this.backendApiService.refreshNotGroupUsersObservable(group.id);
         });
       })
 

@@ -6,7 +6,19 @@
         <tbody>
             <tr>
                 <td class="app-col-narrow">użytkownicy:</td>
-                <td class="app-col-wide">tu trzeba dodać listę użytkowników</td>
+                <td class="app-col-wide">
+                    <div class="clearfix" *ngIf="users.length > 0">
+                    
+                        <span *ngFor="let user of users" class="app-bgcolor-lightgray px-2 pb-1 mr-2 mb-2 float-left">
+                            <a [routerLink]="['/admin/user/view/',user.id]" class="text-primary">{{user.username}}</a>
+                            <a [routerLink]="['../../../user/deletefromgroup', user.id, group.id]" class="ml-2 text-danger">&times;</a>
+                        </span>
+                            
+                    </div>
+
+                    <dcf-admin-group-users [groupId]='group.id'></dcf-admin-group-users>
+
+                </td>
             </tr>
         </tbody>
     </table>
