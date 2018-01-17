@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -16,7 +16,6 @@ import { UiAdminFormButtonConfiguration, UiAdminHeaderConfiguration } from '../.
 export class AdminUserDeleteComponent implements OnInit {
 
   id: number;
-  returnPath: string;
   username: string;
 
   responseMessage: string;
@@ -48,8 +47,7 @@ export class AdminUserDeleteComponent implements OnInit {
       this.route.params.subscribe(params => {
 
         this.id = +params['userId'];
-        this.returnPath = '../../view/' + params['userId'];
-        this.formButtonConfiguration.cancel.navigate = this.returnPath;
+        this.formButtonConfiguration.cancel.navigate = '../../view/' + params['userId'];
         this.formButtonConfiguration.cancel.isRelative = true;
 
         this.backendApiService.getUser(params['userId'])
