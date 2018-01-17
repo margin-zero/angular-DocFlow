@@ -27,8 +27,12 @@ export class BackendApiService implements OnInit {
 
   usersObservable = new Subject<any>();
   groupsObservable = new Subject<any>();
+
   userGroupsObservable = new Subject<any>();
   notUserGroupsObservable = new Subject<any>();
+
+  groupUsersObservable = new Subject<any>();
+  notGroupUsersObservable = new Subject<any>();
 
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
@@ -145,6 +149,7 @@ export class BackendApiService implements OnInit {
         .catch(this.handleError);
   }
 
+
   createUserGroup(userId: number, groupId: number): Promise<ResponseData> {
 
     const URL = API_URL + 'usergroup';
@@ -168,6 +173,53 @@ export class BackendApiService implements OnInit {
         .catch(this.handleError);
 
   }
+
+
+  getGroupUsers(groupId: number): Promise<User[]> {
+
+    const URL = API_URL + 'groupusers/' + groupId;
+
+    return this.http.get<ResponseUser>(URL)
+        .toPromise()
+        .then(apiResponse => apiResponse.data as User[])
+        .catch(this.handleError);
+  }
+
+  getGroupUsersObservable(): Observable<any> {
+    return this.groupUsersObservable.asObservable();
+  }
+
+
+  refreshGroupUsersObservable(groupId: number): any {
+    this.getGroupUsers(groupId)
+    .then(users => this.groupUsersObservable.next(users));
+  }
+
+
+  getNotGroupUsers(groupId: number): Promise<User[]> {
+
+    const URL = API_URL + 'notgroupusers/' + groupId;
+
+    return this.http.get<ResponseUser>(URL)
+        .toPromise()
+        .then(apiResponse => apiResponse.data as User[])
+        .catch(this.handleError);
+  }
+
+
+  getNotGroupUsersObservable(): Observable<any> {
+    return this.notGroupUsersObservable.asObservable();
+  }
+
+
+  refreshNotGroupUsersObservable(groupId: number): any {
+    this.getNotGroupUsers(groupId)
+    .then(users => this.notGroupUsersObservable.next(users));
+  }
+
+
+
+
 
 // -----------------------------------------------------------------------------------------------
 //          GROUP API
