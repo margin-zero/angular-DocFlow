@@ -18,7 +18,7 @@ import { ComponentSubscriptionManager } from '../../common-classes/component-sub
 })
 export class AdminGrouplistComponent implements OnInit {
 
-  groups: Group[];
+  groups: Group[] = [];
   selectedGroup: Group = new Group();
   headerConfiguration = new UiAdminHeaderConfiguration( { headerText: 'Grupy' } );
 

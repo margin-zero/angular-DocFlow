@@ -7,7 +7,7 @@
 
               <dcf-ui-admin-list-header [headerConfiguration]='headerConfiguration'></dcf-ui-admin-list-header>
               
-              <ul class="list-unstyled">
+              <ul class="list-unstyled" *ngIf="groups.length > 0">
                   <li *ngFor="let group of groups" class="p-2 border border-top-0 app-hover-darker app-cursor-pointer" (click)="selectedGroup = group; router.navigate(['view',selectedGroup.id], { relativeTo: currentRoute })">
                       {{group.name}}
                   </li>
