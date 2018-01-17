@@ -18,7 +18,7 @@ import { ComponentSubscriptionManager } from '../../common-classes/component-sub
 })
 export class AdminUserlistComponent implements OnInit {
 
-  users: User[];
+  users: User[] = [];
   selectedUser: User = null;
   headerConfiguration = new UiAdminHeaderConfiguration( { headerText: 'Użytkownicy' } );
 
