@@ -43,3 +43,14 @@ export class FormModelEditGroup extends Group {
         this.name = '';
     }
 }
+
+export class FormModelNewUserGroup {
+    id: number;
+    group_id: number;
+    user_id: number;
+    constructor() {
+        this.id = 0;
+        this.user_id = 0;
+        this.group_id = 0;
+    }
+}
