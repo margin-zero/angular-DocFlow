@@ -49,7 +49,7 @@ export class AdminUserViewComponent implements OnInit {
             this.user = user;
             this.headerConfiguration.headerText = this.user.username;
 
-            this.backendApiService.refreshUserGroupsObservable(this.user.id);
+            this.backendApiService.refreshUserGroupsObservable(user.id);
             this.backendApiService.refreshNotUserGroupsObservable(user.id);
         });
       })
