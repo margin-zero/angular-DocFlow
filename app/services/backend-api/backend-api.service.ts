@@ -145,6 +145,30 @@ export class BackendApiService implements OnInit {
         .catch(this.handleError);
   }
 
+  createUserGroup(userId: number, groupId: number): Promise<ResponseData> {
+
+    const URL = API_URL + 'usergroup';
+
+    return this.http
+        .put<ResponseData>(URL, JSON.stringify({ 'user_id': userId, 'group_id': groupId }), {headers: this.headers})
+        .toPromise()
+        .then(apiResponse => apiResponse as ResponseData)
+        .catch(this.handleError);
+  }
+
+
+  deleteUserGroup(userId: number, groupId: number): Promise<ResponseData> {
+
+    const URL = API_URL + 'usergroup/' + userId + '/' + groupId;
+
+    return this.http
+        .delete<ResponseData>(URL)
+        .toPromise()
+        .then(apiResponse => apiResponse as ResponseData)
+        .catch(this.handleError);
+
+  }
+
 // -----------------------------------------------------------------------------------------------
 //          GROUP API
 // -----------------------------------------------------------------------------------------------
@@ -261,6 +285,8 @@ refreshNotUserGroupsObservable(userId: number): any {
   this.getNotUserGroups(userId)
   .then(groups => this.notUserGroupsObservable.next(groups));
 }
+
+
 
 // -----------------------------------------------------------------------------------------------
 //          PATH API
