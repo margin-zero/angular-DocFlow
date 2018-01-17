@@ -59,6 +59,7 @@ import { EqualValidatorDirective } from './directives/equal-validator.directive'
 import { UniqueUsernameValidatorDirective } from './directives/unique-username-validator.directive';
 import { UniqueGroupNameValidatorDirective } from './directives/unique-group-name-validator.directive';
 import { AdminUserGroupsComponent } from './components/admin-user-groups/admin-user-groups.component';
+import { AdminUserGroupsDeleteComponent } from './components/admin-user-groups-delete/admin-user-groups-delete.component';
 
 
 
@@ -87,7 +88,8 @@ import { AdminUserGroupsComponent } from './components/admin-user-groups/admin-u
     AdminGroupViewComponent,
     AdminGroupDeleteComponent,
     AdminGroupEditComponent,
-    AdminUserGroupsComponent
+    AdminUserGroupsComponent,
+    AdminUserGroupsDeleteComponent
   ],
   imports: [
     BrowserModule,
