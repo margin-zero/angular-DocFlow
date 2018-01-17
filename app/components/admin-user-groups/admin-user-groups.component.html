@@ -1,11 +1,9 @@
+<form *ngIf="formModel.group_id" #f="ngForm" (ngSubmit)="saveForm(f.value,f.valid)" id="myForm" name="myForm" class="form-inline" >
+  <select [(ngModel)]="formModel.group_id" name="group_id" class="form-control form-control-sm">
+      <option *ngFor="let group of groups" 
+        [value]="group.id">{{group.name}}</option>
+  </select>
+  <input type="submit" value="dodaj grupę" class="ml-2 btn btn-primary btn-sm">
+</form>
 
 
-<select [(ngModel)]="selectedOption">
-    <option *ngFor="let group of groups" 
-      [value]="group.id">{{group.name}}</option>
-    </select>
-
-<p *ngFor="let group of groups">{{group.name}}</p>
-<p style="clear: both;" class="m-0 p-0">
-  admin-user-groups works!
-</p>
