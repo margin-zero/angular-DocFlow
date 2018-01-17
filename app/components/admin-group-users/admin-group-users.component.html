@@ -1,0 +1,8 @@
+<form *ngIf="formModel.user_id" #f="ngForm" (ngSubmit)="saveForm(f.value,f.valid)" id="myForm" name="myForm" class="form-inline" >
+    <select [(ngModel)]="formModel.user_id" name="user_id" class="form-control form-control-sm">
+        <option *ngFor="let user of users" 
+          [value]="user.id">{{user.username}}</option>
+    </select>
+    <input type="submit" value="dodaj użytkownika" class="ml-2 btn btn-primary btn-sm">
+  </form>
+  
