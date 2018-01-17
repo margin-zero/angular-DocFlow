@@ -20,7 +20,7 @@ import { UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
 export class AdminUserViewComponent implements OnInit {
 
   user: User;
-  groups: Group[];
+  groups: Group[] = [];
 
   headerConfiguration = new UiAdminHeaderConfiguration({ subheaderText: 'dane użytkownika'});
 
@@ -36,6 +36,12 @@ export class AdminUserViewComponent implements OnInit {
   ngOnInit() {
 
     this.subscriptionManager.add(
+      this.backendApiService.getUserGroupsObservable().subscribe( groups => {
+        this.groups = groups;
+      })
+    );
+
+    this.subscriptionManager.add(
 
       this.currentRoute.params.subscribe(params => {
         this.backendApiService.getUser(+params['userId'])
@@ -43,14 +49,8 @@ export class AdminUserViewComponent implements OnInit {
             this.user = user;
             this.headerConfiguration.headerText = this.user.username;
 
-            // ---- do przeniesienia
-            this.backendApiService.getUserGroups(this.user.id)
-            .then(groups => {
-              this.groups = groups;
-            });
-
+            this.backendApiService.refreshUserGroupsObservable(this.user.id);
             this.backendApiService.refreshNotUserGroupsObservable(user.id);
-            // ---- koniec do przeniesienia
         });
       })
 

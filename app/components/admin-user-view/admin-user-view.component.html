@@ -20,14 +20,15 @@
                 <td class="app-col-narrow">grupy:</td>
                 <td class="app-col-wide">
                     
-                    <div class="mb-3 clearfix">
-                    <span *ngFor="let group of groups" class="app-bgcolor-lightgray px-2 pb-1 mr-2 float-left">
-                        <a [routerLink]="['/admin/group/view/',group.id]" class="text-primary">{{group.name}}</a><a href="#" class="ml-2 text-danger">&times;</a>
+                    <div class="clearfix" *ngIf="groups.length > 0">
+                    
+                    <span *ngFor="let group of groups" class="app-bgcolor-lightgray px-2 pb-1 mr-2 mb-2 float-left">
+                        <a [routerLink]="['/admin/group/view/',group.id]" class="text-primary">{{group.name}}</a>
+                        <a [routerLink]="['../../deletefromgroup', user.id, group.id]" class="ml-2 text-danger">&times;</a>
                     </span>
+                
                     </div>
-
-                    
-                    
+                
                     <dcf-admin-user-groups [userId]='user.id'></dcf-admin-user-groups>
                 </td>
             </tr>
