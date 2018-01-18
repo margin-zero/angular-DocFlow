@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './components/login/login.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminUserlistComponent } from './components/admin-userlist/admin-userlist.component';
@@ -24,13 +25,14 @@ import { AdminHomeComponent } from './components/admin-home/admin-home.component
 import { UserComponent } from './components/user/user.component';
 
 import { AuthenticationService } from './services/authentication/authentication.service';
-import { IsAdminGuard, IsUserGuard, PendingChangesGuard } from './services/router-guards/router-guards.service';
+import { IsAdminGuard, IsUserGuard, IsAuthenticatedGuard, PendingChangesGuard } from './services/router-guards/router-guards.service';
 import { AdminUserGroupsDeleteComponent } from './components/admin-user-groups-delete/admin-user-groups-delete.component';
 
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login',  component: LoginComponent },
+    { path: 'changepassword', component: ChangePasswordComponent, canActivate: [IsAuthenticatedGuard] },
     { path: 'admin', component: AdminComponent, canActivate: [IsAdminGuard],
         children: [
           { path: 'home', component: AdminHomeComponent },
