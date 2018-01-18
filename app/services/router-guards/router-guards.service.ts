@@ -71,6 +71,36 @@ export class IsUserGuard implements CanActivate {
   }
 }
 
+// ----------------------------------- IsAuthenticatedGuard --------------------------------------
+
+@Injectable()
+export class IsAuthenticatedGuard implements CanActivate {
+
+
+  constructor(
+    private authenticationService: AuthenticationService,
+    private router: Router
+  ) { }
+
+  canActivate(): boolean {
+
+    if (this.authenticationService.getUser()) {
+      const isAuthenticated = this.authenticationService.isAuthenticated();
+      const isActive = this.authenticationService.isActive();
+
+      if (isActive && isAuthenticated) {
+        return true;
+      } else {
+        this.router.navigate(['/login']);
+        return false;
+      }
+    } else {
+      this.router.navigate(['/login']);
+      return false;
+    }
+  }
+}
+
 
 // ------------------------------ PendingChangesGuard ------------------------------------
 
