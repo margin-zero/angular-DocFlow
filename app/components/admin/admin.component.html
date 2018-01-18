@@ -22,7 +22,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPersonality">
                     <button *ngIf="authenticationService.isUser()" class="dropdown-item app-cursor-pointer" (click)="router.navigate(['/user'])">przejdź do panelu Użytkownika</button>
-                    <a class="dropdown-item" href="#">zmień hasło</a>
+                    <a [routerLink]="['/changepassword']" class="dropdown-item">zmień hasło</a>
                     <button class="dropdown-item app-cursor-pointer" (click)="logout()">wyloguj się</button>
                 </div>
             </div>
