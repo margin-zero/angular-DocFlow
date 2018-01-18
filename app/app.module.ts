@@ -22,6 +22,11 @@ import { AdminUserResetpasswordComponent } from './components/admin-user-resetpa
 import { AdminUserNewComponent } from './components/admin-user-new/admin-user-new.component';
 import { AdminUserDeleteComponent } from './components/admin-user-delete/admin-user-delete.component';
 
+import { AdminUserGroupsComponent } from './components/admin-user-groups/admin-user-groups.component';
+import { AdminUserGroupsDeleteComponent } from './components/admin-user-groups-delete/admin-user-groups-delete.component';
+import { AdminGroupUsersComponent } from './components/admin-group-users/admin-group-users.component';
+
+
 import { AdminGrouplistComponent } from './components/admin-grouplist/admin-grouplist.component';
 import { AdminGroupNewComponent } from './components/admin-group-new/admin-group-new.component';
 import { AdminGroupViewComponent } from './components/admin-group-view/admin-group-view.component';
@@ -44,7 +49,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 
 // routing guards imports (services) --------------------------------------------------
-import { IsAdminGuard, IsUserGuard } from './services/router-guards/router-guards.service';
+import { IsAdminGuard, IsUserGuard, IsAuthenticatedGuard } from './services/router-guards/router-guards.service';
 import { PendingChangesGuard } from './services/router-guards/router-guards.service';
 
 
@@ -58,9 +63,8 @@ import { BackendApiService } from './services/backend-api/backend-api.service';
 import { EqualValidatorDirective } from './directives/equal-validator.directive';
 import { UniqueUsernameValidatorDirective } from './directives/unique-username-validator.directive';
 import { UniqueGroupNameValidatorDirective } from './directives/unique-group-name-validator.directive';
-import { AdminUserGroupsComponent } from './components/admin-user-groups/admin-user-groups.component';
-import { AdminUserGroupsDeleteComponent } from './components/admin-user-groups-delete/admin-user-groups-delete.component';
-import { AdminGroupUsersComponent } from './components/admin-group-users/admin-group-users.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+
 
 
 
@@ -91,7 +95,8 @@ import { AdminGroupUsersComponent } from './components/admin-group-users/admin-g
     AdminGroupEditComponent,
     AdminUserGroupsComponent,
     AdminUserGroupsDeleteComponent,
-    AdminGroupUsersComponent
+    AdminGroupUsersComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -104,6 +109,7 @@ import { AdminGroupUsersComponent } from './components/admin-group-users/admin-g
     BackendApiService,
     IsAdminGuard,
     IsUserGuard,
+    IsAuthenticatedGuard,
     PendingChangesGuard
   ],
 
