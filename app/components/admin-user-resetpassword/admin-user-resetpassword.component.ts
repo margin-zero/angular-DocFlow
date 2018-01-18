@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 
 import { User } from '../../datatypes/user';
-import { FormModelResetPassword } from '../../datatypes/form-model-classes';
+import { FormModelChangePassword } from '../../datatypes/form-model-classes';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 
@@ -26,7 +26,7 @@ export class AdminUserResetpasswordComponent implements OnInit {
   returnPath: string;
   responseMessage: string = null;
 
-  formModel: FormModelResetPassword = new FormModelResetPassword();
+  formModel: FormModelChangePassword = new FormModelChangePassword();
 
   formButtonConfiguration: UiAdminFormButtonConfiguration = new UiAdminFormButtonConfiguration({});
 
@@ -89,16 +89,16 @@ export class AdminUserResetpasswordComponent implements OnInit {
   }
 
 
-  submitForm(formData: FormModelResetPassword, isValid: boolean) {
+  submitForm(isValid: boolean) {
 
     if (!isValid) { return; }
 
-    this.backendApiService.resetPassword(this.userId, formData.password)
+    this.backendApiService.resetPassword(this.userId, this.formModel.password)
     .then(apiResponse => {
       if (apiResponse.status === 'OK') {
         alert('Hasło użytkownika zostało zmienione.');
         this.responseMessage = null;
-        this.formModel = new FormModelResetPassword();
+        this.formModel = new FormModelChangePassword();
         this.router.navigate([this.returnPath], { relativeTo: this.route });
       } else {
         this.responseMessage = apiResponse.message;
