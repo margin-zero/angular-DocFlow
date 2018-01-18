@@ -12,7 +12,7 @@ import { User } from '../../datatypes/user';
 import { Group } from '../../datatypes/group';
 import { Path } from '../../datatypes/path';
 
-import { ResponseUser, ResponseGroup, ResponseData } from '../../datatypes/response-classes';
+import { ResponseUser, ResponseGroup, ResponsePath, ResponseData } from '../../datatypes/response-classes';
 
 
 // CONSTANTS
@@ -27,6 +27,7 @@ export class BackendApiService implements OnInit {
 
   usersObservable = new Subject<any>();
   groupsObservable = new Subject<any>();
+  pathsObservable = new Subject<any>();
 
   userGroupsObservable = new Subject<any>();
   notUserGroupsObservable = new Subject<any>();
@@ -348,11 +349,24 @@ getPaths(): Promise<Path[]> {
 
   const URL = API_URL + 'paths';
 
-  return this.http.get<Path[]>(URL)
+  return this.http.get<ResponsePath>(URL)
       .toPromise()
-      .then(apiResponse => apiResponse as Path[])
+      .then(apiResponse => apiResponse.data as Path[])
       .catch(this.handleError);
 }
+
+
+getPathsObservable(): Observable<any> {
+  return this.pathsObservable.asObservable();
+}
+
+
+refreshPathsObservable(): any {
+  this.getPaths()
+  .then(paths => this.pathsObservable.next(paths));
+}
+
+
 
 
 }
