@@ -1,5 +1,6 @@
 import { User } from './user';
 import { Group } from './group';
+import { Path } from './path';
 
 export class ResponseData {
     status: string;
@@ -12,4 +13,8 @@ export class ResponseUser extends ResponseData {
 
 export class ResponseGroup extends ResponseData {
     data: Group[];
+}
+
+export class ResponsePath extends ResponseData {
+    data: Path[];
 }
