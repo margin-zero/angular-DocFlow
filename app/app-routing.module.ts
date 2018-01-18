@@ -55,7 +55,7 @@ const routes: Routes = [
                 { path: 'edit/:groupId', component: AdminGroupEditComponent, canDeactivate: [PendingChangesGuard] },
               ] },
 
-          { path: 'pathlist', component: AdminPathlistComponent }
+          { path: 'path', component: AdminPathlistComponent }
 
         ]
     },
