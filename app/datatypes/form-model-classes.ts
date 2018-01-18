@@ -1,10 +1,12 @@
 import { User } from './user';
 import { Group } from './group';
 
-export class FormModelResetPassword {
+export class FormModelChangePassword {
+    oldPassword: string;
     password: string;
     confirmPassword: string;
     constructor() {
+        this.oldPassword = '';
         this.password = '';
         this.confirmPassword = '';
     }
