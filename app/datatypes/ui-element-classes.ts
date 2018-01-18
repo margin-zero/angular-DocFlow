@@ -13,8 +13,10 @@
 // submit.disabled is used for setting state of 'submit' button to 'disabled' (submit.disabled=true) or
 // 'not disabled' (submit.disabled=false)
 // reset.isVisible says if reset button is visible or not.
+// group.isStacked says if buttons are displayed vertical or not
 
 export class UiAdminFormButtonConfiguration {
+    group: { isStacked: boolean };
     reset: { value: string, isVisible: boolean };
     cancel: { value: string, goBack: boolean, navigate: string, isRelative: boolean };
     submit: { value: string, disabled: boolean};
@@ -22,6 +24,9 @@ export class UiAdminFormButtonConfiguration {
     constructor( params: any) {
 
         // first we set default values to every parameter
+        this.group = {
+            isStacked: false
+        };
         this.reset = {
             value: 'resetuj',
             isVisible: true
