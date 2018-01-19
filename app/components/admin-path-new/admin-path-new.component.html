@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-12">
+      <dcf-ui-admin-content-header [headerConfiguration]='headerConfiguration'></dcf-ui-admin-content-header>
+      <p *ngIf="responseMessage" class="text-danger m-0 my-3">{{responseMessage}}</p>
+  </div>
+</div>
+
+
+<form #f="ngForm" novalidate (ngSubmit)="submitForm(f.value, f.valid)" id="myForm" name="myForm" class="p-2 mt-2">
+
+<div class="form-group row">
+  <label for="name" class="col-lg-2 col-form-label">nazwa ścieżki</label>
+  <div class="col">
+
+      <input type="text" class="form-control" name="name" [(ngModel)]="formModel.name" id="name"
+          required validateUniquePathName #name="ngModel"
+          placeholder="nazwa ścieżki (wymagana)" tabindex="1" autofocus>
+
+      <small class="text-danger" [hidden]="name.valid || (name.pristine && !f.submitted)">
+          <span *ngIf="name.errors && name.errors.required">Nazwa ścieżki jest wymagana</span>
+          <span *ngIf="name.errors && name.errors.validateUniquePathName">Istnieje już ścieżka o takiej nazwie.</span>
+      </small>
+  </div>
+</div>
+
+<div class="form-group row">
+  <label for="info" class="col-lg-2 col-form-label">dodatkowe informacje</label>
+  <div class="col">
+      <textarea [(ngModel)]="formModel.info" name="info" class="form-control" id="info" rows="3"  tabindex="2"></textarea>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col-lg-2"></div>
+  <div class="col-12 col-lg-10">
+      <dcf-ui-admin-form-buttons  [formButtons]="formButtonConfiguration"></dcf-ui-admin-form-buttons>
+  </div>
+</div>
+
+
+</form>
