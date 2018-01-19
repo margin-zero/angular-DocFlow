@@ -8,7 +8,6 @@ import { Group } from '../../datatypes/group';
 import { FormModelEditGroup } from '../../datatypes/form-model-classes';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
-// import { AuthenticationService } from '../../services/authentication/authentication.service';
 
 import { ComponentSubscriptionManager } from '../../common-classes/component-subscription-manager.class';
 import { UiAdminFormButtonConfiguration, UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
@@ -16,8 +15,7 @@ import { UiAdminFormButtonConfiguration, UiAdminHeaderConfiguration } from '../.
 @Component({
   selector: 'dcf-admin-group-edit',
   templateUrl: './admin-group-edit.component.html',
-  styleUrls: ['./admin-group-edit.component.css'],
-  providers: [ ComponentSubscriptionManager ]
+  styleUrls: ['./admin-group-edit.component.css']
 })
 export class AdminGroupEditComponent implements OnInit {
 
@@ -38,7 +36,6 @@ export class AdminGroupEditComponent implements OnInit {
     private router: Router,
     private location: Location,
     private backendApiService: BackendApiService,
-    // private authenticationService: AuthenticationService,
     private subscriptionManager: ComponentSubscriptionManager
   ) {}
 
@@ -87,8 +84,6 @@ export class AdminGroupEditComponent implements OnInit {
   submitForm(formData: FormModelEditGroup, isValid: boolean) {
 
     if (!isValid) { return; }
-
-    // if (!this.formModel.is_user) { this.formModel.is_user = 'FALSE'; }
 
     this.backendApiService.updateGroup(this.formModel)
     .then(apiResponse => {
