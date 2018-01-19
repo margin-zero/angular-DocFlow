@@ -11,8 +11,9 @@ import { Subject } from 'rxjs/Subject';
 import { User } from '../../datatypes/user';
 import { Group } from '../../datatypes/group';
 import { Path } from '../../datatypes/path';
+import { PathStep } from '../../datatypes/pathstep';
 
-import { ResponseUser, ResponseGroup, ResponsePath, ResponseData } from '../../datatypes/response-classes';
+import { ResponseUser, ResponseGroup, ResponsePath, ResponseData, ResponsePathStep } from '../../datatypes/response-classes';
 
 
 // CONSTANTS
@@ -28,6 +29,7 @@ export class BackendApiService implements OnInit {
   usersObservable = new Subject<any>();
   groupsObservable = new Subject<any>();
   pathsObservable = new Subject<any>();
+  pathStepsObservable = new Subject<any>();
 
   userGroupsObservable = new Subject<any>();
   notUserGroupsObservable = new Subject<any>();
@@ -367,6 +369,65 @@ refreshPathsObservable(): any {
 }
 
 
+createPath(path: Path): Promise<ResponseData> {
 
+  const URL = API_URL + 'path';
+
+  return this.http
+      .put<ResponseData>(URL, JSON.stringify(path), {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+}
+
+
+getPath(pathId: number): Promise<Path> {
+
+  const URL = API_URL + 'path/' + pathId;
+
+  return this.http.get<ResponsePath>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data[0] as Path)
+      .catch(this.handleError);
+}
+
+
+updatePath(path: Path): Promise<ResponseData> {
+
+  const URL = API_URL + 'path/' + path.id;
+
+  return this.http
+      .post<ResponseData>(URL, JSON.stringify(path), {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+}
+
+
+
+// -----------------------------------------------------------------------------------------------
+//          PATHSTEPS API
+// -----------------------------------------------------------------------------------------------
+
+getPathSteps(pathId: number): Promise<PathStep[]> {
+
+  const URL = API_URL + 'pathsteps/' + pathId;
+
+  return this.http.get<ResponsePathStep>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data as PathStep[])
+      .catch(this.handleError);
+}
+
+
+getPathStepsObservable(): Observable<any> {
+  return this.pathStepsObservable.asObservable();
+}
+
+
+refreshPathStepsObservable(pathId: number): any {
+  this.getPathSteps(pathId)
+  .then(pathSteps => this.pathStepsObservable.next(pathSteps));
+}
 
 }
