@@ -12,8 +12,7 @@ import { UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
 @Component({
   selector: 'dcf-admin-group-view',
   templateUrl: './admin-group-view.component.html',
-  styleUrls: ['./admin-group-view.component.css'],
-  providers: [ ComponentSubscriptionManager ],
+  styleUrls: ['./admin-group-view.component.css']
 })
 export class AdminGroupViewComponent implements OnInit {
 
