@@ -1,5 +1,6 @@
 import { User } from './user';
 import { Group } from './group';
+import { Path } from './path';
 
 export class FormModelChangePassword {
     oldPassword: string;
@@ -56,3 +57,13 @@ export class FormModelNewUserGroup {
         this.group_id = 0;
     }
 }
+
+export class FormPathEditGroup extends Path {
+    // for now we have FormPathEditGroup === Path
+        constructor() {
+            super();
+            this.id = 0;
+            this.name = '';
+            this.info = '';
+        }
+    }
