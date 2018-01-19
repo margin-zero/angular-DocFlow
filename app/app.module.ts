@@ -64,6 +64,10 @@ import { EqualValidatorDirective } from './directives/equal-validator.directive'
 import { UniqueUsernameValidatorDirective } from './directives/unique-username-validator.directive';
 import { UniqueGroupNameValidatorDirective } from './directives/unique-group-name-validator.directive';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { AdminPathNewComponent } from './components/admin-path-new/admin-path-new.component';
+import { AdminPathViewComponent } from './components/admin-path-view/admin-path-view.component';
+import { AdminPathEditComponent } from './components/admin-path-edit/admin-path-edit.component';
+import { UniquePathNameValidatorDirective } from './directives/unique-path-name-validator.directive';
 
 
 
@@ -96,7 +100,11 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     AdminUserGroupsComponent,
     AdminUserGroupsDeleteComponent,
     AdminGroupUsersComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    AdminPathNewComponent,
+    AdminPathViewComponent,
+    AdminPathEditComponent,
+    UniquePathNameValidatorDirective
   ],
   imports: [
     BrowserModule,
