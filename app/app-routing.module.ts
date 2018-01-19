@@ -19,6 +19,10 @@ import { AdminGroupDeleteComponent } from './components/admin-group-delete/admin
 import { AdminGroupEditComponent } from './components/admin-group-edit/admin-group-edit.component';
 
 import { AdminPathlistComponent } from './components/admin-pathlist/admin-pathlist.component';
+import { AdminPathNewComponent } from './components/admin-path-new/admin-path-new.component';
+import { AdminPathViewComponent } from './components/admin-path-view/admin-path-view.component';
+import { AdminPathEditComponent } from './components/admin-path-edit/admin-path-edit.component';
+
 
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 
@@ -55,7 +59,12 @@ const routes: Routes = [
                 { path: 'edit/:groupId', component: AdminGroupEditComponent, canDeactivate: [PendingChangesGuard] },
               ] },
 
-          { path: 'path', component: AdminPathlistComponent }
+          { path: 'path', component: AdminPathlistComponent,
+              children: [
+                { path: 'new', component: AdminPathNewComponent, canDeactivate: [PendingChangesGuard] },
+                { path: 'view/:pathId', component: AdminPathViewComponent },
+                { path: 'edit/:pathId', component: AdminPathEditComponent, canDeactivate: [PendingChangesGuard] },
+              ] },
 
         ]
     },
