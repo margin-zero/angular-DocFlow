@@ -32,7 +32,6 @@ export class ChangePasswordComponent implements OnInit {
   formButtonConfiguration: UiAdminFormButtonConfiguration = new UiAdminFormButtonConfiguration({});
 
 
-
   constructor(
     private route: ActivatedRoute,
     private location: Location,
@@ -81,7 +80,7 @@ export class ChangePasswordComponent implements OnInit {
     this.backendApiService.resetPassword(this.userId, this.formModel.password)
     .then(apiResponse => {
       if (apiResponse.status === 'OK') {
-        alert('Hasło użytkownika zostało zmienione.');
+        alert('Twoje hasło zostało zmienione.');
         this.responseMessage = null;
         this.backendApiService.getUser(this.userId)
           .then(user => {
