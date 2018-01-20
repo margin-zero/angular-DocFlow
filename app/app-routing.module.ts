@@ -23,6 +23,11 @@ import { AdminPathNewComponent } from './components/admin-path-new/admin-path-ne
 import { AdminPathViewComponent } from './components/admin-path-view/admin-path-view.component';
 import { AdminPathEditComponent } from './components/admin-path-edit/admin-path-edit.component';
 
+import { AdminActionlistComponent } from './components/admin-actionlist/admin-actionlist.component';
+import { AdminActionNewComponent } from './components/admin-action-new/admin-action-new.component';
+import { AdminActionViewComponent } from './components/admin-action-view/admin-action-view.component';
+import { AdminActionDeleteComponent } from './components/admin-action-delete/admin-action-delete.component';
+import { AdminActionEditComponent } from './components/admin-action-edit/admin-action-edit.component';
 
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 
@@ -64,6 +69,14 @@ const routes: Routes = [
                 { path: 'new', component: AdminPathNewComponent, canDeactivate: [PendingChangesGuard] },
                 { path: 'view/:pathId', component: AdminPathViewComponent },
                 { path: 'edit/:pathId', component: AdminPathEditComponent, canDeactivate: [PendingChangesGuard] },
+              ] },
+
+          { path: 'action', component: AdminActionlistComponent,
+              children: [
+                { path: 'new', component: AdminActionNewComponent, canDeactivate: [PendingChangesGuard] },
+                { path: 'view/:actionId', component: AdminActionViewComponent },
+                { path: 'delete/:actionId', component: AdminActionDeleteComponent },
+                { path: 'edit/:actionId', component: AdminActionEditComponent, canDeactivate: [PendingChangesGuard] },
               ] },
 
         ]
