@@ -68,6 +68,12 @@ import { AdminPathNewComponent } from './components/admin-path-new/admin-path-ne
 import { AdminPathViewComponent } from './components/admin-path-view/admin-path-view.component';
 import { AdminPathEditComponent } from './components/admin-path-edit/admin-path-edit.component';
 import { UniquePathNameValidatorDirective } from './directives/unique-path-name-validator.directive';
+import { AdminActionlistComponent } from './components/admin-actionlist/admin-actionlist.component';
+import { AdminActionNewComponent } from './components/admin-action-new/admin-action-new.component';
+import { UniqueActionNameValidatorDirective } from './directives/unique-action-name-validator.directive';
+import { AdminActionDeleteComponent } from './components/admin-action-delete/admin-action-delete.component';
+import { AdminActionViewComponent } from './components/admin-action-view/admin-action-view.component';
+import { AdminActionEditComponent } from './components/admin-action-edit/admin-action-edit.component';
 
 
 
@@ -104,7 +110,13 @@ import { UniquePathNameValidatorDirective } from './directives/unique-path-name-
     AdminPathNewComponent,
     AdminPathViewComponent,
     AdminPathEditComponent,
-    UniquePathNameValidatorDirective
+    UniquePathNameValidatorDirective,
+    AdminActionlistComponent,
+    AdminActionNewComponent,
+    UniqueActionNameValidatorDirective,
+    AdminActionDeleteComponent,
+    AdminActionViewComponent,
+    AdminActionEditComponent
   ],
   imports: [
     BrowserModule,
