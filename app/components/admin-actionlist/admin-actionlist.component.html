@@ -1,0 +1,29 @@
+<section class="container-fluid mt-3">
+    
+  <div class="row">
+  
+      <div class="col-sm-5 col-md-4 col-lg-3">
+          <section class="m-0 p-0 mb-2">
+
+              <dcf-ui-admin-list-header [headerConfiguration]='headerConfiguration'></dcf-ui-admin-list-header>
+              
+              <ul class="list-unstyled" *ngIf="actions.length > 0">
+                  <li *ngFor="let action of actions" class="p-2 border border-top-0 app-hover-darker app-cursor-pointer" (click)="selectedAction = action; router.navigate(['view',selectedAction.id], { relativeTo: currentRoute })">
+                      {{action.name}}
+                  </li>
+              </ul>
+
+              <button class="btn btn-primary app-cursor-pointer btn-block mt-2" (click)="selectedAction = {}; router.navigate(['new'], { relativeTo: currentRoute })">nowa akcja</button>
+          </section>
+      </div>
+
+      <div class="col-sm-7 col-md-8 col-lg-9">
+
+          <p *ngIf="router.url === '/admin/action'">Wybierz akcję z listy aby obejrzeć szczegóły...</p>
+
+          <router-outlet></router-outlet>
+
+      </div>
+
+  </div>
+</section>
