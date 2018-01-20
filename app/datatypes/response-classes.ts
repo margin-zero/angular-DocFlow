@@ -2,6 +2,7 @@ import { User } from './user';
 import { Group } from './group';
 import { Path } from './path';
 import { PathStep } from './pathstep';
+import { Action } from './action';
 
 export class ResponseData {
     status: string;
@@ -22,4 +23,8 @@ export class ResponsePath extends ResponseData {
 
 export class ResponsePathStep extends ResponseData {
     data: PathStep[];
+}
+
+export class ResponseAction extends ResponseData {
+    data: Action[];
 }
