@@ -17,7 +17,6 @@ export class AdminGroupDeleteComponent implements OnInit {
 
   id: number;
   returnPath: string;
-  username: string;
 
   responseMessage: string;
 
