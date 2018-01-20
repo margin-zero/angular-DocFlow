@@ -12,8 +12,15 @@ import { User } from '../../datatypes/user';
 import { Group } from '../../datatypes/group';
 import { Path } from '../../datatypes/path';
 import { PathStep } from '../../datatypes/pathstep';
+import { Action } from '../../datatypes/action';
 
-import { ResponseUser, ResponseGroup, ResponsePath, ResponseData, ResponsePathStep } from '../../datatypes/response-classes';
+import {
+  ResponseUser,
+  ResponseGroup,
+  ResponsePath,
+  ResponseData,
+  ResponsePathStep,
+  ResponseAction } from '../../datatypes/response-classes';
 
 
 // CONSTANTS
@@ -30,6 +37,7 @@ export class BackendApiService implements OnInit {
   groupsObservable = new Subject<any>();
   pathsObservable = new Subject<any>();
   pathStepsObservable = new Subject<any>();
+  actionsObservable = new Subject<any>();
 
   userGroupsObservable = new Subject<any>();
   notUserGroupsObservable = new Subject<any>();
@@ -40,7 +48,7 @@ export class BackendApiService implements OnInit {
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
   constructor(private http: HttpClient) {
-    this.refreshUsersObservable();
+  // this.refreshUsersObservable();
   }
 
   ngOnInit() { }
@@ -429,5 +437,83 @@ refreshPathStepsObservable(pathId: number): any {
   this.getPathSteps(pathId)
   .then(pathSteps => this.pathStepsObservable.next(pathSteps));
 }
+
+
+
+
+// -----------------------------------------------------------------------------------------------
+//          ACTION API
+// -----------------------------------------------------------------------------------------------
+
+
+getActions(): Promise<Action[]> {
+
+  const URL = API_URL + 'actions';
+
+  return this.http.get<ResponseAction>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data as Action[])
+      .catch(this.handleError);
+}
+
+
+getActionsObservable(): Observable<any> {
+  return this.actionsObservable.asObservable();
+}
+
+
+refreshActionsObservable(): any {
+  this.getActions()
+  .then(actions => this.actionsObservable.next(actions));
+}
+
+
+createAction(action: Action): Promise<ResponseData> {
+
+  const URL = API_URL + 'action';
+
+  return this.http
+      .put<ResponseData>(URL, JSON.stringify(action), {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+}
+
+
+getAction(actionId: number): Promise<Action> {
+
+  const URL = API_URL + 'action/' + actionId;
+
+  return this.http.get<ResponseAction>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data[0] as Action)
+      .catch(this.handleError);
+}
+
+
+deleteAction(actionId: number): Promise<ResponseData> {
+
+  const URL = API_URL + 'action/' + actionId;
+
+  return this.http
+      .delete<ResponseData>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+
+}
+
+
+updateAction(action: Action): Promise<ResponseData> {
+
+  const URL = API_URL + 'action/' + action.id;
+
+  return this.http
+      .post<ResponseData>(URL, JSON.stringify(action), {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+}
+
 
 }
