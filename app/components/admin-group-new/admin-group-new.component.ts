@@ -71,7 +71,6 @@ export class AdminGroupNewComponent implements OnInit {
   isChanged(): boolean {
     const emptyForm: FormModelEditGroup = new FormModelEditGroup();
     return (JSON.stringify(this.formModel) !== JSON.stringify(emptyForm) );
-    // return true;
   }
 
 
