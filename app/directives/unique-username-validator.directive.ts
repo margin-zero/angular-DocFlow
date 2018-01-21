@@ -22,9 +22,7 @@ export class UniqueUsernameValidatorDirective implements Validator, OnInit {
 
     this.backendApiService.getUsers()
       .then(users => {
-        for (let i = 0; i < users.length ; i++ ) {
-          this.usernames.push(users[i].username);
-        }
+        this.usernames = users.map( user => user.username );
       });
   }
 
