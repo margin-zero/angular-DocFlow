@@ -22,10 +22,8 @@ export class UniquePathNameValidatorDirective implements OnInit {
     this.names = [];
 
     this.backendApiService.getPaths()
-      .then(groups => {
-        for (let i = 0; i < groups.length ; i++ ) {
-          this.names.push(groups[i].name);
-        }
+      .then(paths => {
+        this.names = paths.map( path => path.name );
       });
   }
 
