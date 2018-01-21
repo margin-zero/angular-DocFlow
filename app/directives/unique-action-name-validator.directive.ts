@@ -21,7 +21,6 @@ export class UniqueActionNameValidatorDirective implements Validator, OnInit {
 
     this.names = [];
 
-
     this.backendApiService.getActions()
       .then(actions => {
         this.names = actions.map( action => action.name );
