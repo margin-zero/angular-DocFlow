@@ -23,9 +23,7 @@ export class UniqueGroupNameValidatorDirective implements Validator, OnInit {
 
     this.backendApiService.getGroups()
       .then(groups => {
-        for (let i = 0; i < groups.length ; i++ ) {
-          this.names.push(groups[i].name);
-        }
+        this.names = groups.map( group => group.name );
       });
   }
 
