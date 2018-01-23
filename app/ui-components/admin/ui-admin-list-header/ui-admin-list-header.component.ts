@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UiAdminHeaderConfiguration } from '../../../datatypes/ui-element-classes';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'dcf-ui-admin-list-header',
@@ -10,7 +11,10 @@ export class UiAdminListHeaderComponent implements OnInit {
 
   @Input() headerConfiguration: UiAdminHeaderConfiguration;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private currentRoute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
   }
