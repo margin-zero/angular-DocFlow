@@ -22,6 +22,7 @@ export class AdminPathlistComponent implements OnInit {
   selectedPath: Path = new Path();
   headerConfiguration = new UiAdminHeaderConfiguration( { headerText: 'Ścieżki' } );
 
+  filter: string;
 
   constructor(
     private router: Router,
@@ -39,6 +40,17 @@ export class AdminPathlistComponent implements OnInit {
       this.backendApiService.getPathsObservable().subscribe(paths => { this.paths = paths; })
     );
     this.backendApiService.refreshPathsObservable();
+
+    this.filter = '';
+  }
+
+  filteredPaths(): Path[] {
+    const u = [];
+    for (let i = 0; i < this.paths.length; i++) {
+      if ((this.paths[i].name.toLowerCase().includes(this.filter.toLowerCase())) ||
+          ( this.filter.trim().length === 0)) { u.push(this.paths[i]); }
+    }
+    return u;
   }
 
 }

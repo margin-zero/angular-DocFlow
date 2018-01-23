@@ -7,13 +7,13 @@
   
                 <dcf-ui-admin-list-header [headerConfiguration]='headerConfiguration'></dcf-ui-admin-list-header>
                 
-                <ul class="list-unstyled" *ngIf="paths.length > 0">
-                    <li *ngFor="let path of paths" class="p-2 border border-top-0 app-hover-darker app-cursor-pointer" (click)="selectedPath = path; router.navigate(['view',selectedPath.id], { relativeTo: currentRoute })">
+                <input type="text" class="form-control" placeholder="filtruj..." [(ngModel)]="filter" name="filter">
+                <ul class="list-unstyled" *ngIf="filteredPaths().length > 0">
+                    <li *ngFor="let path of filteredPaths()" class="p-2 border border-top-0 app-hover-darker app-cursor-pointer" (click)="selectedPath = path; router.navigate(['view',selectedPath.id], { relativeTo: currentRoute })">
                         {{path.name}}
                     </li>
                 </ul>
   
-                <button class="btn btn-primary app-cursor-pointer btn-block mt-2" (click)="selectedPath = {}; router.navigate(['new'], { relativeTo: currentRoute })">nowa ścieżka</button>
             </section>
         </div>
   
