@@ -13,12 +13,13 @@
   <div class="col">
 
       <input type="text" class="form-control" name="name" [(ngModel)]="formModel.name" id="name"
-          required validateUniqueActionName #name="ngModel"
+          required validateUniqueActionName validateNoLeadingSpaces #name="ngModel"
           placeholder="nazwa akcji (wymagana)" tabindex="1" autofocus>
 
       <small class="text-danger" [hidden]="name.valid || (name.pristine && !f.submitted)">
           <span *ngIf="name.errors && name.errors.required">Nazwa akcji jest wymagana</span>
           <span *ngIf="name.errors && name.errors.validateUniqueActionName">Istnieje już akcja o takiej nazwie.</span>
+          <span *ngIf="name.errors && name.errors.validateNoLeadingSpaces">Nazwa akcji nie może rozpoczynać się ani kończyć spacją. </span>
       </small>
   </div>
 </div>
