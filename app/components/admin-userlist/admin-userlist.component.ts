@@ -22,6 +22,8 @@ export class AdminUserlistComponent implements OnInit {
   selectedUser: User = null;
   headerConfiguration = new UiAdminHeaderConfiguration( { headerText: 'Użytkownicy' } );
 
+  filter: string;
+
   constructor(
     private router: Router,
     private currentRoute: ActivatedRoute,
@@ -37,6 +39,16 @@ export class AdminUserlistComponent implements OnInit {
     );
 
     this.backendApiService.refreshUsersObservable();
+    this.filter  = '';
+  }
+
+  filteredUsers(): User[] {
+    const u = [];
+    for (let i = 0; i < this.users.length; i++) {
+      if ((this.users[i].username.toLowerCase().includes(this.filter.toLowerCase())) ||
+          ( this.filter.trim().length === 0))  { u.push(this.users[i]); }
+    }
+    return u;
   }
 
 }
