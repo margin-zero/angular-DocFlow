@@ -14,12 +14,13 @@
     <div class="col">
 
         <input type="text" class="form-control" name="name" [(ngModel)]="formModel.name" id="name"
-            required validateUniquePathName #name="ngModel"
+            required validateUniquePathName validateNoLeadingSpaces #name="ngModel"
             placeholder="nazwa ścieżki (wymagana)" tabindex="1" autofocus>
 
         <small class="text-danger" [hidden]="name.valid || (name.pristine && !f.submitted)">
             <span *ngIf="name.errors && name.errors.required">Nazwa ścieżki jest wymagana</span>
             <span *ngIf="name.errors && name.errors.validateUniquePathName && (name.value !== path.name)">Istnieje już ścieżka o takiej nazwie.</span>
+            <span *ngIf="name.errors && name.errors.validateNoLeadingSpaces">Nazwa ścieżki nie może rozpoczynać się ani kończyć spacją. </span>
         </small>
     </div>
 </div>
