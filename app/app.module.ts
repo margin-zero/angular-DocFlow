@@ -74,6 +74,8 @@ import { UniqueActionNameValidatorDirective } from './directives/unique-action-n
 import { AdminActionDeleteComponent } from './components/admin-action-delete/admin-action-delete.component';
 import { AdminActionViewComponent } from './components/admin-action-view/admin-action-view.component';
 import { AdminActionEditComponent } from './components/admin-action-edit/admin-action-edit.component';
+import { NoLeadingSpacesValidatorDirective } from './directives/no-leading-spaces-validator.directive';
+
 
 
 
@@ -116,7 +118,9 @@ import { AdminActionEditComponent } from './components/admin-action-edit/admin-a
     UniqueActionNameValidatorDirective,
     AdminActionDeleteComponent,
     AdminActionViewComponent,
-    AdminActionEditComponent
+    AdminActionEditComponent,
+    NoLeadingSpacesValidatorDirective
+
   ],
   imports: [
     BrowserModule,
