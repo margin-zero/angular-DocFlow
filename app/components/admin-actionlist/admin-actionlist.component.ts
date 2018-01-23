@@ -22,6 +22,7 @@ export class AdminActionlistComponent implements OnInit {
   selectedAction: Action = new Action();
   headerConfiguration = new UiAdminHeaderConfiguration( { headerText: 'Akcje' } );
 
+  filter: string;
 
   constructor(
     private router: Router,
@@ -39,6 +40,17 @@ export class AdminActionlistComponent implements OnInit {
       this.backendApiService.getActionsObservable().subscribe(actions => { this.actions = actions; })
     );
     this.backendApiService.refreshActionsObservable();
+
+    this.filter = '';
+  }
+
+  filteredActions(): Action[] {
+    const u = [];
+    for (let i = 0; i < this.actions.length; i++) {
+      if ((this.actions[i].name.toLowerCase().includes(this.filter.toLowerCase())) ||
+          ( this.filter.trim().length === 0)) { u.push(this.actions[i]); }
+    }
+    return u;
   }
 
 }
