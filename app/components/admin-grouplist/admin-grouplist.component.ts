@@ -22,6 +22,7 @@ export class AdminGrouplistComponent implements OnInit {
   selectedGroup: Group = new Group();
   headerConfiguration = new UiAdminHeaderConfiguration( { headerText: 'Grupy' } );
 
+  filter: string;
 
   constructor(
     private router: Router,
@@ -39,6 +40,17 @@ export class AdminGrouplistComponent implements OnInit {
       this.backendApiService.getGroupsObservable().subscribe(groups => { this.groups = groups; })
     );
     this.backendApiService.refreshGroupsObservable();
+
+    this.filter  = '';
+  }
+
+  filteredGroups(): Group[] {
+    const u = [];
+    for (let i = 0; i < this.groups.length; i++) {
+      if ((this.groups[i].name.toLowerCase().includes(this.filter.toLowerCase())) ||
+          ( this.filter.trim().length === 0)) { u.push(this.groups[i]); }
+    }
+    return u;
   }
 
 }
