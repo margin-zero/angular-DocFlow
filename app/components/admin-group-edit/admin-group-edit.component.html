@@ -14,12 +14,13 @@
     <div class="col">
 
         <input type="text" class="form-control" name="name" [(ngModel)]="formModel.name" id="name"
-            required validateUniqueGroupName #name="ngModel"
+            required validateUniqueGroupName validateNoLeadingSpaces #name="ngModel"
             placeholder="nazwa grupy (wymagana)" tabindex="1" autofocus>
 
         <small class="text-danger" [hidden]="name.valid || (name.pristine && !f.submitted)">
             <span *ngIf="name.errors && name.errors.required">Nazwa grupy jest wymagana</span>
             <span *ngIf="name.errors && name.errors.validateUniqueGroupName && (name.value !== group.name)">Istnieje już grupa o takiej nazwie.</span>
+            <span *ngIf="name.errors && name.errors.validateNoLeadingSpaces">Nazwa grupy nie może rozpoczynać się ani kończyć spacją. </span>
         </small>
     </div>
 </div>
