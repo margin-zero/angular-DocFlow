@@ -20,7 +20,8 @@ import {
   ResponsePath,
   ResponseData,
   ResponsePathStep,
-  ResponseAction } from '../../datatypes/response-classes';
+  ResponseAction,
+  ResponseNumber } from '../../datatypes/response-classes';
 
 
 // CONSTANTS
@@ -439,7 +440,50 @@ refreshPathStepsObservable(pathId: number): any {
 }
 
 
+createPathStep(pathStep: PathStep): Promise<ResponseData> {
 
+  const URL = API_URL + 'pathstep';
+
+  return this.http
+      .put<ResponseData>(URL, JSON.stringify(pathStep), {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+}
+
+
+getPathStep(pathStepId: number): Promise<PathStep> {
+
+  const URL = API_URL + 'pathstep/' + pathStepId;
+
+  return this.http.get<ResponsePathStep>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data[0] as PathStep)
+      .catch(this.handleError);
+}
+
+
+updatePathStep(pathStep: Path): Promise<ResponseData> {
+
+  const URL = API_URL + 'pathstep/' + pathStep.id;
+
+  return this.http
+      .post<ResponseData>(URL, JSON.stringify(pathStep), {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+}
+
+
+getPathStepsCount(pathId: number): Promise<number> {
+
+  const URL = API_URL + 'pathstepscount/' + pathId;
+
+  return this.http.get<ResponseNumber>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data[0][0] as number)
+      .catch(this.handleError);
+}
 
 // -----------------------------------------------------------------------------------------------
 //          ACTION API
