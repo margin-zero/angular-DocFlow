@@ -12,13 +12,15 @@
           </tr>
         <ng-container *ngIf="pathSteps.length>0">
         <tr *ngFor="let pathStep of pathSteps">
-            <td class="app-col-narrow"></td>
-            <td class="app-col-wide">{{pathStep.action_id}}</td>
+            <td class="app-col-narrow">{{pathStep.name}}</td>
+            <td class="app-col-wide">action_enter: {{pathStep.action_enter}} --- action_next: {{pathStep.action_next}}</td>
         </tr>
         </ng-container>
       
     </tbody>
   </table>
+
+  <button class="btn btn-primary" (click)="addNewPathStep()" value="nowa akcja">nowa akcja</button>
 
   <div class="form-group row">
       <div class="col-12">

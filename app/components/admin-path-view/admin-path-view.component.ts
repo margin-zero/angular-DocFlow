@@ -16,7 +16,7 @@ import { UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
 })
 export class AdminPathViewComponent implements OnInit {
 
-  path: Path;
+  path: Path = new Path();
   pathSteps: PathStep[] = [];
 
   headerConfiguration = new UiAdminHeaderConfiguration({ subheaderText: 'ścieżka obiegu dokumentów'});
@@ -37,6 +37,7 @@ export class AdminPathViewComponent implements OnInit {
       })
     );
 
+
     this.subscriptionManager.add(
 
       this.currentRoute.params.subscribe(params => {
@@ -44,7 +45,6 @@ export class AdminPathViewComponent implements OnInit {
           .then(path => {
             this.path = path;
             this.headerConfiguration.headerText = this.path.name;
-
             this.backendApiService.refreshPathStepsObservable(path.id);
         });
       })
@@ -52,4 +52,22 @@ export class AdminPathViewComponent implements OnInit {
     );
 
   }
+
+
+  addNewPathStep() {
+
+    if (!this.pathSteps) {
+      const newPathStep = new PathStep();
+      newPathStep.path_id = this.path.id;
+      newPathStep.step_order = 1;
+      newPathStep.name = 'Wprowadzanie dokumentu';
+      newPathStep.action_enter = 'TRUE';
+      this.backendApiService.createPathStep(newPathStep).then(p => {
+        this.backendApiService.refreshPathStepsObservable(this.path.id);
+      });
+    }
+
+
+  }
+
 }
