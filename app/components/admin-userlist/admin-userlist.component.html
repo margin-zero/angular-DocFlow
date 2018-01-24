@@ -9,8 +9,14 @@
 
                 <input type="text" class="form-control" placeholder="filtruj..." [(ngModel)]="filter" name="filter">
                 <ul class="list-unstyled" *ngIf="filteredUsers().length > 0">
-                    <li *ngFor="let user of filteredUsers()" class="p-2 border border-top-0 app-hover-darker app-cursor-pointer" (click)="selectedUser = user; router.navigate(['view',selectedUser.id], { relativeTo: currentRoute })">
+                    <li *ngFor="let user of filteredUsers()" class="clearfix p-2 border border-top-0 app-hover-darker app-cursor-pointer" (click)="selectedUser = user; router.navigate(['view',selectedUser.id], { relativeTo: currentRoute })">
+                        <span [ngClass]="{'text-danger': user.is_active === 'FALSE'}" class="float-left">
                         {{user.username}}
+                        </span>
+                        <span class="badge badge-pill app-bgcolor-lightgray float-right my-1">
+                            <span [ngClass]="{'text-dark': user.is_user === 'TRUE', 'app-color-muted': user.is_user === 'FALSE'}">U</span>
+                            <span [ngClass]="{'text-dark': user.is_admin === 'TRUE', 'app-color-muted': user.is_admin === 'FALSE'}">A</span>
+                        </span>
                     </li>
                 </ul>
 
