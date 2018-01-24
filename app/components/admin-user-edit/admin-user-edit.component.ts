@@ -102,6 +102,7 @@ export class AdminUserEditComponent implements OnInit {
         }
         this.user = Object.assign({}, this.formModel);
         this.responseMessage = null;
+        this.backendApiService.refreshUsersObservable();
         this.router.navigate(['../../view', this.user.id], { relativeTo: this.route });
       } else {
         this.responseMessage = apiResponse.message;
