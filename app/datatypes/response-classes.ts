@@ -28,3 +28,7 @@ export class ResponsePathStep extends ResponseData {
 export class ResponseAction extends ResponseData {
     data: Action[];
 }
+
+export class ResponseNumber extends ResponseData {
+    data: Number;
+}
