@@ -9,7 +9,7 @@
                 
                 <input type="text" class="form-control" placeholder="filtruj..." [(ngModel)]="filter" name="filter">
                 <ul class="list-unstyled" *ngIf="filteredPaths().length > 0">
-                    <li *ngFor="let path of filteredPaths()" class="p-2 border border-top-0 app-hover-darker app-cursor-pointer" (click)="selectedPath = path; router.navigate(['view',selectedPath.id], { relativeTo: currentRoute })">
+                    <li *ngFor="let path of filteredPaths()" class="p-2 border border-top-0 app-hover-darker app-cursor-pointer" (click)="selectedPath = path; router.navigate(['view', this.selectedPath.id], { relativeTo: this.currentRoute });">
                         {{path.name}}
                     </li>
                 </ul>

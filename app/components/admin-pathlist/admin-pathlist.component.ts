@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 
 import { Path } from '../../datatypes/path';
+import { PathStep } from '../../datatypes/pathstep';
+
 import { UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
@@ -51,6 +53,14 @@ export class AdminPathlistComponent implements OnInit {
           ( this.filter.trim().length === 0)) { u.push(this.paths[i]); }
     }
     return u;
+  }
+  createFirstPathStep() {
+    const newPathStep = new PathStep();
+    newPathStep.path_id = this.selectedPath.id;
+    newPathStep.step_order = 1;
+    newPathStep.name = 'Wprowadzanie dokumentu';
+    newPathStep.action_enter = 'TRUE';
+    this.backendApiService.createPathStep(newPathStep);
   }
 
 }
