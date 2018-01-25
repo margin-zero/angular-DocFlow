@@ -2,7 +2,7 @@ import { User } from './user';
 import { Group } from './group';
 import { Path } from './path';
 import { Action } from './action';
-
+import { PathStep } from './pathstep';
 
 export class FormModelChangePassword {
     oldPassword: string;
@@ -67,6 +67,7 @@ export class FormPathEditGroup extends Path {
             this.id = 0;
             this.name = '';
             this.info = '';
+            this.can_receive = 'FALSE';
         }
     }
 
@@ -76,5 +77,12 @@ export class FormModelEditAction extends Action {
             super();
             this.id = 0;
             this.name = '';
+        }
+    }
+
+export class FormModelNewPathStep extends PathStep {
+    // for now we have FormModelNewPathStep === PathStep
+        constructor() {
+            super();
         }
     }
