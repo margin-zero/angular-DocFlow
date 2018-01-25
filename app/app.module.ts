@@ -75,6 +75,7 @@ import { AdminActionDeleteComponent } from './components/admin-action-delete/adm
 import { AdminActionViewComponent } from './components/admin-action-view/admin-action-view.component';
 import { AdminActionEditComponent } from './components/admin-action-edit/admin-action-edit.component';
 import { NoLeadingSpacesValidatorDirective } from './directives/no-leading-spaces-validator.directive';
+import { AdminPathstepNewComponent } from './components/admin-pathstep-new/admin-pathstep-new.component';
 
 
 
@@ -119,7 +120,8 @@ import { NoLeadingSpacesValidatorDirective } from './directives/no-leading-space
     AdminActionDeleteComponent,
     AdminActionViewComponent,
     AdminActionEditComponent,
-    NoLeadingSpacesValidatorDirective
+    NoLeadingSpacesValidatorDirective,
+    AdminPathstepNewComponent
 
   ],
   imports: [
