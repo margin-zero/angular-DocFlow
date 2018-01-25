@@ -9,28 +9,37 @@
 
 <form #f="ngForm" novalidate (ngSubmit)="submitForm(f.value, f.valid)" id="myForm" name="myForm" class="p-2 mt-2">
 
-  <div class="form-group row">
-    <label for="name" class="col-lg-2 col-form-label">nazwa ścieżki</label>
-    <div class="col">
+    <div class="form-group row">
+        <label for="name" class="col-lg-2 col-form-label">nazwa ścieżki</label>
+        <div class="col">
 
-        <input type="text" class="form-control" name="name" [(ngModel)]="formModel.name" id="name"
-            required validateUniquePathName validateNoLeadingSpaces #name="ngModel"
-            placeholder="nazwa ścieżki (wymagana)" tabindex="1" autofocus>
+            <input type="text" class="form-control" name="name" [(ngModel)]="formModel.name" id="name"
+                required validateUniquePathName validateNoLeadingSpaces #name="ngModel"
+                placeholder="nazwa ścieżki (wymagana)" tabindex="1" autofocus>
 
-        <small class="text-danger" [hidden]="name.valid || (name.pristine && !f.submitted)">
-            <span *ngIf="name.errors && name.errors.required">Nazwa ścieżki jest wymagana</span>
-            <span *ngIf="name.errors && name.errors.validateUniquePathName && (name.value !== path.name)">Istnieje już ścieżka o takiej nazwie.</span>
-            <span *ngIf="name.errors && name.errors.validateNoLeadingSpaces">Nazwa ścieżki nie może rozpoczynać się ani kończyć spacją. </span>
-        </small>
+            <small class="text-danger" [hidden]="name.valid || (name.pristine && !f.submitted)">
+                <span *ngIf="name.errors && name.errors.required">Nazwa ścieżki jest wymagana</span>
+                <span *ngIf="name.errors && name.errors.validateUniquePathName && (name.value !== path.name)">Istnieje już ścieżka o takiej nazwie.</span>
+                <span *ngIf="name.errors && name.errors.validateNoLeadingSpaces">Nazwa ścieżki nie może rozpoczynać się ani kończyć spacją. </span>
+            </small>
+        </div>
     </div>
-</div>
-  
 
-  <div class="form-group row">
-      <div class="col-lg-2"></div>
-      <div class="col-12 col-lg-10">
-          <dcf-ui-admin-form-buttons  [formButtons]="formButtonConfiguration"></dcf-ui-admin-form-buttons>
-      </div>
-  </div>
+    <div class="form-group row">
+        <label for="can_receive" class="col-lg-2 col-form-label">dokumenty z innych ścieżek?</label>
+        <div class="col">
+            <select [(ngModel)]="formModel.can_receive" name="can_receive" class="col-sm-4 col-md-3 col-lg-2 form-control" id="can_receive" tabindex="2">
+                <option value="FALSE">NIE</option>
+                <option value="TRUE">TAK</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-2"></div>
+        <div class="col-12 col-lg-10">
+            <dcf-ui-admin-form-buttons  [formButtons]="formButtonConfiguration"></dcf-ui-admin-form-buttons>
+        </div>
+    </div>
 
 </form>

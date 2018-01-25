@@ -28,7 +28,7 @@ export class AdminPathEditComponent implements OnInit {
 
   formButtonConfiguration: UiAdminFormButtonConfiguration = new UiAdminFormButtonConfiguration({});
   headerConfiguration: UiAdminHeaderConfiguration = new UiAdminHeaderConfiguration( {
-    subheaderText: 'edycja nazwy ścieżki'
+    subheaderText: 'edycja ścieżki'
     } );
 
   constructor(
