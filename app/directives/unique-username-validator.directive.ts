@@ -34,7 +34,7 @@ export class UniqueUsernameValidatorDirective implements Validator, OnInit {
 
     if ( control.value ) {
       for (let i = 0; i < this.usernames.length; i++) {
-        if ( this.usernames[i] === control.value.trim()) {
+        if ( this.usernames[i] === control.value ) {
           isValid = false;
         }
       }
