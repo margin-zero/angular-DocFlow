@@ -54,20 +54,4 @@ export class AdminPathViewComponent implements OnInit {
   }
 
 
-  addNewPathStep() {
-
-    if (!this.pathSteps) {
-      const newPathStep = new PathStep();
-      newPathStep.path_id = this.path.id;
-      newPathStep.step_order = 1;
-      newPathStep.name = 'Wprowadzanie dokumentu';
-      newPathStep.action_enter = 'TRUE';
-      this.backendApiService.createPathStep(newPathStep).then(p => {
-        this.backendApiService.refreshPathStepsObservable(this.path.id);
-      });
-    }
-
-
-  }
-
 }

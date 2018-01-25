@@ -2,29 +2,57 @@
 
   <dcf-ui-admin-content-header [headerConfiguration]='headerConfiguration'></dcf-ui-admin-content-header>
 
-  <table class="table table-sm  table-bordered">
-      <tbody>
-          <tr>
-              <td class="app-col-narrow">informacje:</td>
-              <td class="app-col-wide">
-                  {{path.info}}
-              </td>
-          </tr>
-        <ng-container *ngIf="pathSteps.length>0">
-        <tr *ngFor="let pathStep of pathSteps">
-            <td class="app-col-narrow">{{pathStep.name}}</td>
-            <td class="app-col-wide">action_enter: {{pathStep.action_enter}} --- action_next: {{pathStep.action_next}}</td>
-        </tr>
-        </ng-container>
-      
-    </tbody>
-  </table>
+    <table class="table table-sm  table-bordered">
+        <tbody>
+            <tr>
+                <td class="app-col-narrow">informacje:</td>
+                <td class="app-col-wide">
+                    {{path.info}}
+                </td>
+            </tr>
 
-  <button class="btn btn-primary" (click)="addNewPathStep()" value="nowa akcja">nowa akcja</button>
+            <tr>
+                <td [ngClass]="{'text-success': path.can_receive === 'TRUE', 'text-danger': path.can_receive === 'FALSE' }" class="app-col-narrow">dokumenty z innych ścieżek:</td>
+                <td [ngClass]="{'text-success': path.can_receive === 'TRUE', 'text-danger': path.can_receive === 'FALSE' }" class="app-col-wide">
+                    {{path.can_receive === 'TRUE' ? 'TAK' : 'NIE'}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4 class="p-2">Akcje</h4>
+
+
+    <ng-container *ngIf="pathSteps && pathSteps.length > 0">
+            <table class="table table-sm table-bordered">
+                <tbody>
+            
+                <ng-container *ngIf="pathSteps.length>0">
+                    <tr *ngFor="let pathStep of pathSteps">
+                        <ng-container *ngIf="pathStep.action_enter === 'TRUE'">
+                            <td class="app-col-narrow">{{pathStep.name}}</td>
+                            <td class="app-col-wide">(wprowadzanie)</td>
+                        </ng-container>
+        
+                        <ng-container *ngIf="pathStep.action_enter !== 'TRUE'">
+                            <td class="app-col-narrow">{{pathStep.name}}</td>
+                            <td class="app-col-wide">(inny niż wprowadzanie)</td>
+                        </ng-container>
+            
+                    </tr>
+                </ng-container>
+            
+                </tbody>
+            </table>
+        </ng-container>
+
+
+        PATH-ID: {{path.id}}
+    <dcf-admin-pathstep-new *ngIf="path.id > 0" [pathId]='path.id' [pathSteps]='pathSteps'></dcf-admin-pathstep-new>
 
   <div class="form-group row">
       <div class="col-12">
-          <button class="app-cursor-pointer btn btn-primary col-12 col-md-auto mb-1 float-md-right" (click)="router.navigate(['../../edit',path.id], { relativeTo: currentRoute })" tabindex="1">edycja nazwy</button>
+          <button class="app-cursor-pointer btn btn-primary col-12 col-md-auto mb-1 float-md-right" (click)="router.navigate(['../../edit',path.id], { relativeTo: currentRoute })" tabindex="1">edycja ścieżki</button>
           
           <button class="app-cursor-pointer btn btn-danger  col-12 col-md-auto mb-1 float-md-left" (click)="router.navigate(['../../delete',path.id], { relativeTo: currentRoute })" tabindex="3">usuń ścieżkę</button>
       </div>
