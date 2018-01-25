@@ -9,8 +9,7 @@ import { FormModelNewUserGroup } from '../../datatypes/form-model-classes';
 @Component({
   selector: 'dcf-admin-user-groups',
   templateUrl: './admin-user-groups.component.html',
-  styleUrls: ['./admin-user-groups.component.css'],
-  providers: [ ComponentSubscriptionManager ]
+  styleUrls: ['./admin-user-groups.component.css']
 })
 export class AdminUserGroupsComponent implements OnInit {
 
