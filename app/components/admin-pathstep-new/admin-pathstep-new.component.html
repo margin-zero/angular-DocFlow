@@ -1,0 +1,17 @@
+<div class="p-2 m-0" *ngIf="!pathSteps">
+    <p>Ta ścieżka obiegu nie ma jeszcze zdefiniowanych żadnych akcji...</p>
+    <button class="btn btn-sm app-cursor-pointer mb-4" (click)="addFirstPathStep()">nowa akcja</button>
+</div>
+
+
+<div class="p-0 m-0" *ngIf="pathSteps">
+    <form #f="ngForm" novalidate (ngSubmit)="addNewPathStep(f.value, f.valid)" id="myForm" name="myForm" class="p-2 mt-2">
+        <input type="text" [(ngModel)]="formModel.name" name="name" id="name" #name="ngModel">
+        <input type="submit" class="btn btn-sm" value="nowa akcja">
+    </form>
+</div>
+
+
+
+  
+  
