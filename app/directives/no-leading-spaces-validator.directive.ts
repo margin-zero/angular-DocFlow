@@ -14,14 +14,16 @@ export class NoLeadingSpacesValidatorDirective {
 
     let isValid = true;
 
-    if ( control.value.trim().length !== control.value.length ) {
-          isValid = false;
-    }
+    if (control.value) {
+      if ( control.value.trim().length !== control.value.length ) {
+            isValid = false;
+      }
 
-    if (isValid) {
-      return null;
-    } else {
-      return { validateNoLeadingSpaces: 'validateNoLeadingSpaces' };
+      if (isValid) {
+        return null;
+      } else {
+        return { validateNoLeadingSpaces: 'validateNoLeadingSpaces' };
+      }
     }
   }
 
