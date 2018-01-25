@@ -34,7 +34,7 @@ export class UniqueActionNameValidatorDirective implements Validator, OnInit {
 
     if ( control.value ) {
       for (let i = 0; i < this.names.length; i++) {
-        if ( this.names[i].trim() === control.value.trim()) {
+        if ( this.names[i] === control.value ) {
           isValid = false;
         }
       }
