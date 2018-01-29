@@ -28,43 +28,32 @@ export class AdminPathstepNewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.formModel.path_id = this.pathId;
-    this.formModel.name = 'nowy krok';
-
+    this.backendApiService.getActions().then( actions => this.actions = actions );
   }
 
-  addFirstPathStep() {
-
-      const newPathStep = new PathStep();
-      newPathStep.path_id = this.pathId;
-      newPathStep.step_order = 1;
-      newPathStep.name = 'Wprowadzanie dokumentu';
-      newPathStep.action_enter = 'TRUE';
-      this.backendApiService.createPathStep(newPathStep).then(p => {
-        this.backendApiService.refreshPathStepsObservable(this.pathId);
-      });
-
-  }
 
 
   addNewPathStep(formData: FormModelNewPathStep, isValid: boolean) {
 
+    if (!isValid) { return; }
+
     this.formModel.step_order = this.getNextStepOrder();
+    this.formModel.path_id = this.pathId;
 
     this.backendApiService.createPathStep(this.formModel).then(p => {
       this.backendApiService.refreshPathStepsObservable(this.pathId);
     });
+
+    // this.formModel.name = '';
   }
 
   getNextStepOrder(): number {
-    let maxStepOrder = 0;
+    let nextStepOrder = 0;
     if (this.pathSteps && this.pathSteps.length > 0) {
-      maxStepOrder = Math.max(...this.pathSteps.map( e => e.step_order)) + 1;
+      nextStepOrder = Math.max(...this.pathSteps.map( e => e.step_order)) + 1;
     }
 
-    alert(maxStepOrder);
-
-    return maxStepOrder;
+    return nextStepOrder;
   }
 
 }

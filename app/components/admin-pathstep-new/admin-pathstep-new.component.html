@@ -4,10 +4,53 @@
 </div>
 
 
-<div class="p-0 m-0" *ngIf="pathSteps">
-    <form #f="ngForm" novalidate (ngSubmit)="addNewPathStep(f.value, f.valid)" id="myForm" name="myForm" class="p-2 mt-2">
-        <input type="text" [(ngModel)]="formModel.name" name="name" id="name" #name="ngModel">
-        <input type="submit" class="btn btn-sm" value="nowa akcja">
+<div class="p-0 m-0 mt-5 mb-5 border app-bgcolor-lightgray" *ngIf="pathSteps">
+    <h4 class="px-2 pt-2">Nowa akcja</h4>
+
+    <form #f="ngForm" novalidate (ngSubmit)="addNewPathStep(f.value, f.valid)" id="myForm" name="myForm" class="p-2 pt-0">
+
+        <div class="form-group">
+            <label for="name" class="sr-only">nazwa akcji</label>
+            <input required validateNoLeadingSpaces list="actionlist" [(ngModel)]="formModel.name" class="form-control" name="name" id="name" #name="ngModel" placeholder="nazwa akcji">
+
+            <datalist id="actionlist">
+                <option *ngFor="let action of actions" value="{{action.name}}">{{action.name}}</option>
+            </datalist>
+            <small class="text-danger" [hidden]="name.valid || (name.pristine && !f.submitted)">
+                <span *ngIf="name.errors && name.errors.required">Nazwa akcji jest wymagana. </span>
+                <span *ngIf="name.errors && name.errors.validateNoLeadingSpaces">Nazwa akcji nie może rozpoczynać się ani kończyć spacją. </span>
+            </small>
+        </div>
+
+        <div class="form-check form-check-inline col-12 col-md-6 col-xl-3">
+            <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" value="" [checked]="formModel.action_next === 'TRUE'" (change)="formModel.action_next === 'TRUE'? formModel.action_next = 'FALSE':formModel.action_next = 'TRUE'">
+                Wykonaj i przekaż dalej
+            </label>
+        </div>
+
+        <div class="form-check form-check-inline col-12 col-md-auto col-xl-3">
+            <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" value="" [checked]="formModel.action_archive === 'TRUE'" (change)="formModel.action_archive === 'TRUE'? formModel.action_archive = 'FALSE':formModel.action_archive = 'TRUE'">
+                Wykonaj i archiwizuj
+            </label>
+        </div>
+
+        <div class="form-check form-check-inline col-12 col-md-6 col-xl-3">
+            <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" value="" [checked]="formModel.action_change === 'TRUE'" (change)="formModel.action_change === 'TRUE'? formModel.action_change = 'FALSE':formModel.action_change = 'TRUE'">
+                Przekaż do innej ścieżki
+            </label>
+        </div>
+
+        <div class="form-check form-check-inline col-12 col-md-auto">
+            <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" value="" [checked]="formModel.action_cancel === 'TRUE'" (change)="formModel.action_cancel === 'TRUE'? formModel.action_cancel = 'FALSE':formModel.action_cancel = 'TRUE'">
+                Odrzuć
+            </label>
+        </div>
+
+        <input type="submit" class="btn btn-sm btn-primary btn-block col-12 col-md-4 col-lg-3 col-xl-2" value="dodaj akcję">
     </form>
 </div>
 
