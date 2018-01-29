@@ -84,5 +84,6 @@ export class FormModelNewPathStep extends PathStep {
     // for now we have FormModelNewPathStep === PathStep
         constructor() {
             super();
+            this.name = '';
         }
     }
