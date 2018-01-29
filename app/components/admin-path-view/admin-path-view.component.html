@@ -24,7 +24,7 @@
 
 
     <ng-container *ngIf="pathSteps && pathSteps.length > 0">
-            <table class="table table-sm table-bordered">
+            <table class="table table-sm table-bordered mb-5">
                 <tbody>
             
                 <ng-container *ngIf="pathSteps.length>0">
@@ -38,7 +38,12 @@
                             <td class="app-col-narrow">{{pathStep.name}}</td>
                             <td class="app-col-wide">(inny niż wprowadzanie)</td>
                         </ng-container>
-            
+                    </tr>
+
+                    <tr>
+                        <td class="app-col-narrow" colspan="2">
+                            <button class="btn btn-sm btn-primary app-cursor-pointer" (click)="router.navigate(['../../pathstepnew',path.id], { relativeTo: currentRoute })" >nowa akcja</button>
+                        </td>
                     </tr>
                 </ng-container>
             
@@ -47,15 +52,30 @@
         </ng-container>
 
 
-        PATH-ID: {{path.id}}
-    <dcf-admin-pathstep-new *ngIf="path.id > 0" [pathId]='path.id' [pathSteps]='pathSteps'></dcf-admin-pathstep-new>
+        <table class="table table-sm table-bordered mb-5"  *ngIf="!pathSteps">
+            <tbody>
+                <tr>
+                    <td class="app-col-narrow" colspan="2">
+                        Ta ścieżka obiegu nie ma jeszcze zdefiniowanych żadnych akcji...
+                    </td>
+                </tr>
+                <tr>
+                    <td class="app-col-narrow" colspan="2">
+                        <button class="btn btn-sm btn-primary app-cursor-pointer" (click)="addFirstPathStep()">nowa akcja</button>            
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-  <div class="form-group row">
-      <div class="col-12">
-          <button class="app-cursor-pointer btn btn-primary col-12 col-md-auto mb-1 float-md-right" (click)="router.navigate(['../../edit',path.id], { relativeTo: currentRoute })" tabindex="1">edycja ścieżki</button>
-          
-          <button class="app-cursor-pointer btn btn-danger  col-12 col-md-auto mb-1 float-md-left" (click)="router.navigate(['../../delete',path.id], { relativeTo: currentRoute })" tabindex="3">usuń ścieżkę</button>
-      </div>
-  </div>
+    <!--
+    <dcf-admin-pathstep-new *ngIf="path.id > 0" [pathId]='path.id' [pathSteps]='pathSteps'></dcf-admin-pathstep-new>
+    -->
+
+    <div class="form-group row">
+        <div class="col-12">
+            <button class="app-cursor-pointer btn btn-primary col-12 col-md-auto mb-1 float-md-right" (click)="router.navigate(['../../edit',path.id], { relativeTo: currentRoute })" tabindex="1">edycja ścieżki</button>
+            <button class="app-cursor-pointer btn btn-danger  col-12 col-md-auto mb-1 float-md-left" (click)="router.navigate(['../../delete',path.id], { relativeTo: currentRoute })" tabindex="3">usuń ścieżkę</button>
+        </div>
+    </div>
 
 </ng-container>
