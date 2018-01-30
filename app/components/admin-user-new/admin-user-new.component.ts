@@ -73,7 +73,6 @@ export class AdminUserNewComponent implements OnInit {
   isChanged(): boolean {
     const emptyForm: FormModelEditUser = new FormModelEditUser();
     return (JSON.stringify(this.formModel) !== JSON.stringify(emptyForm) );
-    // return true;
   }
 
 
