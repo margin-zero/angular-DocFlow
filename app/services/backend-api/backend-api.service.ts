@@ -463,7 +463,7 @@ getPathStep(pathStepId: number): Promise<PathStep> {
 }
 
 
-updatePathStep(pathStep: Path): Promise<ResponseData> {
+updatePathStep(pathStep: PathStep): Promise<ResponseData> {
 
   const URL = API_URL + 'pathstep/' + pathStep.id;
 
