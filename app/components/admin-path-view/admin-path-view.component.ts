@@ -65,6 +65,98 @@ export class AdminPathViewComponent implements OnInit {
       this.backendApiService.refreshPathStepsObservable(this.path.id);
     });
 
-}
+  }
+
+  toggleActionNext(pathStep: PathStep) {
+    if (pathStep.action_next === 'TRUE') { pathStep.action_next = 'FALSE'; } else { pathStep.action_next = 'TRUE'; }
+    this.backendApiService.updatePathStep(pathStep);
+  }
+
+  toggleActionArchive(pathStep: PathStep) {
+    if (pathStep.action_archive === 'TRUE') { pathStep.action_archive = 'FALSE'; } else { pathStep.action_archive = 'TRUE'; }
+    this.backendApiService.updatePathStep(pathStep);
+  }
+
+  toggleActionCancel(pathStep: PathStep) {
+    if (pathStep.action_cancel === 'TRUE') { pathStep.action_cancel = 'FALSE'; } else { pathStep.action_cancel = 'TRUE'; }
+    this.backendApiService.updatePathStep(pathStep);
+  }
+
+  toggleActionChange(pathStep: PathStep) {
+    if (pathStep.action_change === 'TRUE') { pathStep.action_change = 'FALSE'; } else { pathStep.action_change = 'TRUE'; }
+    this.backendApiService.updatePathStep(pathStep);
+  }
+
+  canGoUp(pathStep: PathStep) {
+    let previousStepOrder = 0;
+    for (let i = 0; i < this.pathSteps.length; i ++) {
+      if (this.pathSteps[i].step_order > previousStepOrder && this.pathSteps[i].step_order < pathStep.step_order) {
+        previousStepOrder = this.pathSteps[i].step_order;
+      }
+    }
+
+    if (previousStepOrder > 1) { return true; } else { return false; }
+  }
+
+  canGoDown(pathStep: PathStep) {
+    let nextStepOrder = pathStep.step_order;
+    for (let i = 0; i < this.pathSteps.length; i++) {
+      if (this.pathSteps[i].step_order > nextStepOrder) {
+        nextStepOrder = this.pathSteps[i].step_order;
+      }
+    }
+
+    if (nextStepOrder > pathStep.step_order) { return true; } else { return false; }
+  }
+
+
+  goUp(pathStep: PathStep) {
+    if (!this.canGoUp(pathStep)) { return; }
+
+    let previousPathStep = null;
+    let previousStepOrder = 0;
+
+    for (let i = 0; i < this.pathSteps.length; i ++) {
+      if (this.pathSteps[i].step_order > previousStepOrder && this.pathSteps[i].step_order < pathStep.step_order) {
+        previousStepOrder = this.pathSteps[i].step_order;
+        previousPathStep = this.pathSteps[i];
+      }
+    }
+
+    if (previousPathStep !== null) {
+      const tmp = previousPathStep.step_order;
+      previousPathStep.step_order = pathStep.step_order;
+      pathStep.step_order = tmp;
+
+      this.backendApiService.updatePathStep(pathStep)
+        .then(resp => this.backendApiService.updatePathStep(previousPathStep))
+        .then(resp => this.backendApiService.refreshPathStepsObservable(this.path.id));
+    }
+
+  }
+
+  goDown(pathStep: PathStep) {
+    if (!this.canGoDown(pathStep)) { return; }
+
+    let nextStepOrder = pathStep.step_order;
+    let nextPathStep = null;
+
+    for (let i = 0; i < this.pathSteps.length; i++) {
+      if (this.pathSteps[i].step_order > nextStepOrder && nextStepOrder === pathStep.step_order) {
+        nextStepOrder = this.pathSteps[i].step_order;
+        nextPathStep = this.pathSteps[i];
+      }
+    }
+
+    if (nextPathStep !== null) {
+      const tmp = nextPathStep.step_order;
+      nextPathStep.step_order = pathStep.step_order;
+      pathStep.step_order = tmp;
+
+      this.backendApiService.updatePathStep(pathStep)
+        .then(resp => this.backendApiService.updatePathStep(nextPathStep))
+        .then(resp => this.backendApiService.refreshPathStepsObservable(this.path.id));
+    }
+  }
 
 }

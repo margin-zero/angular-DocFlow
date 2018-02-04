@@ -1,6 +1,6 @@
 <ng-container *ngIf="path">
 
-  <dcf-ui-admin-content-header [headerConfiguration]='headerConfiguration'></dcf-ui-admin-content-header>
+    <dcf-ui-admin-content-header [headerConfiguration]='headerConfiguration'></dcf-ui-admin-content-header>
 
     <table class="table table-sm  table-bordered">
         <tbody>
@@ -20,62 +20,87 @@
         </tbody>
     </table>
 
-    <h4 class="p-2">Akcje</h4>
-
-
-    <ng-container *ngIf="pathSteps && pathSteps.length > 0">
-            <table class="table table-sm table-bordered mb-5">
-                <tbody>
-            
-                <ng-container *ngIf="pathSteps.length>0">
-                    <tr *ngFor="let pathStep of pathSteps">
-                        <ng-container *ngIf="pathStep.action_enter === 'TRUE'">
-                            <td class="app-col-narrow">{{pathStep.name}}</td>
-                            <td class="app-col-wide">(wprowadzanie)</td>
-                        </ng-container>
-        
-                        <ng-container *ngIf="pathStep.action_enter !== 'TRUE'">
-                            <td class="app-col-narrow">{{pathStep.name}}</td>
-                            <td class="app-col-wide">(inny niż wprowadzanie)</td>
-                        </ng-container>
-                    </tr>
-
-                    <tr>
-                        <td class="app-col-narrow" colspan="2">
-                            <button class="btn btn-sm btn-primary app-cursor-pointer" (click)="router.navigate(['../../pathstepnew',path.id], { relativeTo: currentRoute })" >nowa akcja</button>
-                        </td>
-                    </tr>
-                </ng-container>
-            
-                </tbody>
-            </table>
-        </ng-container>
-
-
-        <table class="table table-sm table-bordered mb-5"  *ngIf="!pathSteps">
-            <tbody>
-                <tr>
-                    <td class="app-col-narrow" colspan="2">
-                        Ta ścieżka obiegu nie ma jeszcze zdefiniowanych żadnych akcji...
-                    </td>
-                </tr>
-                <tr>
-                    <td class="app-col-narrow" colspan="2">
-                        <button class="btn btn-sm btn-primary app-cursor-pointer" (click)="addFirstPathStep()">nowa akcja</button>            
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-    <!--
-    <dcf-admin-pathstep-new *ngIf="path.id > 0" [pathId]='path.id' [pathSteps]='pathSteps'></dcf-admin-pathstep-new>
-    -->
-
     <div class="form-group row">
         <div class="col-12">
             <button class="app-cursor-pointer btn btn-primary col-12 col-md-auto mb-1 float-md-right" (click)="router.navigate(['../../edit',path.id], { relativeTo: currentRoute })" tabindex="1">edycja ścieżki</button>
             <button class="app-cursor-pointer btn btn-danger  col-12 col-md-auto mb-1 float-md-left" (click)="router.navigate(['../../delete',path.id], { relativeTo: currentRoute })" tabindex="3">usuń ścieżkę</button>
         </div>
     </div>
+
+    <h4 class="p-2">Akcje</h4>
+
+    <ng-container *ngIf="pathSteps && pathSteps.length > 0">
+            
+        <table class="table table-sm table-bordered mb-5">
+            <tbody>
+            
+            <ng-container *ngIf="pathSteps.length>0">
+                <tr *ngFor="let pathStep of pathSteps">
+                    <ng-container *ngIf="pathStep.action_enter === 'TRUE'">
+                        <td class="app-col-narrow">{{pathStep.name}}</td>
+                        <td class="app-col-wide">
+                            <span class="badge badge-pill app-bgcolor-lightgray my-1">
+                                <span class="text-dark">Wprowadzanie</span>
+                            </span><br />
+                            tutaj będzie lista grup, które mają dostęp do danej akcji
+                        </td>
+                    </ng-container>
+        
+                    <ng-container *ngIf="pathStep.action_enter !== 'TRUE'">
+                        <td class="app-col-narrow">
+                            <span [ngClass]="{'text-danger': pathStep.action_next === 'FALSE' && pathStep.action_archive === 'FALSE' && pathStep.action_cancel === 'FALSE' && pathStep.action_change === 'FALSE'}">
+                                {{pathStep.name}}
+                            </span><br />
+                            
+                            <span [ngClass]="{'text-muted app-cursor-not-allowed': !canGoUp(pathStep), 'text-primary app-cursor-pointer': canGoUp(pathStep)}" (click)="goUp(pathStep)">&#11205;</span>
+                            <span [ngClass]="{'text-muted app-cursor-not-allowed': !canGoDown(pathStep), 'text-primary app-cursor-pointer': canGoDown(pathStep)}" (click)="goDown(pathStep)">&#11206;</span>
+                            
+                            
+
+                        </td>
+                        <td class="app-col-wide">
+                            <span class="badge badge-pill app-bgcolor-lightgray my-1 app-cursor-pointer" (click)="toggleActionNext(pathStep)">
+                                <span [ngClass]="{'text-dark': pathStep.action_next === 'TRUE', 'app-color-muted': pathStep.action_next === 'FALSE'}">Wykonaj i przekaż dalej</span>
+                            </span>
+                            <span class="badge badge-pill app-bgcolor-lightgray my-1 app-cursor-pointer" (click)="toggleActionArchive(pathStep)">
+                                <span [ngClass]="{'text-dark': pathStep.action_archive === 'TRUE', 'app-color-muted': pathStep.action_archive === 'FALSE'}">Wykonaj i archiwizuj</span>
+                            </span>
+                            <span class="badge badge-pill app-bgcolor-lightgray my-1 app-cursor-pointer" (click)="toggleActionCancel(pathStep)">
+                                <span [ngClass]="{'text-dark': pathStep.action_cancel === 'TRUE', 'app-color-muted': pathStep.action_cancel === 'FALSE'}">Odrzuć</span>
+                            </span>
+                            <span class="badge badge-pill app-bgcolor-lightgray my-1 app-cursor-pointer" (click)="toggleActionChange(pathStep)">
+                                <span [ngClass]="{'text-dark': pathStep.action_change === 'TRUE', 'app-color-muted': pathStep.action_change === 'FALSE'}">Przekaż do innej ścieżki</span>
+                            </span>
+                        </td>
+                    </ng-container>
+                </tr>
+
+                <tr>
+                    <td class="app-col-narrow" colspan="2">
+                        <button class="btn btn-sm btn-primary app-cursor-pointer" (click)="router.navigate(['../../pathstepnew',path.id], { relativeTo: currentRoute })" >nowa akcja</button>
+                    </td>
+                </tr>
+            </ng-container>
+            
+            </tbody>
+        </table>
+   
+    </ng-container>
+
+
+    <table class="table table-sm table-bordered mb-5"  *ngIf="!pathSteps">
+        <tbody>
+            <tr>
+                <td class="app-col-narrow" colspan="2">
+                    Ta ścieżka obiegu nie ma jeszcze zdefiniowanych żadnych akcji...
+                </td>
+            </tr>
+            <tr>
+                <td class="app-col-narrow" colspan="2">
+                    <button class="btn btn-sm btn-primary app-cursor-pointer" (click)="addFirstPathStep()">nowa akcja</button>            
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
 </ng-container>
