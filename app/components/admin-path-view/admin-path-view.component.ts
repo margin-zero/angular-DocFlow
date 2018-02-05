@@ -87,7 +87,7 @@ export class AdminPathViewComponent implements OnInit {
     this.backendApiService.updatePathStep(pathStep);
   }
 
-  canGoUp(pathStep: PathStep) {
+  pathstepCanGoUp(pathStep: PathStep) {
     let previousStepOrder = 0;
     for (let i = 0; i < this.pathSteps.length; i ++) {
       if (this.pathSteps[i].step_order > previousStepOrder && this.pathSteps[i].step_order < pathStep.step_order) {
@@ -98,7 +98,7 @@ export class AdminPathViewComponent implements OnInit {
     if (previousStepOrder > 1) { return true; } else { return false; }
   }
 
-  canGoDown(pathStep: PathStep) {
+  pathstepCanGoDown(pathStep: PathStep) {
     let nextStepOrder = pathStep.step_order;
     for (let i = 0; i < this.pathSteps.length; i++) {
       if (this.pathSteps[i].step_order > nextStepOrder) {
@@ -110,8 +110,8 @@ export class AdminPathViewComponent implements OnInit {
   }
 
 
-  goUp(pathStep: PathStep) {
-    if (!this.canGoUp(pathStep)) { return; }
+  pathstepGoUp(pathStep: PathStep) {
+    if (!this.pathstepCanGoUp(pathStep)) { return; }
 
     let previousPathStep = null;
     let previousStepOrder = 0;
@@ -135,8 +135,8 @@ export class AdminPathViewComponent implements OnInit {
 
   }
 
-  goDown(pathStep: PathStep) {
-    if (!this.canGoDown(pathStep)) { return; }
+  pathstepGoDown(pathStep: PathStep) {
+    if (!this.pathstepCanGoDown(pathStep)) { return; }
 
     let nextStepOrder = pathStep.step_order;
     let nextPathStep = null;
@@ -159,4 +159,11 @@ export class AdminPathViewComponent implements OnInit {
     }
   }
 
+  pathstepHasActions(pathStep: PathStep): boolean {
+    return (
+      pathStep.action_next === 'TRUE' ||
+      pathStep.action_archive === 'TRUE' ||
+      pathStep.action_cancel === 'TRUE' ||
+      pathStep.action_change === 'TRUE');
+  }
 }
