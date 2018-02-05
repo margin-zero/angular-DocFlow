@@ -49,11 +49,12 @@
                     <ng-container *ngIf="pathStep.action_enter !== 'TRUE'">
                         <td class="app-col-narrow">
                             <span [ngClass]="{'text-danger': pathStep.action_next === 'FALSE' && pathStep.action_archive === 'FALSE' && pathStep.action_cancel === 'FALSE' && pathStep.action_change === 'FALSE'}">
-                                {{pathStep.name}}
+                                <a class="text-dark" href="#" title="edytuj nazwę akcji">{{pathStep.name}}</a>
+                                <span><a href="#" class="text-danger" title="usuń akcję">&times;</a></span>
                             </span><br />
                             
-                            <span [ngClass]="{'text-muted app-cursor-not-allowed': !canGoUp(pathStep), 'text-primary app-cursor-pointer': canGoUp(pathStep)}" (click)="goUp(pathStep)">&#11205;</span>
-                            <span [ngClass]="{'text-muted app-cursor-not-allowed': !canGoDown(pathStep), 'text-primary app-cursor-pointer': canGoDown(pathStep)}" (click)="goDown(pathStep)">&#11206;</span>
+                            <span [ngClass]="{'text-muted app-cursor-not-allowed': !canGoUp(pathStep), 'text-primary app-cursor-pointer': canGoUp(pathStep)}" (click)="goUp(pathStep)" title="przesuń w górę">&#11205;</span>
+                            <span [ngClass]="{'text-muted app-cursor-not-allowed': !canGoDown(pathStep), 'text-primary app-cursor-pointer': canGoDown(pathStep)}" (click)="goDown(pathStep)" title="przesuń w dół">&#11206;</span>
                             
                             
 
