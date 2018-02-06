@@ -71,7 +71,7 @@ const routes: Routes = [
                 { path: 'new', component: AdminPathNewComponent, canDeactivate: [PendingChangesGuard] },
                 { path: 'view/:pathId', component: AdminPathViewComponent },
                 { path: 'edit/:pathId', component: AdminPathEditComponent, canDeactivate: [PendingChangesGuard] },
-                { path: 'pathstepnew/:pathId', component: AdminPathstepNewComponent, canDeactivate: [PendingChangesGuard] },
+                { path: 'pathstep/new/:pathId', component: AdminPathstepNewComponent, canDeactivate: [PendingChangesGuard] },
               ] },
 
           { path: 'action', component: AdminActionlistComponent,
