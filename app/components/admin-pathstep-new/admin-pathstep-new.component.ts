@@ -65,7 +65,7 @@ export class AdminPathstepNewComponent implements OnInit {
 
         this.formButtonConfiguration.cancel.goBack = false;
         this.formButtonConfiguration.cancel.isRelative = true;
-        this.formButtonConfiguration.cancel.navigate = '../../view/' + this.pathId;
+        this.formButtonConfiguration.cancel.navigate = '../../../view/' + this.pathId;
 
       })
     );
@@ -92,7 +92,7 @@ export class AdminPathstepNewComponent implements OnInit {
         this.formModel = new FormModelNewPathStep();
         this.responseMessage = null;
         this.backendApiService.refreshPathStepsObservable(this.pathId);
-        this.router.navigate(['../../view/' + this.pathId], { relativeTo: this.route });
+        this.router.navigate(['../../../view/' + this.pathId], { relativeTo: this.route });
       } else {
         this.responseMessage = apiResponse.message;
       }
