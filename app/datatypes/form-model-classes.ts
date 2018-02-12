@@ -87,3 +87,16 @@ export class FormModelEditPathStep extends PathStep {
             this.name = '';
         }
     }
+
+export class FormModelNewPathStepGroup {
+    id: number;
+    group_id: number;
+    pathstep_id: number;
+    path_id: number;
+    constructor() {
+        this.id = 0;
+        this.pathstep_id = 0;
+        this.group_id = 0;
+        this.path_id = 0;
+    }
+}
