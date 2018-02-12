@@ -15,7 +15,7 @@
 
         <input type="text" class="form-control" name="name" [(ngModel)]="formModel.name" id="name"
             required validateUniqueActionName validateNoLeadingSpaces #name="ngModel"
-            placeholder="nazwa grupy (wymagana)" tabindex="1" autofocus>
+            placeholder="nazwa akcji (wymagana)" tabindex="1" autofocus>
 
         <small class="text-danger" [hidden]="name.valid || (name.pristine && !f.submitted)">
             <span *ngIf="name.errors && name.errors.required">Nazwa akcji jest wymagana</span>
