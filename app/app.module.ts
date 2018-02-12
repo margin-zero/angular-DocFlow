@@ -76,6 +76,7 @@ import { AdminActionViewComponent } from './components/admin-action-view/admin-a
 import { AdminActionEditComponent } from './components/admin-action-edit/admin-action-edit.component';
 import { NoLeadingSpacesValidatorDirective } from './directives/no-leading-spaces-validator.directive';
 import { AdminPathstepNewComponent } from './components/admin-pathstep-new/admin-pathstep-new.component';
+import { AdminPathstepEditComponent } from './components/admin-pathstep-edit/admin-pathstep-edit.component';
 
 
 
@@ -121,7 +122,8 @@ import { AdminPathstepNewComponent } from './components/admin-pathstep-new/admin
     AdminActionViewComponent,
     AdminActionEditComponent,
     NoLeadingSpacesValidatorDirective,
-    AdminPathstepNewComponent
+    AdminPathstepNewComponent,
+    AdminPathstepEditComponent
 
   ],
   imports: [
