@@ -72,6 +72,15 @@
                             <span class="badge badge-pill app-bgcolor-lightgray my-1 app-cursor-pointer" (click)="toggleActionChange(pathStep)">
                                 <span [ngClass]="{'text-dark': pathStep.action_change === 'TRUE', 'app-color-muted': pathStep.action_change === 'FALSE'}">Przekaż do innej ścieżki</span>
                             </span>
+
+                            <span *ngFor="let pathStepGroup of pathStepGroups">
+                                <p>{{pathStepGroup.name}}</p>
+                            </span>
+
+
+                            <dcf-admin-pathstep-groups [pathStepId]='pathStep.id' [pathId]='path.id'></dcf-admin-pathstep-groups>
+
+
                         </td>
                     </ng-container>
                 </tr>

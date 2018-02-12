@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Path } from '../../datatypes/path';
 import { PathStep } from '../../datatypes/pathstep';
+import { PathStepGroup } from '../../datatypes/pathstepgroup';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 
@@ -18,6 +19,7 @@ export class AdminPathViewComponent implements OnInit {
 
   path: Path = new Path();
   pathSteps: PathStep[] = [];
+  pathStepGroups: PathStepGroup[];
 
   headerConfiguration = new UiAdminHeaderConfiguration({ subheaderText: 'ścieżka obiegu dokumentów'});
 
@@ -37,6 +39,11 @@ export class AdminPathViewComponent implements OnInit {
       })
     );
 
+    this.subscriptionManager.add(
+      this.backendApiService.getPathStepGroupsObservable().subscribe( pathStepGroups => {
+        this.pathStepGroups = pathStepGroups;
+      })
+    );
 
     this.subscriptionManager.add(
 
@@ -46,6 +53,7 @@ export class AdminPathViewComponent implements OnInit {
             this.path = path;
             this.headerConfiguration.headerText = this.path.name;
             this.backendApiService.refreshPathStepsObservable(path.id);
+            this.backendApiService.refreshPathStepGroupsObservable(path.id);
         });
       })
 
