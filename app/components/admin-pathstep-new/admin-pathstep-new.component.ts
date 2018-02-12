@@ -9,7 +9,7 @@ import { BackendApiService } from '../../services/backend-api/backend-api.servic
 import { PathStep } from '../../datatypes/pathstep';
 import { Action } from '../../datatypes/action';
 
-import { FormModelNewPathStep } from '../../datatypes/form-model-classes';
+import { FormModelEditPathStep } from '../../datatypes/form-model-classes';
 
 import { ComponentSubscriptionManager } from '../../common-classes/component-subscription-manager.class';
 import { UiAdminFormButtonConfiguration, UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
@@ -29,7 +29,7 @@ export class AdminPathstepNewComponent implements OnInit {
   actions: Action[];
   responseMessage: string = null;
 
-  formModel: FormModelNewPathStep = new FormModelNewPathStep();
+  formModel: FormModelEditPathStep = new FormModelEditPathStep();
 
   formButtonConfiguration: UiAdminFormButtonConfiguration = new UiAdminFormButtonConfiguration({});
 
@@ -80,7 +80,7 @@ export class AdminPathstepNewComponent implements OnInit {
 
 
 
-  addNewPathStep(formData: FormModelNewPathStep, isValid: boolean) {
+  addNewPathStep(formData: FormModelEditPathStep, isValid: boolean) {
 
     if (!isValid) { return; }
 
@@ -89,7 +89,7 @@ export class AdminPathstepNewComponent implements OnInit {
 
     this.backendApiService.createPathStep(this.formModel).then(apiResponse => {
       if (apiResponse.status === 'OK') {
-        this.formModel = new FormModelNewPathStep();
+        this.formModel = new FormModelEditPathStep();
         this.responseMessage = null;
         this.backendApiService.refreshPathStepsObservable(this.pathId);
         this.router.navigate(['../../../view/' + this.pathId], { relativeTo: this.route });
@@ -121,7 +121,7 @@ export class AdminPathstepNewComponent implements OnInit {
   }
 
   isChanged(): boolean {
-    const emptyForm: FormModelNewPathStep = new FormModelNewPathStep();
+    const emptyForm: FormModelEditPathStep = new FormModelEditPathStep();
     return (JSON.stringify(this.formModel) !== JSON.stringify(emptyForm) );
   }
 }
