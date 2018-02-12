@@ -49,7 +49,7 @@
                     <ng-container *ngIf="pathStep.action_enter !== 'TRUE'">
                         <td class="app-col-narrow">
                             <span >
-                                <a [ngClass]="{'text-danger': !pathstepHasActions(pathStep), 'text-dark': pathstepHasActions(pathStep)}" href="#" title="edytuj nazwę akcji">{{pathStep.name}}</a>
+                                <a [ngClass]="{'text-danger': !pathstepHasActions(pathStep), 'text-dark': pathstepHasActions(pathStep)}" [routerLink]="['../../pathstep/edit',pathStep.id]" title="edytuj nazwę akcji">{{pathStep.name}}</a>
                                 <span><a href="#" class="text-danger" title="usuń akcję">&times;</a></span>
                             </span><br />
                             
