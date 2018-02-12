@@ -60,8 +60,8 @@ export class FormModelNewUserGroup {
     }
 }
 
-export class FormPathEditGroup extends Path {
-    // for now we have FormPathEditGroup === Path
+export class FormModelEditPath extends Path {
+    // for now we have FormModelEditPath === Path
         constructor() {
             super();
             this.id = 0;
@@ -80,8 +80,8 @@ export class FormModelEditAction extends Action {
         }
     }
 
-export class FormModelNewPathStep extends PathStep {
-    // for now we have FormModelNewPathStep === PathStep
+export class FormModelEditPathStep extends PathStep {
+    // for now we have FormModelEditPathStep === PathStep
         constructor() {
             super();
             this.name = '';
