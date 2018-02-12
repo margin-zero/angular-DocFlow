@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 
 import { Path } from '../../datatypes/path';
-import { FormPathEditGroup } from '../../datatypes/form-model-classes';
+import { FormModelEditPath } from '../../datatypes/form-model-classes';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 
@@ -24,7 +24,7 @@ export class AdminPathNewComponent implements OnInit {
   paths: Path[];
   responseMessage: string = null;
 
-  formModel: FormPathEditGroup = new FormPathEditGroup();
+  formModel: FormModelEditPath = new FormModelEditPath();
 
   formButtonConfiguration: UiAdminFormButtonConfiguration = new UiAdminFormButtonConfiguration({});
 
@@ -68,19 +68,19 @@ export class AdminPathNewComponent implements OnInit {
 
 
   isChanged(): boolean {
-    const emptyForm: FormPathEditGroup = new FormPathEditGroup();
+    const emptyForm: FormModelEditPath = new FormModelEditPath();
     return (JSON.stringify(this.formModel) !== JSON.stringify(emptyForm) );
   }
 
 
-  submitForm(formData: FormPathEditGroup, isValid: boolean) {
+  submitForm(formData: FormModelEditPath, isValid: boolean) {
 
     if (!isValid) { return; }
 
     this.backendApiService.createPath(formData)
       .then(apiResponse => {
         if (apiResponse.status === 'OK') {
-          this.formModel = new FormPathEditGroup();
+          this.formModel = new FormModelEditPath();
           this.responseMessage = null;
           this.backendApiService.refreshPathsObservable();
           this.router.navigate(['/admin/path/']);
