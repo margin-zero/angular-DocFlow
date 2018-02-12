@@ -1,0 +1,11 @@
+<p>
+  admin-pathstep-groups works! - pathId={{pathId}}  --- pathstepId={{pathStepId}}
+</p>
+
+<form *ngIf="formModel.group_id" #f="ngForm" (ngSubmit)="saveForm(f.value,f.valid)" id="myForm" name="myForm" class="form-inline" >
+  <select [(ngModel)]="formModel.group_id" name="group_id" class="form-control form-control-sm col-12 col-md-auto">
+      <option *ngFor="let group of groups" 
+        [value]="group.id">{{group.name}}</option>
+  </select>
+  <input type="submit" value="dodaj grupę" class="btn btn-primary btn-sm mt-2 mt-md-0 col-12 col-md-auto ml-md-2">
+</form>
