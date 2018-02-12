@@ -24,6 +24,7 @@ import { AdminPathViewComponent } from './components/admin-path-view/admin-path-
 import { AdminPathEditComponent } from './components/admin-path-edit/admin-path-edit.component';
 
 import { AdminPathstepNewComponent } from './components/admin-pathstep-new/admin-pathstep-new.component';
+import { AdminPathstepEditComponent } from './components/admin-pathstep-edit/admin-pathstep-edit.component';
 
 import { AdminActionlistComponent } from './components/admin-actionlist/admin-actionlist.component';
 import { AdminActionNewComponent } from './components/admin-action-new/admin-action-new.component';
@@ -72,6 +73,7 @@ const routes: Routes = [
                 { path: 'view/:pathId', component: AdminPathViewComponent },
                 { path: 'edit/:pathId', component: AdminPathEditComponent, canDeactivate: [PendingChangesGuard] },
                 { path: 'pathstep/new/:pathId', component: AdminPathstepNewComponent, canDeactivate: [PendingChangesGuard] },
+                { path: 'pathstep/edit/:pathStepId', component: AdminPathstepEditComponent, canDeactivate: [PendingChangesGuard] },
               ] },
 
           { path: 'action', component: AdminActionlistComponent,
