@@ -26,9 +26,16 @@
     </div>
 
     <div class="form-group row">
+        <label for="info" class="col-lg-2 col-form-label">dodatkowe informacje</label>
+        <div class="col">
+            <textarea [(ngModel)]="formModel.info" name="info" class="form-control" id="info" rows="3"  tabindex="2"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
         <label for="can_receive" class="col-lg-2 col-form-label">dokumenty z innych ścieżek?</label>
         <div class="col">
-            <select [(ngModel)]="formModel.can_receive" name="can_receive" class="col-sm-4 col-md-3 col-lg-2 form-control" id="can_receive" tabindex="2">
+            <select [(ngModel)]="formModel.can_receive" name="can_receive" class="col-sm-4 col-md-3 col-lg-2 form-control" id="can_receive" tabindex="3">
                 <option value="FALSE">NIE</option>
                 <option value="TRUE">TAK</option>
             </select>

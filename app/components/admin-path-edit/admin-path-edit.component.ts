@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 
 import { Path } from '../../datatypes/path';
-import { FormPathEditGroup } from '../../datatypes/form-model-classes';
+import { FormModelEditPath } from '../../datatypes/form-model-classes';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 
@@ -24,7 +24,7 @@ export class AdminPathEditComponent implements OnInit {
   path: Path = new Path();
   responseMessage: string;
 
-  formModel: FormPathEditGroup = new FormPathEditGroup();
+  formModel: FormModelEditPath = new FormModelEditPath();
 
   formButtonConfiguration: UiAdminFormButtonConfiguration = new UiAdminFormButtonConfiguration({});
   headerConfiguration: UiAdminHeaderConfiguration = new UiAdminHeaderConfiguration( {
@@ -81,7 +81,7 @@ export class AdminPathEditComponent implements OnInit {
   }
 
 
-  submitForm(formData: FormPathEditGroup, isValid: boolean) {
+  submitForm(formData: FormModelEditPath, isValid: boolean) {
 
     if (!isValid) { return; }
 
