@@ -12,11 +12,13 @@ import { User } from '../../datatypes/user';
 import { Group } from '../../datatypes/group';
 import { Path } from '../../datatypes/path';
 import { PathStep } from '../../datatypes/pathstep';
+import { PathStepGroup } from '../../datatypes/pathstepgroup';
 import { Action } from '../../datatypes/action';
 
 import {
   ResponseUser,
   ResponseGroup,
+  ResponsePathStepGroup,
   ResponsePath,
   ResponseData,
   ResponsePathStep,
@@ -39,6 +41,9 @@ export class BackendApiService implements OnInit {
   pathsObservable = new Subject<any>();
   pathStepsObservable = new Subject<any>();
   actionsObservable = new Subject<any>();
+
+  pathStepGroupsObservable = new Subject<any>();
+  notPathStepGroupsObservable = new Subject<any>();
 
   userGroupsObservable = new Subject<any>();
   notUserGroupsObservable = new Subject<any>();
@@ -484,6 +489,71 @@ getPathStepsCount(pathId: number): Promise<number> {
       .then(apiResponse => apiResponse.data[0][0] as number)
       .catch(this.handleError);
 }
+
+
+// -----------------------------------------------------------------------------------------------
+//          PATHSTEPS GROUPS API
+// -----------------------------------------------------------------------------------------------
+
+
+getPathStepGroups(pathId: number): Promise<PathStepGroup[]> {
+
+  const URL = API_URL + 'pathstepgroups/' + pathId;
+
+  return this.http.get<ResponsePathStepGroup>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data as PathStepGroup[])
+      .catch(this.handleError);
+}
+
+
+getPathStepGroupsObservable(): Observable<any> {
+  return this.pathStepGroupsObservable.asObservable();
+}
+
+
+refreshPathStepGroupsObservable(pathId: number): any {
+  this.getPathStepGroups(pathId)
+  .then(pathStepGroups => this.pathStepGroupsObservable.next(pathStepGroups));
+}
+
+
+
+getNotPathStepGroups(pathstepId: number): Promise<Group[]> {
+
+  const URL = API_URL + 'notpathstepgroups/' + pathstepId;
+
+  return this.http.get<ResponseGroup>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data as Group[])
+      .catch(this.handleError);
+}
+
+
+getNotPathStepGroupsObservable(): Observable<any> {
+  return this.notPathStepGroupsObservable.asObservable();
+}
+
+
+refreshNotPathStepGroupsObservable(pathstepId: number): any {
+  this.getNotPathStepGroups(pathstepId)
+  .then(groups => this.notPathStepGroupsObservable.next(groups));
+}
+
+createPathStepGroup(pathStepId: number, pathId: number, groupId: number): Promise<ResponseData> {
+
+  const URL = API_URL + 'pathstepgroup';
+
+  return this.http
+      .put<ResponseData>(URL, JSON.stringify(
+        { 'pathstep_id': pathStepId, 'path_id': pathId, 'group_id': groupId }), {headers: this.headers}
+      )
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+}
+
+
 
 // -----------------------------------------------------------------------------------------------
 //          ACTION API
