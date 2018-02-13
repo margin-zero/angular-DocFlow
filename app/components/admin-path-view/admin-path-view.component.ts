@@ -19,7 +19,7 @@ export class AdminPathViewComponent implements OnInit {
 
   path: Path = new Path();
   pathSteps: PathStep[] = [];
-  pathStepGroups: PathStepGroup[];
+  pathStepGroups: PathStepGroup[] = [];
 
   headerConfiguration = new UiAdminHeaderConfiguration({ subheaderText: 'ścieżka obiegu dokumentów'});
 

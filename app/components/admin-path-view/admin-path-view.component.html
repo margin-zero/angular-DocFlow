@@ -73,12 +73,8 @@
                                 <span [ngClass]="{'text-dark': pathStep.action_change === 'TRUE', 'app-color-muted': pathStep.action_change === 'FALSE'}">Przekaż do innej ścieżki</span>
                             </span>
 
-                            <span *ngFor="let pathStepGroup of pathStepGroups">
-                                <p>{{pathStepGroup.name}}</p>
-                            </span>
 
-
-                            <dcf-admin-pathstep-groups [pathStepId]='pathStep.id' [pathId]='path.id'></dcf-admin-pathstep-groups>
+                            <dcf-admin-pathstep-groups [pathStepId]='pathStep.id' [pathId]='path.id' [pathStepGroups]='pathStepGroups'></dcf-admin-pathstep-groups>
 
 
                         </td>
