@@ -21,6 +21,8 @@ export class AdminPathViewComponent implements OnInit {
   pathSteps: PathStep[] = [];
   pathStepGroups: PathStepGroup[] = [];
 
+  editMode = false;
+
   headerConfiguration = new UiAdminHeaderConfiguration({ subheaderText: 'ścieżka obiegu dokumentów'});
 
   constructor(
@@ -174,4 +176,15 @@ export class AdminPathViewComponent implements OnInit {
       pathStep.action_cancel === 'TRUE' ||
       pathStep.action_change === 'TRUE');
   }
+
+  toggleEditMode() {
+    this.editMode = !this.editMode;
+  }
+
+  getEditMode(): string {
+    if (this.editMode) { return 'tryb uproszczony'; }
+    if (!this.editMode) { return 'tryb edycji grup'; }
+  }
+
 }
+
