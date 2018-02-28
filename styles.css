@@ -26,3 +26,6 @@
     width: 80%;
 }
 
+.app-border-top-2 {
+    border-top-width: 2px !important;
+}
