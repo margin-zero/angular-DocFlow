@@ -3,16 +3,16 @@
     <ng-container *ngFor="let group of allGroups">
         <span *ngIf="isInPathStepGroups(group.id)" class="app-bgcolor-lightgray px-2 pb-1 mr-2 mb-2 float-left">
             <a [routerLink]="['/admin/group/view/',group.id]" class="text-primary">{{group.name}}</a>
-            <a [routerLink]="['../../deletefromgroup', group.id]" class="ml-2 text-danger">&times;</a>
+            <a *ngIf="this.editMode" [routerLink]="['../../deletefromgroup', group.id]" class="ml-2 text-danger">&times;</a>
         </span>
     </ng-container>                    
 
 </div>
 
-<form *ngIf="formModel.group_id && this.groups" #f="ngForm" (ngSubmit)="saveForm(f.value,f.valid)" id="myForm" name="myForm" class="form-inline" >
+<form *ngIf="formModel.group_id && this.groups && this.editMode" #f="ngForm" (ngSubmit)="saveForm(f.value,f.valid)" id="myForm" name="myForm" class="form-inline mb-2" >
   <select [(ngModel)]="formModel.group_id" name="group_id" class="form-control form-control-sm col-12 col-md-auto">
       <option *ngFor="let group of groups" 
         [value]="group.id">{{group.name}}</option>
   </select>
-  <input type="submit" value="dodaj grupę" class="btn btn-primary btn-sm mt-2 mt-md-0 col-12 col-md-auto ml-md-2">
+  <input type="submit" value="dodaj grupę" class="btn btn-sm btn-primary mt-2 mt-md-0 col-12 col-md-auto ml-md-2">
 </form>

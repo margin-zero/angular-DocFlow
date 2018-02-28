@@ -19,6 +19,8 @@ export class AdminPathstepGroupsComponent implements OnInit {
   @Input() pathId: number;
   @Input() pathStepGroups: PathStepGroup[];
 
+  @Input() editMode: boolean;
+
   groups: Group[] = [];
   allGroups: Group[] = [];
 
