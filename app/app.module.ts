@@ -78,6 +78,7 @@ import { NoLeadingSpacesValidatorDirective } from './directives/no-leading-space
 import { AdminPathstepNewComponent } from './components/admin-pathstep-new/admin-pathstep-new.component';
 import { AdminPathstepEditComponent } from './components/admin-pathstep-edit/admin-pathstep-edit.component';
 import { AdminPathstepGroupsComponent } from './components/admin-pathstep-groups/admin-pathstep-groups.component';
+import { AdminPathstepGroupsDeleteComponent } from './components/admin-pathstep-groups-delete/admin-pathstep-groups-delete.component';
 
 
 
@@ -125,7 +126,8 @@ import { AdminPathstepGroupsComponent } from './components/admin-pathstep-groups
     NoLeadingSpacesValidatorDirective,
     AdminPathstepNewComponent,
     AdminPathstepEditComponent,
-    AdminPathstepGroupsComponent
+    AdminPathstepGroupsComponent,
+    AdminPathstepGroupsDeleteComponent
 
   ],
   imports: [
