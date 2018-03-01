@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-12">
+      <dcf-ui-admin-content-header [headerConfiguration]='headerConfiguration'></dcf-ui-admin-content-header>
+      <p *ngIf="responseMessage" class="text-danger m-0 my-3">{{responseMessage}}</p>
+  </div>
+
+  <div class="col-12 mt-3">
+      <div class="alert alert-danger" role="alert">
+          <h4 class="alert-heading">Uwaga!</h4>
+          <p>Potwierdź zamiar usunięcia wybranej akcji ścieżki obiegu dokumentów.</p>
+          <p>Ścieżka obiegu: <b>{{pathName}}</b><br />
+            Akcja: <b>{{pathStepName}}</b></p>
+          <hr>
+          <p class="mb-0">Jeśli potwierdzisz usunięcie wskazanej akcji, to zostanie ona usunięta ze ścieżki obiegu dokumentów wraz z informacją o przypisanych do niej grupach użytkowników.
+          </p>
+      </div>
+  </div>
+</div>
+  
+<form (submit)="submitForm()">
+  
+<div class="form-group row">
+  <div class="col-12">
+      <dcf-ui-admin-form-buttons  [formButtons]="formButtonConfiguration"></dcf-ui-admin-form-buttons>
+  </div>
+</div>
+
+</form>
+  
