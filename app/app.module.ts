@@ -79,6 +79,7 @@ import { AdminPathstepNewComponent } from './components/admin-pathstep-new/admin
 import { AdminPathstepEditComponent } from './components/admin-pathstep-edit/admin-pathstep-edit.component';
 import { AdminPathstepGroupsComponent } from './components/admin-pathstep-groups/admin-pathstep-groups.component';
 import { AdminPathstepGroupsDeleteComponent } from './components/admin-pathstep-groups-delete/admin-pathstep-groups-delete.component';
+import { AdminPathstepDeleteComponent } from './components/admin-pathstep-delete/admin-pathstep-delete.component';
 
 
 
@@ -127,7 +128,8 @@ import { AdminPathstepGroupsDeleteComponent } from './components/admin-pathstep-
     AdminPathstepNewComponent,
     AdminPathstepEditComponent,
     AdminPathstepGroupsComponent,
-    AdminPathstepGroupsDeleteComponent
+    AdminPathstepGroupsDeleteComponent,
+    AdminPathstepDeleteComponent
 
   ],
   imports: [
