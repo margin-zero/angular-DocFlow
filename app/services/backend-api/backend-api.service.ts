@@ -480,6 +480,20 @@ updatePathStep(pathStep: PathStep): Promise<ResponseData> {
 }
 
 
+deletePathStep(pathstepId: number): Promise<ResponseData> {
+
+  const URL = API_URL + 'pathstep/' + pathstepId;
+
+  return this.http
+      .delete<ResponseData>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+
+}
+
+
+
 getPathStepsCount(pathId: number): Promise<number> {
 
   const URL = API_URL + 'pathstepscount/' + pathId;
