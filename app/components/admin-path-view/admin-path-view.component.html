@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <h4 class="p-2 mt-5">Akcje &nbsp;&nbsp; <button class="btn btn-sm btn-primary" (click)="toggleEditMode()">{{getEditMode()}}</button></h4>
+    <h4 class="p-2 mt-5">Akcje &nbsp;&nbsp; <button *ngIf="pathSteps && pathSteps.length > 0" class="btn btn-sm btn-primary" (click)="toggleEditMode()">{{getEditMode()}}</button></h4>
 
     <ng-container *ngIf="pathSteps && pathSteps.length > 0">
             
@@ -50,7 +50,7 @@
                         <td class="app-col-narrow app-border-top-2 pt-4 pb-4">
                             <span >
                                 <a [ngClass]="{'text-danger': !pathstepHasActions(pathStep), 'text-dark': pathstepHasActions(pathStep)}" [routerLink]="['../../pathstep/edit',pathStep.id]" title="edytuj nazwę akcji">{{pathStep.name}}</a>
-                                <span><a href="#" class="text-danger" title="usuń akcję">&times;</a></span>
+                                <span><a [routerLink]="['../../pathstep/delete',pathStep.id]" title="usuń akcję" class="text-danger">&times;</a></span>
                             </span><br />
                             
                             <span [ngClass]="{'text-muted app-cursor-not-allowed': !pathstepCanGoUp(pathStep), 'text-primary app-cursor-pointer': pathstepCanGoUp(pathStep)}" (click)="pathstepGoUp(pathStep)" title="przesuń w górę">&#11205;</span>
