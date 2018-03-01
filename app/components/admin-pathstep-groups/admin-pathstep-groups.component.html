@@ -3,7 +3,7 @@
     <ng-container *ngFor="let group of allGroups">
         <span *ngIf="isInPathStepGroups(group.id)" class="app-bgcolor-lightgray px-2 pb-1 mr-2 mb-2 float-left">
             <a [routerLink]="['/admin/group/view/',group.id]" class="text-primary">{{group.name}}</a>
-            <a *ngIf="this.editMode" [routerLink]="['../../deletefromgroup', group.id]" class="ml-2 text-danger">&times;</a>
+            <a *ngIf="this.editMode" [routerLink]="['../../pathstep/deletegroup', pathStepId, group.id]" class="ml-2 text-danger">&times;</a>
         </span>
     </ng-container>                    
 
