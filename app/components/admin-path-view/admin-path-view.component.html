@@ -37,8 +37,8 @@
             <ng-container *ngIf="pathSteps.length>0">
                 <tr *ngFor="let pathStep of pathSteps">
                     <ng-container *ngIf="pathStep.action_enter === 'TRUE'">
-                        <td class="app-col-narrow app-border-top-2">{{pathStep.name}}</td>
-                        <td class="app-col-wide pb-4 app-border-top-2">
+                        <td class="app-col-narrow app-border-top-2 pt-4 pb-4">{{pathStep.name}}</td>
+                        <td class="app-col-wide app-border-top-2 pt-4 pb-4">
                             <span class="badge badge-pill app-bgcolor-lightgray my-1">
                                 <span class="text-dark">Wprowadzanie</span>
                             </span>
@@ -47,7 +47,7 @@
                     </ng-container>
         
                     <ng-container *ngIf="pathStep.action_enter !== 'TRUE'">
-                        <td class="app-col-narrow app-border-top-2">
+                        <td class="app-col-narrow app-border-top-2 pt-4 pb-4">
                             <span >
                                 <a [ngClass]="{'text-danger': !pathstepHasActions(pathStep), 'text-dark': pathstepHasActions(pathStep)}" [routerLink]="['../../pathstep/edit',pathStep.id]" title="edytuj nazwę akcji">{{pathStep.name}}</a>
                                 <span><a href="#" class="text-danger" title="usuń akcję">&times;</a></span>
@@ -55,11 +55,9 @@
                             
                             <span [ngClass]="{'text-muted app-cursor-not-allowed': !pathstepCanGoUp(pathStep), 'text-primary app-cursor-pointer': pathstepCanGoUp(pathStep)}" (click)="pathstepGoUp(pathStep)" title="przesuń w górę">&#11205;</span>
                             <span [ngClass]="{'text-muted app-cursor-not-allowed': !pathstepCanGoDown(pathStep), 'text-primary app-cursor-pointer': pathstepCanGoDown(pathStep)}" (click)="pathstepGoDown(pathStep)" title="przesuń w dół">&#11206;</span>
-                            
-                            
-
                         </td>
-                        <td class="app-col-wide pb-4 app-border-top-2">
+
+                        <td class="app-col-wide app-border-top-2 pt-4 pb-4">
                             <span class="badge badge-pill app-bgcolor-lightgray my-1 app-cursor-pointer" (click)="toggleActionNext(pathStep)">
                                 <span [ngClass]="{'text-dark': pathStep.action_next === 'TRUE', 'app-color-muted': pathStep.action_next === 'FALSE'}">Wykonaj i przekaż dalej</span>
                             </span>
