@@ -553,7 +553,17 @@ createPathStepGroup(pathStepId: number, pathId: number, groupId: number): Promis
       .catch(this.handleError);
 }
 
+deletePathStepGroup(pathstepId: number, groupId: number): Promise<ResponseData> {
 
+  const URL = API_URL + 'pathstepgroup/' + pathstepId + '/' + groupId;
+
+  return this.http
+      .delete<ResponseData>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+
+}
 
 // -----------------------------------------------------------------------------------------------
 //          ACTION API
