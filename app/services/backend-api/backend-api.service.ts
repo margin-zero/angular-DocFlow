@@ -418,6 +418,18 @@ updatePath(path: Path): Promise<ResponseData> {
 }
 
 
+deletePath(id: number): Promise<ResponseData> {
+
+  const URL = API_URL + 'path/' + id;
+
+  return this.http
+      .delete<ResponseData>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+
+}
+
 
 // -----------------------------------------------------------------------------------------------
 //          PATHSTEPS API
