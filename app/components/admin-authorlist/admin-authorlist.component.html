@@ -1,0 +1,30 @@
+<section class="container-fluid mt-3">
+    
+  <div class="row">
+  
+      <div class="col-sm-5 col-md-4 col-lg-3">
+
+          <section class="m-0 p-0 mb-2">
+
+              <dcf-ui-admin-list-header [headerConfiguration]='headerConfiguration'></dcf-ui-admin-list-header>
+
+              <input type="text" class="form-control" placeholder="filtruj..." [(ngModel)]="filter" name="filter">
+              <ul class="list-unstyled" *ngIf="filteredAuthors().length > 0">
+                  <li *ngFor="let author of filteredAuthors()" class="clearfix p-2 border border-top-0 app-hover-darker app-cursor-pointer" (click)="selectedAuthor = author; router.navigate(['view',selectedAuthor.id], { relativeTo: currentRoute })">
+                      {{author.name}}
+                  </li>
+              </ul>
+
+          </section>
+      </div>
+
+      <div class="col-sm-7 col-md-8 col-lg-9">
+
+          <p *ngIf="router.url === '/admin/author'">Wybierz wystawcę dokumentów z listy aby obejrzeć szczegóły...</p>
+
+          <router-outlet></router-outlet>
+
+      </div>
+
+  </div>
+</section>
