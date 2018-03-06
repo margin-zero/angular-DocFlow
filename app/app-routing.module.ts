@@ -35,6 +35,8 @@ import { AdminActionViewComponent } from './components/admin-action-view/admin-a
 import { AdminActionDeleteComponent } from './components/admin-action-delete/admin-action-delete.component';
 import { AdminActionEditComponent } from './components/admin-action-edit/admin-action-edit.component';
 
+import { AdminAuthorlistComponent } from './components/admin-authorlist/admin-authorlist.component';
+
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 
 import { UserComponent } from './components/user/user.component';
@@ -83,6 +85,14 @@ const routes: Routes = [
               ] },
 
           { path: 'action', component: AdminActionlistComponent,
+              children: [
+                { path: 'new', component: AdminActionNewComponent, canDeactivate: [PendingChangesGuard] },
+                { path: 'view/:actionId', component: AdminActionViewComponent },
+                { path: 'delete/:actionId', component: AdminActionDeleteComponent },
+                { path: 'edit/:actionId', component: AdminActionEditComponent, canDeactivate: [PendingChangesGuard] },
+              ] },
+
+          { path: 'author', component: AdminAuthorlistComponent,
               children: [
                 { path: 'new', component: AdminActionNewComponent, canDeactivate: [PendingChangesGuard] },
                 { path: 'view/:actionId', component: AdminActionViewComponent },
