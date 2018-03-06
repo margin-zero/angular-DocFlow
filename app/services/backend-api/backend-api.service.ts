@@ -14,6 +14,8 @@ import { Path } from '../../datatypes/path';
 import { PathStep } from '../../datatypes/pathstep';
 import { PathStepGroup } from '../../datatypes/pathstepgroup';
 import { Action } from '../../datatypes/action';
+import { Author } from '../../datatypes/author';
+
 
 import {
   ResponseUser,
@@ -23,7 +25,8 @@ import {
   ResponseData,
   ResponsePathStep,
   ResponseAction,
-  ResponseNumber } from '../../datatypes/response-classes';
+  ResponseNumber,
+  ResponseAuthor } from '../../datatypes/response-classes';
 
 
 // CONSTANTS
@@ -41,6 +44,7 @@ export class BackendApiService implements OnInit {
   pathsObservable = new Subject<any>();
   pathStepsObservable = new Subject<any>();
   actionsObservable = new Subject<any>();
+  authorsObservable = new Subject<any>();
 
   pathStepGroupsObservable = new Subject<any>();
   notPathStepGroupsObservable = new Subject<any>();
@@ -664,6 +668,86 @@ updateAction(action: Action): Promise<ResponseData> {
       .then(apiResponse => apiResponse as ResponseData)
       .catch(this.handleError);
 }
+
+
+
+
+// -----------------------------------------------------------------------------------------------
+//          AUTHOR API
+// -----------------------------------------------------------------------------------------------
+
+getAuthors(): Promise<Author[]> {
+
+  const URL = API_URL + 'authors';
+
+  return this.http.get<ResponseAuthor>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data as Author[])
+      .catch(this.handleError);
+}
+
+
+getAuthorsObservable(): Observable<any> {
+  return this.authorsObservable.asObservable();
+}
+
+
+refreshAuthorsObservable(): any {
+  this.getAuthors()
+  .then(authors => this.authorsObservable.next(authors));
+}
+
+
+getAuthor(authorId: number): Promise<Author> {
+
+  const URL = API_URL + 'author/' + authorId;
+
+  return this.http.get<ResponseAuthor>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data[0] as Author)
+      .catch(this.handleError);
+}
+
+updateAuthor(author: Author): Promise<ResponseData> {
+
+  const URL = API_URL + 'author/' + author.id;
+
+  return this.http
+      .post<ResponseData>(URL, JSON.stringify(author), {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+}
+
+createAuthor(author: Author): Promise<ResponseData> {
+
+  const URL = API_URL + 'author';
+
+  return this.http
+      .put<ResponseData>(URL, JSON.stringify(author), {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+}
+
+
+deleteAuthor(id: number): Promise<ResponseData> {
+
+  const URL = API_URL + 'author/' + id;
+
+  return this.http
+      .delete<ResponseData>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+
+}
+
+
+
+
+
+
 
 
 }
