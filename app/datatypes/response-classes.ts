@@ -4,6 +4,8 @@ import { Path } from './path';
 import { PathStep } from './pathstep';
 import { PathStepGroup } from './pathstepgroup';
 import { Action } from './action';
+import { Author } from './author';
+
 
 export class ResponseData {
     status: string;
@@ -36,4 +38,8 @@ export class ResponseAction extends ResponseData {
 
 export class ResponseNumber extends ResponseData {
     data: Number;
+}
+
+export class ResponseAuthor extends ResponseData {
+    data: Author[];
 }
