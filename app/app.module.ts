@@ -84,6 +84,7 @@ import { AdminPathDeleteComponent } from './components/admin-path-delete/admin-p
 import { AdminAuthorlistComponent } from './components/admin-authorlist/admin-authorlist.component';
 import { AdminAuthorNewComponent } from './components/admin-author-new/admin-author-new.component';
 import { UniqueAuthorNameValidatorDirective } from './directives/unique-author-name-validator.directive';
+import { AdminAuthorViewComponent } from './components/admin-author-view/admin-author-view.component';
 
 
 
@@ -137,7 +138,8 @@ import { UniqueAuthorNameValidatorDirective } from './directives/unique-author-n
     AdminPathDeleteComponent,
     AdminAuthorlistComponent,
     AdminAuthorNewComponent,
-    UniqueAuthorNameValidatorDirective
+    UniqueAuthorNameValidatorDirective,
+    AdminAuthorViewComponent
 
   ],
   imports: [
