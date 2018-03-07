@@ -34,7 +34,7 @@ export class UniqueAuthorNameValidatorDirective implements Validator, OnInit {
 
     if ( control.value ) {
       for (let i = 0; i < this.authornames.length; i++) {
-        if ( this.authornames[i] === control.value ) {
+        if ( this.authornames[i].toLowerCase() === control.value.toLowerCase() ) {
           isValid = false;
         }
       }
