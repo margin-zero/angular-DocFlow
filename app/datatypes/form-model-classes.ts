@@ -3,6 +3,7 @@ import { Group } from './group';
 import { Path } from './path';
 import { Action } from './action';
 import { PathStep } from './pathstep';
+import { Author } from './author';
 
 export class FormModelChangePassword {
     oldPassword: string;
@@ -98,5 +99,19 @@ export class FormModelNewPathStepGroup {
         this.pathstep_id = 0;
         this.group_id = 0;
         this.path_id = 0;
+    }
+}
+
+export class FormModelEditAuthor extends Author {
+    // for now we have FormModelEditAuthor === Author
+    constructor() {
+        super();
+        this.id = 0;
+        this.name = '';
+        this.full_name = '';
+        this.address = '';
+        this.phone_number = '';
+        this.email_address = '';
+        this.additional_info  = '';
     }
 }
