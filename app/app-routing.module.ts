@@ -37,6 +37,7 @@ import { AdminActionEditComponent } from './components/admin-action-edit/admin-a
 
 import { AdminAuthorlistComponent } from './components/admin-authorlist/admin-authorlist.component';
 import { AdminAuthorNewComponent } from './components/admin-author-new/admin-author-new.component';
+import { AdminAuthorViewComponent } from './components/admin-author-view/admin-author-view.component';
 
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 
@@ -96,7 +97,7 @@ const routes: Routes = [
           { path: 'author', component: AdminAuthorlistComponent,
               children: [
                 { path: 'new', component: AdminAuthorNewComponent, canDeactivate: [PendingChangesGuard] },
-                { path: 'view/:actionId', component: AdminActionViewComponent },
+                { path: 'view/:authorId', component: AdminAuthorViewComponent },
                 { path: 'delete/:actionId', component: AdminActionDeleteComponent },
                 { path: 'edit/:actionId', component: AdminActionEditComponent, canDeactivate: [PendingChangesGuard] },
               ] },
