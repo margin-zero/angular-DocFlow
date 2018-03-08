@@ -86,6 +86,7 @@ import { AdminAuthorNewComponent } from './components/admin-author-new/admin-aut
 import { UniqueAuthorNameValidatorDirective } from './directives/unique-author-name-validator.directive';
 import { AdminAuthorViewComponent } from './components/admin-author-view/admin-author-view.component';
 import { AdminAuthorEditComponent } from './components/admin-author-edit/admin-author-edit.component';
+import { UserHomeComponent } from './components/user-home/user-home.component';
 
 
 
@@ -141,7 +142,8 @@ import { AdminAuthorEditComponent } from './components/admin-author-edit/admin-a
     AdminAuthorNewComponent,
     UniqueAuthorNameValidatorDirective,
     AdminAuthorViewComponent,
-    AdminAuthorEditComponent
+    AdminAuthorEditComponent,
+    UserHomeComponent
 
   ],
   imports: [
