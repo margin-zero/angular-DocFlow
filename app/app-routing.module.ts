@@ -44,6 +44,8 @@ import { AdminHomeComponent } from './components/admin-home/admin-home.component
 
 import { UserComponent } from './components/user/user.component';
 
+import { UserHomeComponent } from './components/user-home/user-home.component';
+
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { IsAdminGuard, IsUserGuard, IsAuthenticatedGuard, PendingChangesGuard } from './services/router-guards/router-guards.service';
 import { AdminUserGroupsDeleteComponent } from './components/admin-user-groups-delete/admin-user-groups-delete.component';
@@ -106,7 +108,11 @@ const routes: Routes = [
         ]
     },
 
-    { path: 'user', component: UserComponent, canActivate: [IsUserGuard] },
+    { path: 'user', component: UserComponent, canActivate: [IsUserGuard],
+    children: [
+      { path: 'home', component: UserHomeComponent },
+    ] },
+
     { path: '**', redirectTo: 'login', pathMatch: 'full' },
   ];
 
