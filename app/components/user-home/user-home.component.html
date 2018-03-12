@@ -1,3 +1,9 @@
 <p>
   user-home works!
 </p>
+
+<p *ngFor="let group of groups">{{group.name}} -- {{group.id}}</p>
+<hr>
+<p *ngFor="let entrygroup of entryPathStepGroups">
+  {{entrygroup.id}} -- {{entrygroup.pathstep_id}} -- {{entrygroup.group_id}} -- {{entrygroup.path_id}} -- {{entrygroup.name}}
+</p>
