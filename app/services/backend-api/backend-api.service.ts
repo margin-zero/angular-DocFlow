@@ -15,6 +15,7 @@ import { PathStep } from '../../datatypes/pathstep';
 import { PathStepGroup } from '../../datatypes/pathstepgroup';
 import { Action } from '../../datatypes/action';
 import { Author } from '../../datatypes/author';
+import { EntryPathStepGroup } from '../../datatypes/entrypathstepgroup';
 
 
 import {
@@ -26,7 +27,8 @@ import {
   ResponsePathStep,
   ResponseAction,
   ResponseNumber,
-  ResponseAuthor } from '../../datatypes/response-classes';
+  ResponseAuthor,
+  ResponseEntryPathStepGroup } from '../../datatypes/response-classes';
 
 
 // CONSTANTS
@@ -594,6 +596,20 @@ deletePathStepGroup(pathstepId: number, groupId: number): Promise<ResponseData> 
       .catch(this.handleError);
 
 }
+
+
+
+
+getEntryPathStepGroups(): Promise<EntryPathStepGroup[]> {
+
+  const URL = API_URL + 'entrypathstepgroups/';
+
+  return this.http.get<ResponseEntryPathStepGroup>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data as EntryPathStepGroup[])
+      .catch(this.handleError);
+}
+
 
 // -----------------------------------------------------------------------------------------------
 //          ACTION API
