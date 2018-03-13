@@ -759,11 +759,4 @@ deleteAuthor(id: number): Promise<ResponseData> {
 
 }
 
-
-
-
-
-
-
-
 }
