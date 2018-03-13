@@ -88,6 +88,7 @@ import { AdminAuthorViewComponent } from './components/admin-author-view/admin-a
 import { AdminAuthorEditComponent } from './components/admin-author-edit/admin-author-edit.component';
 import { UserHomeComponent } from './components/user-home/user-home.component';
 import { UserDocumentNewComponent } from './components/user-document-new/user-document-new.component';
+import { ToolSelectAuthorComponent } from './components/tool-select-author/tool-select-author.component';
 
 
 
@@ -145,7 +146,8 @@ import { UserDocumentNewComponent } from './components/user-document-new/user-do
     AdminAuthorViewComponent,
     AdminAuthorEditComponent,
     UserHomeComponent,
-    UserDocumentNewComponent
+    UserDocumentNewComponent,
+    ToolSelectAuthorComponent
 
   ],
   imports: [
