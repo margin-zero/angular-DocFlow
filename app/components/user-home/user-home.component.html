@@ -20,5 +20,5 @@
 
 <p *ngFor="let path of paths">
   <span *ngIf="canEnterNewDocument(path.id)">
-    <a [routerLink]="['document/new', path.id]">{{path.name}}</a></span>
+    <a [routerLink]="['../document/new', path.id]">{{path.name}}</a></span>
 </p>
