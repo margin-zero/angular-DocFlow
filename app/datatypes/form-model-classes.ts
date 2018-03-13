@@ -4,6 +4,7 @@ import { Path } from './path';
 import { Action } from './action';
 import { PathStep } from './pathstep';
 import { Author } from './author';
+import { Document } from './document';
 
 export class FormModelChangePassword {
     oldPassword: string;
@@ -113,5 +114,27 @@ export class FormModelEditAuthor extends Author {
         this.phone_number = '';
         this.email_address = '';
         this.additional_info  = '';
+    }
+}
+
+export class FormModelEditDocument extends Document {
+    // for now we have FormModelEditDocument === Document
+    constructor() {
+        super();
+        this.id = 0;
+        this.name = '';
+        this.register = '';
+        this.input_date = 0;
+        this.author_id = 0;
+        this.id_by_author = '';
+        this.date_by_author = 0;
+        this.additional_info = '';
+        this.ready = 'FALSE';
+        this.path_id = 0;
+        this.pathstep_id = 0;
+        this.assigned_user = 0;
+        this.closed = 'FALSE';
+        this.file_path = '';
+        this.message = '';
     }
 }
