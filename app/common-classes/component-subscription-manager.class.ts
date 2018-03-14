@@ -9,6 +9,7 @@ export class ComponentSubscriptionManager implements OnDestroy {
     }
 
     ngOnDestroy() {
+
         for (let i = 0; i < this.subscriptionArray.length; i++ ) {
             this.subscriptionArray[i].unsubscribe();
         }
