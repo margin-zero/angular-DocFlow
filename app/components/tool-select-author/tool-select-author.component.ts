@@ -14,7 +14,8 @@ import { ComponentSubscriptionManager } from '../../common-classes/component-sub
 })
 export class ToolSelectAuthorComponent implements OnInit {
 
-  pageNumber: number;
+  page: number;
+  totalPages: number;
   authors: Author[] = [];
   headerConfiguration = new UiAdminHeaderConfiguration( { headerText: 'Wybierz wystawcę dokumentu' } );
 
@@ -26,8 +27,8 @@ export class ToolSelectAuthorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.pageNumber = 1;
-
+    this.page = 1;
+    this.totalPages = 0;
 
     this.subscriptionManager.add(
       this.backendApiService.getAuthorsObservable().subscribe(authors => this.authors = authors)
@@ -51,7 +52,15 @@ export class ToolSelectAuthorComponent implements OnInit {
       if ((valueToSearchIn.toLowerCase().includes(this.filter.toLowerCase())) ||
           ( this.filter.trim().length === 0))  { fa.push(this.authors[i]); }
     }
+
+    this.totalPages = Math.floor(fa.length / 10 );
+    if ((fa.length % 10) > 0) { this.totalPages++ ; }
+
     return fa;
   }
 
+
+  setPage(pageNumber: number) {
+    this.page = pageNumber;
+  }
 }
