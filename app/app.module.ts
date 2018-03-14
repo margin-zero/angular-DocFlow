@@ -89,6 +89,7 @@ import { AdminAuthorEditComponent } from './components/admin-author-edit/admin-a
 import { UserHomeComponent } from './components/user-home/user-home.component';
 import { UserDocumentNewComponent } from './components/user-document-new/user-document-new.component';
 import { ToolSelectAuthorComponent } from './components/tool-select-author/tool-select-author.component';
+import { UiUserToolHeaderComponent } from './ui-components/user/ui-user-tool-header/ui-user-tool-header.component';
 
 
 
@@ -147,7 +148,8 @@ import { ToolSelectAuthorComponent } from './components/tool-select-author/tool-
     AdminAuthorEditComponent,
     UserHomeComponent,
     UserDocumentNewComponent,
-    ToolSelectAuthorComponent
+    ToolSelectAuthorComponent,
+    UiUserToolHeaderComponent
 
   ],
   imports: [
