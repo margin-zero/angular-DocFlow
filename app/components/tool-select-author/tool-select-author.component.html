@@ -1,3 +1,23 @@
-<p>
-  tool-select-author works!
-</p>
+<dcf-ui-user-tool-header [headerConfiguration]='headerConfiguration'></dcf-ui-user-tool-header>
+<input type="text" class="form-control" placeholder="filtruj..." [(ngModel)]="filter" name="filter">
+
+<table class="table table-sm table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Nazwa</th>
+      <th scope="col">Nazwa pełna</th>
+      <th scope="col">Adres</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let author of filteredAuthors()">
+      <td>{{author.id}}</td>
+      <td>{{author.name}}</td>
+      <td>{{author.full_name}}</td>
+      <td>{{author.address}}</td>
+    </tr>
+  </tbody>
+</table>
+
