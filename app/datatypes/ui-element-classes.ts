@@ -71,3 +71,20 @@ export class UiAdminHeaderConfiguration {
         }
     }
 }
+
+
+export class UiUserHeaderConfiguration {
+    headerText: string;
+    subheaderText: string;
+
+    constructor(params: any) {
+
+        this.headerText = '';
+        this.subheaderText = '';
+
+        const paramArray = Object.keys(params);
+        for ( let i = 0; i < paramArray.length; i++) {
+            this[paramArray[i]] = params[paramArray[i]];
+        }
+    }
+}
