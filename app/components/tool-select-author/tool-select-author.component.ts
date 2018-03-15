@@ -18,6 +18,7 @@ export class ToolSelectAuthorComponent implements OnInit {
   totalPages: number;
   authors: Author[] = [];
   headerConfiguration = new UiAdminHeaderConfiguration( { headerText: 'Wybierz wystawcę dokumentu' } );
+  pageArray = [];
 
   filter: string;
 
@@ -53,12 +54,23 @@ export class ToolSelectAuthorComponent implements OnInit {
           ( this.filter.trim().length === 0))  { fa.push(this.authors[i]); }
     }
 
-    this.totalPages = Math.floor(fa.length / 10 );
-    if ((fa.length % 10) > 0) { this.totalPages++ ; }
+    this.setTotalPages(fa.length);
+    this.setPageArray();
 
     return fa;
   }
 
+  setTotalPages(elementCount: number) {
+    this.totalPages = Math.floor(elementCount / 10 );
+    if ((elementCount % 10) > 0) { this.totalPages++ ; }
+  }
+
+  setPageArray() {
+      this.pageArray = [];
+      for (let i = 1; i <= this.totalPages; i++ ) {
+        this.pageArray.push(i);
+      }
+  }
 
   setPage(pageNumber: number) {
     this.page = pageNumber;

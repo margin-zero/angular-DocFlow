@@ -28,27 +28,20 @@
 </table>
 
 
-
-<nav aria-label="nawigacja pomiędzy stronami wyników">
+<nav>
     <ul class="pagination">
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-          <span class="sr-only">Previous</span>
-        </a>
+
+      <li [ngClass]="{'disabled': page === 1}" class="page-item">
+          <input type="button" class="page-link" (click)="setPage(page-1)" value="&laquo;">
       </li>
-      <li class="page-item active"><input type="button" class="page-link" (click)="setPage(1)" value="1"></li>
-      <li class="page-item"><input type="button" class="page-link" (click)="setPage(2)" value="2"></li>
-      <li class="page-item disabled"><input type="button" class="page-link" (click)="setPage(3)" value="3"></li>
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-          <span class="sr-only">Next</span>
-        </a>
+
+      <li [ngClass]="{'active': pageArray[i] === page }" class="page-item" *ngFor="let element of pageArray; let i = index">
+          <input type="button" class="page-link" (click)="setPage(pageArray[i])" value="{{pageArray[i]}}">
       </li>
+        
+      <li [ngClass]="{'disabled': page === pageArray[pageArray.length-1]}" class="page-item">
+          <input type="button" class="page-link" (click)="setPage(page+1)" value="&raquo;">
+      </li>
+
     </ul>
-  </nav>
-
-
-<hr>
-total pages: {{totalPages}} / strona: {{page}}
+</nav>
