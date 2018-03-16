@@ -1,21 +1,21 @@
 <dcf-ui-user-tool-header [headerConfiguration]='headerConfiguration'></dcf-ui-user-tool-header>
-<input type="text" class="form-control" placeholder="filtruj..." [(ngModel)]="filter" name="filter">
+<input type="text" class="form-control" placeholder="filtruj..." [(ngModel)]="filter" name="filter" (ngModelChange)="prepareAuthorsArray()">
 
 <table class="table table-sm table-hover">
   <thead>
     <tr>
       <th scope="col">Id</th>
-      <th scope="col">Nazwa</th>
-      <th scope="col">Nazwa pełna</th>
-      <th scope="col">Adres</th>
+      <th scope="col" (click)="clickNameHeader()" class="app-cursor-pointer">Nazwa</th>
+      <th scope="col" (click)="clickFullNameHeader()" class="app-cursor-pointer">Nazwa pełna</th>
+      <th scope="col" (click)="clickAddressHeader()" class="app-cursor-pointer">Adres</th>
     </tr>
   </thead>
   <tbody>
 
-    <ng-container *ngFor="let author of filteredAuthors(); let i = index">
+    <ng-container *ngFor="let author of authorsArray; let i = index">
         
         <!-- display only elements from current page -->
-        <tr *ngIf="(i >= (page-1)*10) && (i <= (page*10)-1)">
+        <tr *ngIf="(i >= (page-1)*10) && (i <= (page*10)-1)" (click)="selectAuthor(author)" class="app-cursor-pointer">
             <td>{{author.id}}</td>
             <td>{{author.name}}</td>
             <td>{{author.full_name}}</td>
@@ -29,19 +29,21 @@
 
 
 <nav>
-    <ul class="pagination">
+    <ul class="pagination justify-content-center">
 
-      <li [ngClass]="{'disabled': page === 1}" class="page-item">
-          <input type="button" class="page-link" (click)="setPage(page-1)" value="&laquo;">
+      <li [ngClass]="{'disabled app-cursor-not-allowed': page === 1}" class="page-item">
+          <input type="button" [ngClass]="{'app-cursor-pointer': page > 1}" class="page-link" (click)="setPage(page-1)" value="&laquo;">
       </li>
 
       <li [ngClass]="{'active': pageArray[i] === page }" class="page-item" *ngFor="let element of pageArray; let i = index">
-          <input type="button" class="page-link" (click)="setPage(pageArray[i])" value="{{pageArray[i]}}">
+          <input type="button" [ngClass]="{'app-cursor-pointer': pageArray[i] !== page }" class="page-link" (click)="setPage(pageArray[i])" value="{{pageArray[i]}}">
       </li>
         
-      <li [ngClass]="{'disabled': page === pageArray[pageArray.length-1]}" class="page-item">
-          <input type="button" class="page-link" (click)="setPage(page+1)" value="&raquo;">
+      <li [ngClass]="{'disabled app-cursor-not-allowed': page === pageArray[pageArray.length-1]}" class="page-item">
+          <input type="button" [ngClass]="{'app-cursor-pointer': page < pageArray[pageArray.length-1]}" class="page-link" (click)="setPage(page+1)" value="&raquo;">
       </li>
 
     </ul>
 </nav>
+
+
