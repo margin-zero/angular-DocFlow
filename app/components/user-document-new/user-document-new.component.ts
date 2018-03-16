@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Document } from '../../datatypes/document';
 import { Path } from '../../datatypes/path';
+import { Author } from '../../datatypes/author';
 
 import { FormModelEditDocument } from '../../datatypes/form-model-classes';
 
@@ -29,6 +30,12 @@ export class UserDocumentNewComponent implements OnInit {
   path: Path;
 
   formModel: FormModelEditDocument = new FormModelEditDocument();
+
+  showToolSelectAuthor = false;
+  selectedAuthor: Author = null;
+
+  showToolSelectPath = false;
+  selectedPath: Path = null;
 
 
   constructor(
@@ -87,6 +94,29 @@ export class UserDocumentNewComponent implements OnInit {
         }
       });
     */
+  }
+
+
+  onSelectAuthor(author: Author) {
+    this.selectedAuthor = author;
+    this.showToolSelectAuthor = false;
+
+    this.formModel.author_id = author.id;
+  }
+
+  toggleShowToolSelectAuthor() {
+    this.showToolSelectAuthor = !this.showToolSelectAuthor;
+  }
+
+  onSelectPath(path: Path) {
+    this.selectedPath = path;
+    this.showToolSelectPath = false;
+
+    this.formModel.path_id = path.id;
+  }
+
+  toggleShowToolSelectPath() {
+    this.showToolSelectPath = !this.showToolSelectPath;
   }
 
 }

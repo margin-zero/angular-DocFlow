@@ -9,9 +9,20 @@
 <section class="container-fluid">
   <div class="row">
     <div class="col-12">
-      
-        <dcf-tool-select-author></dcf-tool-select-author>
-      
+        <p *ngIf="selectedAuthor">wystawca dokumentu: ({{selectedAuthor.id}}) {{selectedAuthor.name}} / {{selectedAuthor.full_name}} / {{selectedAuthor.address}}</p>
+        <dcf-tool-select-author *ngIf="showToolSelectAuthor" (onSelectAuthor)="onSelectAuthor($event)"></dcf-tool-select-author>
+        <button (click)="toggleShowToolSelectAuthor()">przełącz listę autorów</button>
     </div>
+
+    <div class="col-12">
+      <p *ngIf="selectedPath">ścieżka obiegu: ({{selectedPath.id}}) {{selectedPath.name}}</p>
+      <dcf-tool-select-path *ngIf="showToolSelectPath" (onSelectPath)="onSelectPath($event)"></dcf-tool-select-path>
+      <button (click)="toggleShowToolSelectPath()">przełącz listę ścieżek</button>
+    </div>
+
   </div>
 </section>
+
+
+<hr>
+formModel.author_id = {{formModel.author_id}}
