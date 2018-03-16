@@ -90,6 +90,7 @@ import { UserHomeComponent } from './components/user-home/user-home.component';
 import { UserDocumentNewComponent } from './components/user-document-new/user-document-new.component';
 import { ToolSelectAuthorComponent } from './components/tool-select-author/tool-select-author.component';
 import { UiUserToolHeaderComponent } from './ui-components/user/ui-user-tool-header/ui-user-tool-header.component';
+import { ToolSelectPathComponent } from './components/tool-select-path/tool-select-path.component';
 
 
 
@@ -149,7 +150,8 @@ import { UiUserToolHeaderComponent } from './ui-components/user/ui-user-tool-hea
     UserHomeComponent,
     UserDocumentNewComponent,
     ToolSelectAuthorComponent,
-    UiUserToolHeaderComponent
+    UiUserToolHeaderComponent,
+    ToolSelectPathComponent
 
   ],
   imports: [
