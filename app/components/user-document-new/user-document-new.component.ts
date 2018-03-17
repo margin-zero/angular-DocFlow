@@ -12,7 +12,7 @@ import { FormModelEditDocument } from '../../datatypes/form-model-classes';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 
-import { ComponentSubscriptionManager } from '../../common-classes/component-subscription-manager.class';
+// import { ComponentSubscriptionManager } from '../../common-classes/component-subscription-manager.class';
 // import { UiAdminFormButtonConfiguration, UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
 
 
@@ -20,14 +20,9 @@ import { ComponentSubscriptionManager } from '../../common-classes/component-sub
   selector: 'dcf-user-document-new',
   templateUrl: './user-document-new.component.html',
   styleUrls: ['./user-document-new.component.css'],
-  providers: [ ComponentSubscriptionManager ]
+  // providers: [ ComponentSubscriptionManager ]
 })
 export class UserDocumentNewComponent implements OnInit {
-
-  pathId: number;
-  authorId: number;
-
-  path: Path;
 
   formModel: FormModelEditDocument = new FormModelEditDocument();
 
@@ -43,23 +38,10 @@ export class UserDocumentNewComponent implements OnInit {
     private location: Location,
     private route: ActivatedRoute,
     private router: Router,
-    private subscriptionManager: ComponentSubscriptionManager
+    // private subscriptionManager: ComponentSubscriptionManager
   ) { }
 
-  ngOnInit() {
-
-    this.subscriptionManager.add(
-      this.route.params.subscribe(params => {
-        this.backendApiService.getPath(+params['pathId'])
-          .then(path => {
-            this.path = path;
-          });
-        this.pathId = +params['pathId'];
-        this.authorId = +params['authorId'];
-        })
-    );
-
-  }
+  ngOnInit() {}
 
 
   // @HostListener detects navigating out of your current location via router but also

@@ -1,28 +1,40 @@
-<h3>Nowy dokument</h3>
-<h4>ścieżka obiegu:
-  <ng-container *ngIf="path">
-    <small>{{ path.name}}</small>
-  </ng-container>
-</h4>
-<hr>
-
 <section class="container-fluid">
-  <div class="row">
-    <div class="col-12">
-        <p *ngIf="selectedAuthor">wystawca dokumentu: ({{selectedAuthor.id}}) {{selectedAuthor.name}} / {{selectedAuthor.full_name}} / {{selectedAuthor.address}}</p>
-        <dcf-tool-select-author *ngIf="showToolSelectAuthor" (onSelectAuthor)="onSelectAuthor($event)"></dcf-tool-select-author>
-        <button (click)="toggleShowToolSelectAuthor()">przełącz listę autorów</button>
-    </div>
+    <div class="row">
+        <div class="col-12">
+            <h1>Nowy dokument</h1>
+            <table class="table table-sm  table-bordered">
+              <tbody>
+                  <tr>
+                      <td class="app-col-narrow">wystawca:<span class="float-right"><button class="btn btn-sm btn-primary"  (click)="toggleShowToolSelectAuthor()">(...)</button></span></td>
+                      <td class="app-col-wide">
+                          <ng-container *ngIf="selectedAuthor">
+                              <section class="container-fluid">
+                                  <div class="row">
+                                      <div class="col mb-3">{{selectedAuthor.full_name}}<br />
+                                        <small>{{selectedAuthor.address}}</small></div>
+                                  </div>
+                              </section>
+                          </ng-container>
+                          <dcf-tool-select-author *ngIf="showToolSelectAuthor" (onSelectAuthor)="onSelectAuthor($event)"></dcf-tool-select-author>
+                      </td>
+                  </tr>
 
-    <div class="col-12">
-      <p *ngIf="selectedPath">ścieżka obiegu: ({{selectedPath.id}}) {{selectedPath.name}}</p>
-      <dcf-tool-select-path *ngIf="showToolSelectPath" (onSelectPath)="onSelectPath($event)"></dcf-tool-select-path>
-      <button (click)="toggleShowToolSelectPath()">przełącz listę ścieżek</button>
-    </div>
+                  <tr>
+                      <td class="app-col-narrow">ścieżka obiegu:<span class="float-right"><button class="btn btn-sm btn-primary"  (click)="toggleShowToolSelectPath()">(...)</button></span></td>
+                      <td class="app-col-wide">
+                          <ng-container *ngIf="selectedPath">
+                              <section class="container-fluid">
+                                  <div class="row">
+                                      <div class="col mb-3">{{selectedPath.name}}</div>
+                                  </div>
+                              </section>
+                          </ng-container>
+                          <dcf-tool-select-path *ngIf="showToolSelectPath" (onSelectPath)="onSelectPath($event)"></dcf-tool-select-path>
+                      </td>
+                  </tr>
 
-  </div>
+              </tbody>
+            </table>
+        </div>
+    </div>
 </section>
-
-
-<hr>
-formModel.author_id = {{formModel.author_id}}
