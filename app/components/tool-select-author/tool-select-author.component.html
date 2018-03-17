@@ -4,7 +4,7 @@
 <table class="table table-sm table-hover">
   <thead>
     <tr>
-      <th scope="col">Id</th>
+      <th scope="col" (click)="clickIdHeader()" class="app-cursor-pointer">Id</th>
       <th scope="col" (click)="clickNameHeader()" class="app-cursor-pointer">Nazwa</th>
       <th scope="col" (click)="clickFullNameHeader()" class="app-cursor-pointer">Nazwa pełna</th>
       <th scope="col" (click)="clickAddressHeader()" class="app-cursor-pointer">Adres</th>
@@ -16,10 +16,10 @@
         
         <!-- display only elements from current page -->
         <tr *ngIf="(i >= (page-1)*10) && (i <= (page*10)-1)" (click)="selectAuthor(author)" class="app-cursor-pointer">
-            <td>{{author.id}}</td>
-            <td>{{author.name}}</td>
-            <td>{{author.full_name}}</td>
-            <td>{{author.address}}</td>
+            <td><small>{{author.id}}</small></td>
+            <td><small>{{author.name}}</small></td>
+            <td><small>{{author.full_name}}</small></td>
+            <td><small>{{author.address}}</small></td>
         </tr>
 
     </ng-container>

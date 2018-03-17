@@ -9,7 +9,8 @@ import { ComponentSubscriptionManager } from '../../common-classes/component-sub
 @Component({
   selector: 'dcf-tool-select-author',
   templateUrl: './tool-select-author.component.html',
-  styleUrls: ['./tool-select-author.component.css']
+  styleUrls: ['./tool-select-author.component.css'],
+  providers: [ ComponentSubscriptionManager ]
 })
 export class ToolSelectAuthorComponent implements OnInit {
 
@@ -102,6 +103,21 @@ export class ToolSelectAuthorComponent implements OnInit {
 
 // obsługa klikania w nagłówki tabeli - zmiana kolejności elementów
 
+  clickIdHeader() {
+    if (this.sortBy === 'id') {
+      if (this.sortDirection === 'asc') {
+          this.sortDirection = 'dsc';
+      } else {
+          this.sortDirection = 'asc';
+      }
+    } else {
+      this.sortBy = 'id';
+      this.sortDirection = 'asc';
+    }
+
+    this.sortAuthorsArray();
+  }
+
   clickNameHeader() {
     if (this.sortBy === 'name') {
       if (this.sortDirection === 'asc') {
@@ -150,6 +166,8 @@ export class ToolSelectAuthorComponent implements OnInit {
   }
 
   sortAuthorsArray() {
+    if (this.sortBy === 'id' && this.sortDirection === 'asc') { this.authorsArray.sort(this.sortAuthorsArrayByIdAsc); }
+    if (this.sortBy === 'id' && this.sortDirection === 'dsc') { this.authorsArray.sort(this.sortAuthorsArrayByIdDsc); }
     if (this.sortBy === 'name' && this.sortDirection === 'asc') { this.authorsArray.sort(this.sortAuthorsArrayByNameAsc); }
     if (this.sortBy === 'name' && this.sortDirection === 'dsc') { this.authorsArray.sort(this.sortAuthorsArrayByNameDsc); }
     if (this.sortBy === 'full_name' && this.sortDirection === 'asc') { this.authorsArray.sort(this.sortAuthorsArrayByFullNameAsc); }
@@ -158,11 +176,24 @@ export class ToolSelectAuthorComponent implements OnInit {
     if (this.sortBy === 'address' && this.sortDirection === 'dsc') { this.authorsArray.sort(this.sortAuthorsArrayByAddressDsc); }
   }
 
+  sortAuthorsArrayByIdAsc(a, b) {
+      if (a.id < b.id) { return -1; }
+      if (a.id > b.id) { return 1; }
+      return 0;
+    }
+
+  sortAuthorsArrayByIdDsc(a, b) {
+      if (a.id > b.id) { return -1; }
+      if (a.id < b.id) { return 1; }
+      return 0;
+    }
+
   sortAuthorsArrayByNameAsc(a, b) {
       if (a.name < b.name) { return -1; }
       if (a.name > b.name) { return 1; }
       return 0;
     }
+
   sortAuthorsArrayByNameDsc(a, b) {
       if (a.name > b.name) { return -1; }
       if (a.name < b.name) { return 1; }
