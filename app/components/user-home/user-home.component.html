@@ -1,24 +1,3 @@
 <p>
   user-home works!
 </p>
-
-<ng-container *ngIf="groups">
-  <p *ngFor="let group of groups">{{group.name}} -- {{group.id}}</p>
-  <hr>
-</ng-container>
-
-
-<p *ngFor="let entrygroup of entryPathStepGroups">
-  {{entrygroup.id}} -- {{entrygroup.pathstep_id}} -- {{entrygroup.group_id}} -- {{entrygroup.path_id}} -- {{entrygroup.name}}
-</p>
-<hr>
-
-
-
-<p>Użytkownik może dodać dokument do ścieżek:</p>
-
-
-<p *ngFor="let path of paths">
-  <span *ngIf="canEnterNewDocument(path.id)">
-    <a [routerLink]="['../document/new']">{{path.name}}</a></span>
-</p>
