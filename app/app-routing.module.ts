@@ -115,8 +115,7 @@ const routes: Routes = [
 
           { path: 'home', component: UserHomeComponent },
 
-          { path: 'document/new/:pathId', component: UserDocumentNewComponent, canDeactivate: [PendingChangesGuard] },
-          { path: 'document/new/:pathId/:authorId', component: UserDocumentNewComponent, canDeactivate: [PendingChangesGuard] },
+          { path: 'document/new', component: UserDocumentNewComponent, canDeactivate: [PendingChangesGuard] },
 
     ] },
 
