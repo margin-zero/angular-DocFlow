@@ -1,10 +1,15 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
+import { User } from '../../datatypes/user';
+import { Group } from '../../datatypes/group';
 import { Path } from '../../datatypes/path';
+import { EntryPathStepGroup } from '../../datatypes/entrypathstepgroup';
+
 import { UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 import { ComponentSubscriptionManager } from '../../common-classes/component-subscription-manager.class';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
 
 @Component({
   selector: 'dcf-tool-select-path',
@@ -18,35 +23,94 @@ export class ToolSelectPathComponent implements OnInit {
 
   page: number;
   totalPages: number;
-  paths: Path[] = [];
+  pageArray = [];
+
+  user: User;
+  groups: Group[] = [];  // grupy do których należy uzytkownik
+  entryPathStepGroups: EntryPathStepGroup[] = [];  // wszystkie grupy, które są przypisane do akcji będących akcjami "wprowadzanie"
+  paths: Path[] = [];  // ścieżki w systemie do których użytkownik może wystawiać nowe dokumenty
 
   pathsArray: Path[] = [];
 
   headerConfiguration = new UiAdminHeaderConfiguration( { headerText: 'Wybierz ścieżkę obiegu dokumentu' } );
-  pageArray = [];
 
   filter: string;
 
   sortBy = 'name';
   sortDirection = 'asc';
 
+  dataReadyToDisplay = false;
+
 
   constructor(
     private backendApiService: BackendApiService,
-    private subscriptionManager: ComponentSubscriptionManager
+    private authenticationService: AuthenticationService,
+    // private subscriptionManager: ComponentSubscriptionManager
   ) { }
 
   ngOnInit() {
+
+    this.user = this.authenticationService.getUser();
+
     this.page = 1;
     this.totalPages = 0;
+    this.filter = '';
 
-    this.backendApiService.getPaths()
-      .then( paths => {
-        this.paths = paths;
-        this.preparePathsArray();
+
+    // ustalamy listę grup do których użytkownik jest przypisany
+    this.backendApiService.getUserGroups(this.user.id)
+      .then(groups  => {
+
+        this.groups = groups;
+
+      })
+      .then( () => {
+
+        // ustalamy wszystkie grupy które mają dostęp do jakiejkolwiek akcji "wprowadzanie" dla wszystkich ścieżek w systemie
+          this.backendApiService.getEntryPathStepGroups()
+            .then(entryPathStepGroups => {
+                this.entryPathStepGroups = entryPathStepGroups;
+            });
+
+      })
+      .then( () => {
+
+          // ustalamy listę wszystkich ścieżek w systemie
+          this.backendApiService.getPaths()
+            .then( paths => {
+                this.paths = this.getAllowedPaths(paths);
+                this.preparePathsArray();
+                this.dataReadyToDisplay = true;
+            });
+
       });
 
-      this.filter = '';
+  }
+
+  // funkcja określa nam, czy bieżący użytkownik ma uprawnienia do wprowadzania dokumentu do danej ścieżki
+  // sprawdzamy każdą grupę, która ma dostęp do jakiejkolwiek akcji "wprowadź"
+  // jeśli dana grupa ma dostęp do akcji "wprowadź" sprawdzanej ścieżki
+  // to sprawdzamy, czy ta grupa jest również na liście grup przypisanych do danego użytkownika
+  // jeśli tak, to zwracamy TRUE
+  canEnterNewDocument(pathId: number): boolean {
+    for (let i = 0 ; i < this.entryPathStepGroups.length; i++) {
+      if (this.entryPathStepGroups[i].path_id === pathId) {
+        for (let j = 0; j < this.groups.length; j++) {
+          if ( this.groups[j].id === this.entryPathStepGroups[i].group_id) { return true; }
+        }
+      }
+    }
+    return false;
+  }
+
+
+  // funkcja zwraca tablicę typu Path[], która zawiera tylko te ścieżki, do których użytkownik ma prawo wprowadzać dokumenty
+  getAllowedPaths(paths: Path[]): Path[] {
+    const pathArray: Path[] = [];
+    for (let i = 0; i < paths.length; i++) {
+      if (this.canEnterNewDocument(paths[i].id)) { pathArray.push(paths[i]); }
+    }
+    return pathArray;
   }
 
 
@@ -56,7 +120,6 @@ export class ToolSelectPathComponent implements OnInit {
     // potem sortujemy odfiltrowaną tablicę
     this.sortPathsArray();
   }
-
 
 
   filterPaths() {

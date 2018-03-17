@@ -1,3 +1,5 @@
+<ng-container *ngIf="paths.length > 0">
+
 <dcf-ui-user-tool-header [headerConfiguration]='headerConfiguration'></dcf-ui-user-tool-header>
 <input type="text" class="form-control" placeholder="filtruj..." [(ngModel)]="filter" name="filter" (ngModelChange)="preparePathsArray()">
 
@@ -42,4 +44,7 @@
     </ul>
 </nav>
 
+</ng-container>
+
+<p *ngIf="dataReadyToDisplay && paths.length === 0" class="text-danger">Nie masz uprawnień do wprowadzania nowych dokumentów do żadnej ścieżki obiegu dokumentów.</p>
 
