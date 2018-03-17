@@ -4,9 +4,8 @@
 <table class="table table-sm table-hover">
   <thead>
     <tr>
-      <th scope="col">Id</th>
       <th scope="col" (click)="clickNameHeader()" class="app-cursor-pointer">Nazwa</th>
-      <th scope="col" (click)="clickInfoHeader()" class="app-cursor-pointer">Info</th>
+      <th scope="col" (click)="clickInfoHeader()" class="app-cursor-pointer">Informacje dodatkowe</th>
     </tr>
   </thead>
   <tbody>
@@ -15,9 +14,8 @@
         
         <!-- display only elements from current page -->
         <tr *ngIf="(i >= (page-1)*10) && (i <= (page*10)-1)" (click)="selectPath(path)" class="app-cursor-pointer">
-            <td>{{path.id}}</td>
-            <td>{{path.name}}</td>
-            <td>{{path.info}}</td>
+            <td><small>{{path.name}}</small></td>
+            <td><small>{{path.info}}</small></td>
         </tr>
 
     </ng-container>

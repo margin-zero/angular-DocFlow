@@ -9,7 +9,8 @@ import { ComponentSubscriptionManager } from '../../common-classes/component-sub
 @Component({
   selector: 'dcf-tool-select-path',
   templateUrl: './tool-select-path.component.html',
-  styleUrls: ['./tool-select-path.component.css']
+  styleUrls: ['./tool-select-path.component.css'],
+  providers: [ ComponentSubscriptionManager ]
 })
 export class ToolSelectPathComponent implements OnInit {
 
