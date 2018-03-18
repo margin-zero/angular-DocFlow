@@ -43,6 +43,8 @@ export class UserDocumentNewComponent implements OnInit {
 
   responseMessage: string;
 
+
+
   constructor(
     private backendApiService: BackendApiService,
     private location: Location,
@@ -60,11 +62,17 @@ export class UserDocumentNewComponent implements OnInit {
       })
     );
 
+
+
+    this.formModel.path_id = null;
+    this.formModel.author_id = null;
+
     this.formModel.input_date = this.getCurrentDateStr();
 
     this.formModel.assigned_user = this.authenticationService.getUser().id;
 
     this.responseMessage = '';
+
   }
 
 

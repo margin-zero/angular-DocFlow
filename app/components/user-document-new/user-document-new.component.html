@@ -8,6 +8,11 @@
 
     <form #f="ngForm" novalidate (ngSubmit)="submitForm(f.valid)" id="myForm" name="myForm" class="p-2 mt-2">
 
+    <!-- hidden form fields: path_id, author_id -->
+
+    <input type="hidden" class="form-control" name="path_id" [(ngModel)]="formModel.path_id" id="path_id" required #pathid="ngModel">
+    <input type="hidden" class="form-control" name="author_id" [(ngModel)]="formModel.author_id" id="author_id" required #authorid="ngModel">
+
     <div class="form-group row">
         <label class="col-lg-2 col-form-label">wystawca<span class="float-right"><button type="button" class="btn btn-sm btn-primary app-cursor-pointer" title="pokaż/ukryj listę wystawców dokumentów" (click)="toggleShowToolSelectAuthor()" tabindex="1">(...)</button></span></label>
         <label class="col col-form-label">
@@ -16,7 +21,7 @@
                     <small>{{selectedAuthor.address}}</small>
             </ng-container>
             <ng-container *ngIf="!selectedAuthor">
-                <span class="text-muted">Wybierz wystawcę dokumentu.</span>
+                <span class="text-danger">Wybierz wystawcę dokumentu.</span>
             </ng-container>
             <dcf-tool-select-author *ngIf="showToolSelectAuthor" (onSelectAuthor)="onSelectAuthor($event)"></dcf-tool-select-author>
         </label>
@@ -26,19 +31,16 @@
         <label class="col-lg-2 col-form-label">ścieżka obiegu<span class="float-right"><button type="button" class="btn btn-sm btn-primary app-cursor-pointer" title="pokaż/ukryj listę ścieżek obiegu dokumentów" (click)="toggleShowToolSelectPath()" tabindex="2">(...)</button></span></label>
         <label class="col col-form-label">
             <ng-container *ngIf="selectedPath">
-                <p class="mb-3">{{selectedPath.name}}</p>
+                {{selectedPath.name}}
             </ng-container>
             <ng-container *ngIf="!selectedPath">
-                <p class="text-muted mb-3">Wybierz ścieżkę obiegu dla nowego dokumentu.</p>
+                <span class="text-danger">Wybierz ścieżkę obiegu dla nowego dokumentu.</span>
             </ng-container>
             <dcf-tool-select-path *ngIf="showToolSelectPath" (onSelectPath)="onSelectPath($event)"></dcf-tool-select-path>
         </label>
     </div>
 
     
-    <ng-container *ngIf="formModel.author_id && formModel.path_id">
-
-
     <div class="form-group row">
         <label for="name" class="col-lg-2 col-form-label">nazwa dokumentu</label>
         <div class="col">
@@ -126,8 +128,6 @@
             <dcf-ui-admin-form-buttons  [formButtons]="formButtonConfiguration"></dcf-ui-admin-form-buttons>
         </div>
     </div>
-
-    </ng-container>
 
 </form>
 
