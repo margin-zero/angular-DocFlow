@@ -6,6 +6,7 @@ import { PathStepGroup } from './pathstepgroup';
 import { Action } from './action';
 import { Author } from './author';
 import { EntryPathStepGroup } from './entrypathstepgroup';
+import { Document } from './document';
 
 export class ResponseData {
     status: string;
@@ -47,3 +48,7 @@ export class ResponseAuthor extends ResponseData {
 export class ResponseEntryPathStepGroup extends ResponseData {
     data: EntryPathStepGroup[];
 }
+
+export class ResponseDocument extends ResponseData {
+    data: Document[];
+} 
