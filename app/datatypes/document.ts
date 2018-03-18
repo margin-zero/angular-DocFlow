@@ -2,10 +2,10 @@ export class Document {
     id: number;
     name: string;
     register: string;
-    input_date: number;
+    input_date: string;
     author_id: number;
     id_by_author: string;
-    date_by_author: number;
+    date_by_author: string;
     additional_info: string;
     ready: string;
     path_id: number;
@@ -18,10 +18,10 @@ export class Document {
         this.id = 0;
         this.name = '';
         this.register = '';
-        this.input_date = 0;
+        this.input_date = '';
         this.author_id = 0;
         this.id_by_author = '';
-        this.date_by_author = 0;
+        this.date_by_author = '';
         this.additional_info = '';
         this.ready = 'FALSE';
         this.path_id = 0;
