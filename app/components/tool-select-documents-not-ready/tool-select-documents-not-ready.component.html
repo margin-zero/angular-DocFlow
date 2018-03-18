@@ -1,0 +1,27 @@
+
+<table class="table table-sm table-hover">
+  <thead>
+    <tr>
+      <th scope="col" (click)="clickIdHeader()" class="app-cursor-pointer">id / rejestr</th>
+      <th scope="col" (click)="clickNameHeader()" class="app-cursor-pointer">wprowadzony</th>
+      <th scope="col" (click)="clickFullNameHeader()" class="app-cursor-pointer">nr. wg wystawcy</th>
+      <th scope="col" (click)="clickAddressHeader()" class="app-cursor-pointer">nazwa</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <ng-container *ngFor="let document of documentsNotReady; let i = index">
+        
+        <!-- display only elements from current page -->
+        <tr *ngIf="(i >= (page-1)*10) && (i <= (page*10)-1)" (click)="selectDocument(document)" class="app-cursor-pointer">
+            <td><small>{{document.id}}<span *ngIf="document.register"> / {{document.register}}</span></small></td>
+            <td><small>{{document.input_date}}</small></td>
+            <td><small>{{document.id_by_author}}</small></td>
+            <td><small>{{document.name}}</small></td>
+        </tr>
+
+    </ng-container>
+
+  </tbody>
+</table>
+
