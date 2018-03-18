@@ -48,6 +48,7 @@ export class BackendApiService implements OnInit {
   pathStepsObservable = new Subject<any>();
   actionsObservable = new Subject<any>();
   authorsObservable = new Subject<any>();
+  documentsNotReadyObservable = new Subject<any>();
 
   pathStepGroupsObservable = new Subject<any>();
   notPathStepGroupsObservable = new Subject<any>();
@@ -814,6 +815,28 @@ deleteDocument(documentId: number): Promise<ResponseData> {
 }
 
 
+
+
+getDocumentsNotReady(userId: number): Promise<Document[]> {
+
+  const URL = API_URL + 'documentsnotready/' + userId;
+
+  return this.http.get<ResponseDocument>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data as Document[])
+      .catch(this.handleError);
+}
+
+
+getDocumentsNotReadyObservable(): Observable<any> {
+  return this.documentsNotReadyObservable.asObservable();
+}
+
+
+refreshDocumentsNotReadyObservable(userId: number): any {
+  this.getDocumentsNotReady(userId)
+  .then(documents => this.documentsNotReadyObservable.next(documents));
+}
 
 
 /*
