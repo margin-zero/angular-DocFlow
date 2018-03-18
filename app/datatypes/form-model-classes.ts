@@ -124,10 +124,10 @@ export class FormModelEditDocument extends Document {
         this.id = 0;
         this.name = '';
         this.register = '';
-        this.input_date = 0;
+        this.input_date = '';
         this.author_id = 0;
         this.id_by_author = '';
-        this.date_by_author = 0;
+        this.date_by_author = '';
         this.additional_info = '';
         this.ready = 'FALSE';
         this.path_id = 0;
