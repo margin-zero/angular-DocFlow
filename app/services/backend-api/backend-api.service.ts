@@ -16,7 +16,7 @@ import { PathStepGroup } from '../../datatypes/pathstepgroup';
 import { Action } from '../../datatypes/action';
 import { Author } from '../../datatypes/author';
 import { EntryPathStepGroup } from '../../datatypes/entrypathstepgroup';
-
+import { Document } from '../../datatypes/document';
 
 import {
   ResponseUser,
@@ -28,7 +28,8 @@ import {
   ResponseAction,
   ResponseNumber,
   ResponseAuthor,
-  ResponseEntryPathStepGroup } from '../../datatypes/response-classes';
+  ResponseEntryPathStepGroup,
+  ResponseDocument } from '../../datatypes/response-classes';
 
 
 // CONSTANTS
@@ -758,5 +759,130 @@ deleteAuthor(id: number): Promise<ResponseData> {
       .catch(this.handleError);
 
 }
+
+
+
+
+
+// -----------------------------------------------------------------------------------------------
+//          DOCUMENTS API
+// -----------------------------------------------------------------------------------------------
+
+getDocument(documentId: number): Promise<Document> {
+
+  const URL = API_URL + 'document/' + documentId;
+
+  return this.http.get<ResponseDocument>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data[0] as Document)
+      .catch(this.handleError);
+}
+
+updateDocument(document: Document): Promise<ResponseData> {
+
+  const URL = API_URL + 'document/' + document.id;
+
+  return this.http
+      .post<ResponseData>(URL, JSON.stringify(document), {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+}
+
+createDocument(document: Document): Promise<ResponseData> {
+
+  const URL = API_URL + 'document';
+
+  return this.http
+      .put<ResponseData>(URL, JSON.stringify(document), {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+}
+
+
+deleteDocument(documentId: number): Promise<ResponseData> {
+
+  const URL = API_URL + 'document/' + documentId;
+
+  return this.http
+      .delete<ResponseData>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+
+}
+
+
+
+
+/*
+getAuthors(): Promise<Author[]> {
+
+  const URL = API_URL + 'authors';
+
+  return this.http.get<ResponseAuthor>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data as Author[])
+      .catch(this.handleError);
+}
+
+
+getAuthorsObservable(): Observable<any> {
+  return this.authorsObservable.asObservable();
+}
+
+
+refreshAuthorsObservable(): any {
+  this.getAuthors()
+  .then(authors => this.authorsObservable.next(authors));
+}
+
+
+getAuthor(authorId: number): Promise<Author> {
+
+  const URL = API_URL + 'author/' + authorId;
+
+  return this.http.get<ResponseAuthor>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data[0] as Author)
+      .catch(this.handleError);
+}
+
+updateAuthor(author: Author): Promise<ResponseData> {
+
+  const URL = API_URL + 'author/' + author.id;
+
+  return this.http
+      .post<ResponseData>(URL, JSON.stringify(author), {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+}
+
+createAuthor(author: Author): Promise<ResponseData> {
+
+  const URL = API_URL + 'author';
+
+  return this.http
+      .put<ResponseData>(URL, JSON.stringify(author), {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+}
+
+
+deleteAuthor(id: number): Promise<ResponseData> {
+
+  const URL = API_URL + 'author/' + id;
+
+  return this.http
+      .delete<ResponseData>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+
+}
+*/
 
 }
