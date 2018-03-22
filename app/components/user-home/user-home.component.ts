@@ -18,6 +18,8 @@ export class UserHomeComponent implements OnInit {
 
   documentsNotReady: Document[];
 
+  documentToDisplay: Document;
+
   constructor(
     private currentRoute: ActivatedRoute,
     private router: Router,
@@ -35,5 +37,9 @@ export class UserHomeComponent implements OnInit {
       })
     );
 
+   }
+
+   onSelectDocumentNotReady(document: Document) {
+      this.documentToDisplay = document;
    }
 }

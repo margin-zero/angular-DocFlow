@@ -1,5 +1,31 @@
-<p>
-  user-home works!
-</p>
+<section class="container-fluid">
+    <div class="row">
+        <div class="col pt-3">
 
-<dcf-tool-select-documents-not-ready></dcf-tool-select-documents-not-ready>
+            <ul class="nav nav-tabs" id="userHomeTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="documents-not-ready-tab" data-toggle="tab" href="#documents-not-ready" role="tab" aria-controls="niezatwierdzone" aria-selected="true">Niezatwierdzone</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="documents-reserved-tab" data-toggle="tab" href="#documents-reserved" role="tab" aria-controls="zarezerwowane" aria-selected="false">Zarezerwowane</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="documents-not-reserved-tab" data-toggle="tab" href="#document-not-reserved" role="tab" aria-controls="niezarezerwowane" aria-selected="false">Niezarezerwowane</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active border" id="documents-not-ready" role="tabpanel" aria-labelledby="niezatwierdzone-tab">
+                <dcf-tool-select-documents-not-ready (onSelectDocument)="onSelectDocumentNotReady($event)"></dcf-tool-select-documents-not-ready>
+              </div>
+              <div class="tab-pane fade" id="documents-reserved" role="tabpanel" aria-labelledby="zarezerwowane-tab">...</div>
+              <div class="tab-pane fade" id="documents-not-reserved" role="tabpanel" aria-labelledby="niezarezerwowane-tab">...</div>
+            </div>
+
+        </div>
+
+        <div class="col">
+            <hr>
+            <dcf-tool-display-selected-document *ngIf="documentToDisplay" [documentToDisplay]='documentToDisplay'></dcf-tool-display-selected-document>
+        </div>
+    </div>
+</section>
