@@ -92,6 +92,7 @@ import { ToolSelectAuthorComponent } from './components/tool-select-author/tool-
 import { UiUserToolHeaderComponent } from './ui-components/user/ui-user-tool-header/ui-user-tool-header.component';
 import { ToolSelectPathComponent } from './components/tool-select-path/tool-select-path.component';
 import { ToolSelectDocumentsNotReadyComponent } from './components/tool-select-documents-not-ready/tool-select-documents-not-ready.component';
+import { ToolDisplaySelectedDocumentComponent } from './components/tool-display-selected-document/tool-display-selected-document.component';
 
 
 
@@ -153,7 +154,8 @@ import { ToolSelectDocumentsNotReadyComponent } from './components/tool-select-d
     ToolSelectAuthorComponent,
     UiUserToolHeaderComponent,
     ToolSelectPathComponent,
-    ToolSelectDocumentsNotReadyComponent
+    ToolSelectDocumentsNotReadyComponent,
+    ToolDisplaySelectedDocumentComponent
 
   ],
   imports: [
