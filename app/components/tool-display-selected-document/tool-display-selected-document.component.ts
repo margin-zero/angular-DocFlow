@@ -38,9 +38,9 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
     return this._documentToDisplay;
   }
 
-  author: Author;
-  path: Path;
-  pathstep: PathStep;
+  author: Author = new Author();
+  path: Path = new Path();
+  pathstep: PathStep = new PathStep();
   pathsteps: PathStep[] = [];
 
   constructor(

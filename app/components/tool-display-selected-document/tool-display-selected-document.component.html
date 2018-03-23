@@ -1,12 +1,60 @@
-<p>
-  tool-display-selected-document works!
-</p>
-<p>{{ documentToDisplay | json }}</p>
+<h1 class="m-0 p-0">{{documentToDisplay.name}}</h1>
+<p class="h5 mt-0 mb-3 p-0 text-muted">{{documentToDisplay.id}}<span *ngIf="documentToDisplay.register"> / {{documentToDisplay.register}}</span> / {{documentToDisplay.input_date}}</p>
 
-<p>{{ path | json }}</p>
+<table class="table table-sm  table-bordered">
+    <tbody>
+        
+        <tr>
+            <th scope="row" class="app-col-narrow"><small><b>wystawca</b></small></th>
+            <td class="app-col-wide">{{author.name}}<br /><small>{{author.address}}</small></td>
+        </tr>
 
-<p>{{ pathstep | json }}</p>
+        <tr>
+            <th scope="row" class="app-col-narrow"><small><b>nr. wg wystawcy</b></small></th>
+            <td class="app-col-wide">{{documentToDisplay.id_by_author}}</td>
+        </tr>
 
-<p>{{ author | json }}</p>
+        <tr>
+            <th scope="row" class="app-col-narrow"><small><b>wystawiony dnia</b></small></th>
+            <td class="app-col-wide">{{documentToDisplay.date_by_author}}</td>
+        </tr>
 
-<p>{{ pathsteps | json }}</p>
+        <tr>
+            <th scope="row" class="app-col-narrow"><small><b>dod. informacje</b></small></th>
+            <td class="app-col-wide">{{documentToDisplay.additional_info}}</td>
+        </tr>
+
+        <tr>
+            <th scope="row" class="app-col-narrow"><small><b>ścieżka obiegu</b></small></th>
+            <td class="app-col-wide">{{path.name}}</td>
+        </tr>
+
+        <tr>
+            <th scope="row" class="app-col-narrow"><small><b>akcja w ścieżce</b></small></th>
+            <td class="app-col-wide">{{pathstep.name}}</td>
+        </tr>
+
+        <tr>
+            <th scope="row" class="app-col-narrow"><small><b>plik</b></small></th>
+            <td class="app-col-wide"><a href="{{documentToDisplay.file_path}}">pobierz</a></td>
+        </tr>
+
+        <tr>
+            <th scope="row" class="app-col-narrow"><small><b>zatwierdzony</b></small></th>
+            <td [ngClass]="{'text-success': documentToDisplay.ready === 'TRUE', 'text-danger': documentToDisplay.ready === 'FALSE' }" class="app-col-wide">{{documentToDisplay.ready === 'TRUE' ? 'TAK' : 'NIE'}}</td>
+        </tr>
+
+        <tr>
+            <th scope="row" class="app-col-narrow"><small><b>zamknięty</b></small></th>
+            <td [ngClass]="{'text-success': documentToDisplay.closed === 'TRUE', 'text-danger': documentToDisplay.closed === 'FALSE' }" class="app-col-wide">{{documentToDisplay.closed === 'TRUE' ? 'TAK' : 'NIE'}}</td>
+        </tr>
+
+        <tr>
+            <th scope="row" class="app-col-narrow"><small><b>wiadomość</b></small></th>
+            <td class="app-col-wide">{{documentToDisplay.message}}</td>
+        </tr>
+
+
+
+    </tbody>
+</table>
