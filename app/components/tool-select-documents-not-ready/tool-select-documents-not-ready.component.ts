@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
@@ -15,6 +15,7 @@ import { Document } from '../../datatypes/document';
 })
 export class ToolSelectDocumentsNotReadyComponent implements OnInit {
 
+  @Input() documentsPerPage: number;
   @Output() onSelectDocument = new EventEmitter<Document>();
 
   documentsNotReady: Document[];
@@ -25,7 +26,7 @@ export class ToolSelectDocumentsNotReadyComponent implements OnInit {
   headerConfiguration = new UiAdminHeaderConfiguration( { headerText: 'Wybierz dokument' } );
   pageArray = [];
 
-  documentsPerPage = 5;
+  // documentsPerPage = 5;
 
   constructor(
     private backendApiService: BackendApiService,
