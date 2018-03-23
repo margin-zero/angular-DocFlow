@@ -15,7 +15,7 @@
             </ul>
             <div class="tab-content" id="myTabContent">
               <div class="tab-pane fade show active border" id="documents-not-ready" role="tabpanel" aria-labelledby="niezatwierdzone-tab">
-                <dcf-tool-select-documents-not-ready (onSelectDocument)="onSelectDocumentNotReady($event)"></dcf-tool-select-documents-not-ready>
+                <dcf-tool-select-documents-not-ready [documentsPerPage]="10" (onSelectDocument)="onSelectDocumentNotReady($event)"></dcf-tool-select-documents-not-ready>
               </div>
               <div class="tab-pane fade" id="documents-reserved" role="tabpanel" aria-labelledby="zarezerwowane-tab">...</div>
               <div class="tab-pane fade" id="documents-not-reserved" role="tabpanel" aria-labelledby="niezarezerwowane-tab">...</div>
@@ -23,8 +23,7 @@
 
         </div>
 
-        <div class="col">
-            <hr>
+        <div class="col pt-3">
             <dcf-tool-display-selected-document *ngIf="documentToDisplay" [documentToDisplay]='documentToDisplay'></dcf-tool-display-selected-document>
         </div>
     </div>
