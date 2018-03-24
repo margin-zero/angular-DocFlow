@@ -7,6 +7,7 @@ import { Action } from './action';
 import { Author } from './author';
 import { EntryPathStepGroup } from './entrypathstepgroup';
 import { Document } from './document';
+import { DocumentHistory } from './documenthistory';
 
 export class ResponseData {
     status: string;
@@ -51,4 +52,8 @@ export class ResponseEntryPathStepGroup extends ResponseData {
 
 export class ResponseDocument extends ResponseData {
     data: Document[];
-} 
+}
+
+export class ResponseDocumentHistory extends ResponseData {
+    data: DocumentHistory[];
+}
