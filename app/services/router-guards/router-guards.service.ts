@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { CanActivate, CanDeactivate }    from '@angular/router';
+import { CanActivate, CanDeactivate } from '@angular/router';
 
 import {Router} from '@angular/router';
 
