@@ -17,6 +17,7 @@ import { Action } from '../../datatypes/action';
 import { Author } from '../../datatypes/author';
 import { EntryPathStepGroup } from '../../datatypes/entrypathstepgroup';
 import { Document } from '../../datatypes/document';
+import { DocumentHistory } from '../../datatypes/documenthistory';
 
 import {
   ResponseUser,
@@ -29,7 +30,8 @@ import {
   ResponseNumber,
   ResponseAuthor,
   ResponseEntryPathStepGroup,
-  ResponseDocument } from '../../datatypes/response-classes';
+  ResponseDocument,
+  ResponseDocumentHistory } from '../../datatypes/response-classes';
 
 
 // CONSTANTS
@@ -836,6 +838,35 @@ getDocumentsNotReadyObservable(): Observable<any> {
 refreshDocumentsNotReadyObservable(userId: number): any {
   this.getDocumentsNotReady(userId)
   .then(documents => this.documentsNotReadyObservable.next(documents));
+}
+
+
+
+
+
+// -----------------------------------------------------------------------------------------------
+//          DOCUMENTS_HISTORY API
+// -----------------------------------------------------------------------------------------------
+
+getDocumentHistory(documentId: number): Promise<DocumentHistory[]> {
+
+  const URL = API_URL + 'documenthistory/' + documentId;
+
+  return this.http.get<ResponseDocumentHistory>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data[0] as DocumentHistory)
+      .catch(this.handleError);
+}
+
+makeDocumentReady(documentId: number): Promise<ResponseData> {
+
+  const URL = API_URL + 'makedocumentready/' + documentId;
+
+  return this.http
+      .post<ResponseData>(URL, {'ready': 'TRUE', 'id': documentId }, {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
 }
 
 
