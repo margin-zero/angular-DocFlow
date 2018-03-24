@@ -29,3 +29,7 @@
 .app-border-top-2 {
     border-top-width: 2px !important;
 }
+
+.app-border-bottom-2 {
+    border-bottom-width: 2px !important;
+}
