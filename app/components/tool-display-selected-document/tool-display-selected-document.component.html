@@ -54,7 +54,14 @@
             <td class="app-col-wide">{{documentToDisplay.message}}</td>
         </tr>
 
-
-
     </tbody>
 </table>
+
+
+<div class="form-group row">
+        <div class="col-12">
+            <button class="app-cursor-pointer btn btn-primary btn-sm col-12 col-md-auto mb-1 float-md-right" (click)="acceptDocument()" tabindex="1">zatwierdź</button>
+            <button class="app-cursor-pointer btn btn-primary btn-sm col-12 col-md-auto mb-1 mr-1 float-md-right" (click)="router.navigate(['../../resetpassword',document.id], { relativeTo: currentRoute })" tabindex="2">edycja</button>
+            <button class="app-cursor-pointer btn btn-danger  btn-sm col-12 col-md-auto mb-1 float-md-left" (click)="deleteDocument()" tabindex="3">usuń dokument</button>
+        </div>
+</div>

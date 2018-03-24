@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 import { ComponentSubscriptionManager } from '../../common-classes/component-subscription-manager.class';
@@ -14,6 +14,9 @@ import { Document } from '../../datatypes/document';
   styleUrls: ['./tool-display-selected-document.component.css']
 })
 export class ToolDisplaySelectedDocumentComponent implements OnInit {
+
+  @Output() onDeleteSelectedDocument = new EventEmitter();
+  @Output() onAcceptSelectedDocument = new EventEmitter();
 
   private _documentToDisplay: Document;
 
@@ -52,4 +55,23 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
 
   }
 
+  deleteDocument() {
+    if (window.confirm('Wybierz OK aby potwierdzić usunięcie dokumentu lub ANULUJ aby zrezygnować z usunięcia.')) {
+      this.backendApiService.deleteDocument(this.documentToDisplay.id)
+      .then( () => {
+        this.backendApiService.refreshDocumentsNotReadyObservable(this.documentToDisplay.assigned_user);
+        this.onDeleteSelectedDocument.emit();
+      });
+    }
+  }
+
+  acceptDocument() {
+    if (window.confirm('Wybierz OK aby zatwierdzić dokument lub ANULUJ aby zrezygnować z zatwierdzenia.')) {
+      this.backendApiService.makeDocumentReady(this.documentToDisplay.id)
+      .then( () => {
+        this.backendApiService.refreshDocumentsNotReadyObservable(this.documentToDisplay.assigned_user);
+        this.onAcceptSelectedDocument.emit();
+      });
+    }
+  }
 }
