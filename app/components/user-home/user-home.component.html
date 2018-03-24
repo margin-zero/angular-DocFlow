@@ -24,7 +24,19 @@
         </div>
 
         <div class="col pt-3">
-            <dcf-tool-display-selected-document *ngIf="documentToDisplay" [documentToDisplay]='documentToDisplay'></dcf-tool-display-selected-document>
+            <ng-container *ngIf="documentToDisplay">
+
+                <dcf-tool-display-selected-document 
+                    *ngIf="!showDocumentHistory" 
+                    [documentToDisplay]='documentToDisplay' 
+                    (onDeleteSelectedDocument)="onDeleteSelectedDocument($event)" 
+                    (onAcceptSelectedDocument)="onAcceptSelectedDocument($event)">
+                </dcf-tool-display-selected-document>
+
+                <dcf-tool-display-selected-document-history *ngIf="showDocumentHistory" [documentToDisplay]='documentToDisplay'></dcf-tool-display-selected-document-history>
+                <button (click)="toggleShowDocumentHistory()">historia</button>
+            </ng-container>
+            
         </div>
     </div>
 </section>

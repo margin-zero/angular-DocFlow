@@ -20,6 +20,8 @@ export class UserHomeComponent implements OnInit {
 
   documentToDisplay: Document;
 
+  showDocumentHistory = false;
+
   constructor(
     private currentRoute: ActivatedRoute,
     private router: Router,
@@ -41,5 +43,18 @@ export class UserHomeComponent implements OnInit {
 
    onSelectDocumentNotReady(document: Document) {
       this.documentToDisplay = document;
+      this.showDocumentHistory = false;
+   }
+
+   onDeleteSelectedDocument() {
+     this.documentToDisplay = null;
+   }
+
+   onAcceptSelectedDocument() {
+    this.documentToDisplay = null;
+   }
+
+   toggleShowDocumentHistory() {
+     this.showDocumentHistory = !this.showDocumentHistory;
    }
 }
