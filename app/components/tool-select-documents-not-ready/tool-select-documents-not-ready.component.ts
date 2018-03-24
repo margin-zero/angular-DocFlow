@@ -26,8 +26,6 @@ export class ToolSelectDocumentsNotReadyComponent implements OnInit {
   headerConfiguration = new UiAdminHeaderConfiguration( { headerText: 'Wybierz dokument' } );
   pageArray = [];
 
-  // documentsPerPage = 5;
-
   constructor(
     private backendApiService: BackendApiService,
     private authenticationService: AuthenticationService,
