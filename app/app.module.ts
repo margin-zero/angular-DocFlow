@@ -56,7 +56,7 @@ import { PendingChangesGuard } from './services/router-guards/router-guards.serv
 // services imports --------------------------------------------------------------------
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { BackendApiService } from './services/backend-api/backend-api.service';
-
+import { GlobalFunctionsService } from './services/global-functions/global-functions.service';
 
 
 // directive imports --------------------------------------------------------------------
@@ -91,9 +91,14 @@ import { UserDocumentNewComponent } from './components/user-document-new/user-do
 import { ToolSelectAuthorComponent } from './components/tool-select-author/tool-select-author.component';
 import { UiUserToolHeaderComponent } from './ui-components/user/ui-user-tool-header/ui-user-tool-header.component';
 import { ToolSelectPathComponent } from './components/tool-select-path/tool-select-path.component';
-import { ToolSelectDocumentsNotReadyComponent } from './components/tool-select-documents-not-ready/tool-select-documents-not-ready.component';
+import {
+  ToolSelectDocumentsNotReadyComponent
+  } from './components/tool-select-documents-not-ready/tool-select-documents-not-ready.component';
+
 import { ToolDisplaySelectedDocumentComponent } from './components/tool-display-selected-document/tool-display-selected-document.component';
-import { ToolDisplaySelectedDocumentHistoryComponent } from './components/tool-display-selected-document-history/tool-display-selected-document-history.component';
+import {
+  ToolDisplaySelectedDocumentHistoryComponent
+  } from './components/tool-display-selected-document-history/tool-display-selected-document-history.component';
 
 
 
@@ -172,7 +177,8 @@ import { ToolDisplaySelectedDocumentHistoryComponent } from './components/tool-d
     IsAdminGuard,
     IsUserGuard,
     IsAuthenticatedGuard,
-    PendingChangesGuard
+    PendingChangesGuard,
+    GlobalFunctionsService
   ],
 
   bootstrap: [AppComponent]
