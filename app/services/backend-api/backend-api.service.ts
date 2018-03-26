@@ -869,6 +869,17 @@ makeDocumentReady(documentId: number): Promise<ResponseData> {
       .catch(this.handleError);
 }
 
+createDocumentHistoryEntry(documentHistoryEntry: DocumentHistory): Promise<ResponseData> {
+
+  const URL = API_URL + 'documenthistoryentry';
+
+  return this.http
+      .put<ResponseData>(URL, JSON.stringify(documentHistoryEntry), {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+}
+
 
 /*
 getAuthors(): Promise<Author[]> {
