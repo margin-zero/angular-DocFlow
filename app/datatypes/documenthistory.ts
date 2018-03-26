@@ -3,7 +3,7 @@ export class DocumentHistory {
     document_id: number;
     user_id: number;
     user_name: string;
-    operation_date: number;
+    operation_date: string;
     pathstep: string;
     action: string;
     constructor() {
@@ -11,7 +11,7 @@ export class DocumentHistory {
         this.document_id = 0;
         this.user_id = 0;
         this.user_name = '';
-        this.operation_date = 0;
+        this.operation_date = '';
         this.pathstep = '';
         this.action = '';
     }
