@@ -2,11 +2,14 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 import { ComponentSubscriptionManager } from '../../common-classes/component-subscription-manager.class';
+import { GlobalFunctionsService } from '../../services/global-functions/global-functions.service';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
 
 import { PathStep } from '../../datatypes/pathstep';
 import { Author } from '../../datatypes/author';
 import { Path } from '../../datatypes/path';
 import { Document } from '../../datatypes/document';
+import { DocumentHistory } from '../../datatypes/documenthistory';
 
 @Component({
   selector: 'dcf-tool-display-selected-document',
@@ -48,7 +51,9 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
 
   constructor(
     private backendApiService: BackendApiService,
-    private componentSubscriptionManager: ComponentSubscriptionManager
+    private componentSubscriptionManager: ComponentSubscriptionManager,
+    private globalFunctionsService: GlobalFunctionsService,
+    private authenticationService: AuthenticationService
   ) { }
 
   ngOnInit() {
@@ -69,8 +74,20 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
     if (window.confirm('Wybierz OK aby zatwierdzić dokument lub ANULUJ aby zrezygnować z zatwierdzenia.')) {
       this.backendApiService.makeDocumentReady(this.documentToDisplay.id)
       .then( () => {
-        this.backendApiService.refreshDocumentsNotReadyObservable(this.documentToDisplay.assigned_user);
-        this.onAcceptSelectedDocument.emit();
+        const documentHistoryEntry = new DocumentHistory();
+        documentHistoryEntry.document_id = this.documentToDisplay.id;
+        documentHistoryEntry.user_id = this.authenticationService.getUser().id;
+        documentHistoryEntry.user_name = this.authenticationService.getUser().username;
+        documentHistoryEntry.operation_date = this.globalFunctionsService.getCurrentDateStr();
+        documentHistoryEntry.pathstep = this.pathstep.name;
+        documentHistoryEntry.action = 'Zatwierdzenie dokumentu';
+
+        this.backendApiService.createDocumentHistoryEntry(documentHistoryEntry)
+        .then(() => {
+          this.backendApiService.refreshDocumentsNotReadyObservable(this.documentToDisplay.assigned_user);
+          this.onAcceptSelectedDocument.emit();
+        });
+
       });
     }
   }
