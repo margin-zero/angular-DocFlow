@@ -14,6 +14,7 @@ import { FormModelEditDocument } from '../../datatypes/form-model-classes';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
+import { GlobalFunctionsService } from '../../services/global-functions/global-functions.service';
 
 import { ComponentSubscriptionManager } from '../../common-classes/component-subscription-manager.class';
 import { UiAdminFormButtonConfiguration, UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
@@ -51,7 +52,8 @@ export class UserDocumentNewComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private subscriptionManager: ComponentSubscriptionManager,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private globalFunctionsService: GlobalFunctionsService
   ) { }
 
   ngOnInit() {
@@ -67,7 +69,7 @@ export class UserDocumentNewComponent implements OnInit {
     this.formModel.path_id = null;
     this.formModel.author_id = null;
 
-    this.formModel.input_date = this.getCurrentDateStr();
+    this.formModel.input_date = this.globalFunctionsService.getCurrentDateStr();
 
     this.formModel.assigned_user = this.authenticationService.getUser().id;
 
@@ -137,23 +139,6 @@ export class UserDocumentNewComponent implements OnInit {
 
   toggleShowToolSelectPath() {
     this.showToolSelectPath = !this.showToolSelectPath;
-  }
-
-
-  getCurrentDateStr(): string {
-    const currentDate = new Date();
-    let currentDateString: string ;
-
-    currentDateString = '' + currentDate.getFullYear() + '-';
-    if (currentDate.getMonth() + 1 > 9) {
-      currentDateString += (currentDate.getMonth() + 1);
-    } else {
-      currentDateString += ('0' + (currentDate.getMonth() + 1));
-    }
-
-    currentDateString += '-' + currentDate.getDate();
-
-    return currentDateString;
   }
 
   getEntryPathStep(pathsteps: PathStep[]): PathStep {
