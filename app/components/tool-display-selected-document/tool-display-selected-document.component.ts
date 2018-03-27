@@ -84,7 +84,8 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
 
         this.backendApiService.createDocumentHistoryEntry(documentHistoryEntry)
         .then(() => {
-          this.backendApiService.refreshDocumentsNotReadyObservable(this.documentToDisplay.assigned_user);
+          this.backendApiService.refreshDocumentsNotReadyObservable(this.authenticationService.getUser().id);
+          this.backendApiService.refreshDocumentsNotReadyCountObservable(this.authenticationService.getUser().id);
           this.onAcceptSelectedDocument.emit();
         });
 
