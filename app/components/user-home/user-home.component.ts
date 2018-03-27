@@ -17,8 +17,10 @@ import { Document } from '../../datatypes/document';
 export class UserHomeComponent implements OnInit {
 
   documentsNotReady: Document[];
+  documentsNotAssigned: Document[];
 
   documentsNotReadyCount = 0;
+  documentsNotAssignedCount = 0;
 
   documentToDisplay: Document;
 
@@ -47,11 +49,22 @@ export class UserHomeComponent implements OnInit {
       })
     );
 
-   }
+    this.subscriptionManager.add(
+      this.backendApiService.getDocumentsNotAssignedCountObservable().subscribe( count => {
+        this.documentsNotAssignedCount = count;
+      })
+    );
+
+  }
 
    onSelectDocumentNotReady(document: Document) {
       this.documentToDisplay = document;
       this.showDocumentHistory = false;
+   }
+
+   onSelectDocumentNotAssigned(document: Document) {
+    this.documentToDisplay = document;
+    this.showDocumentHistory = false;
    }
 
    onDeleteSelectedDocument() {
@@ -60,6 +73,11 @@ export class UserHomeComponent implements OnInit {
 
    onAcceptSelectedDocument() {
     this.documentToDisplay = null;
+   }
+
+   onAssignSelectedDocument() {
+    this.documentToDisplay = null;
+    alert('trzeba dorobić aktualizację zarezerwowanych dokumentów');
    }
 
    toggleShowDocumentHistory() {
