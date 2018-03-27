@@ -20,6 +20,7 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
 
   @Output() onDeleteSelectedDocument = new EventEmitter();
   @Output() onAcceptSelectedDocument = new EventEmitter();
+  @Output() onAssignSelectedDocument = new EventEmitter();
 
   private _documentToDisplay: Document;
 
@@ -61,7 +62,8 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
   }
 
   deleteDocument() {
-    if (window.confirm('Wybierz OK aby potwierdzić usunięcie dokumentu lub ANULUJ aby zrezygnować z usunięcia.')) {
+    const message = 'Wybierz OK aby potwierdzić usunięcie dokumentu lub ANULUJ aby zrezygnować z usunięcia.';
+    if (window.confirm(message)) {
       this.backendApiService.deleteDocument(this.documentToDisplay.id)
       .then( () => {
         this.backendApiService.refreshDocumentsNotReadyObservable(this.documentToDisplay.assigned_user);
@@ -71,7 +73,8 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
   }
 
   acceptDocument() {
-    if (window.confirm('Wybierz OK aby zatwierdzić dokument lub ANULUJ aby zrezygnować z zatwierdzenia.')) {
+    const message = 'Wybierz OK aby zatwierdzić dokument lub ANULUJ aby zrezygnować z zatwierdzenia.';
+    if (window.confirm(message)) {
       this.backendApiService.makeDocumentReady(this.documentToDisplay.id)
       .then( () => {
         const documentHistoryEntry = new DocumentHistory();
@@ -89,6 +92,30 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
           this.onAcceptSelectedDocument.emit();
         });
 
+      });
+    }
+  }
+
+
+  assignDocument() {
+    const message = 'Wybierz OK aby potwierdzić pobranie tego dokumentu do realizacji lub ANULUJ aby zrezygnować z rezerwacji dokumentu.';
+    if (window.confirm(message)) {
+       this.backendApiService.makeDocumentAssigned(this.documentToDisplay.id, this.authenticationService.getUser().id)
+      .then( () => {
+        const documentHistoryEntry = new DocumentHistory();
+        documentHistoryEntry.document_id = this.documentToDisplay.id;
+        documentHistoryEntry.user_id = this.authenticationService.getUser().id;
+        documentHistoryEntry.user_name = this.authenticationService.getUser().username;
+        documentHistoryEntry.operation_date = this.globalFunctionsService.getCurrentDateStr();
+        documentHistoryEntry.pathstep = this.pathstep.name;
+        documentHistoryEntry.action = 'Rezerwacja dokumentu';
+
+        this.backendApiService.createDocumentHistoryEntry(documentHistoryEntry)
+        .then(() => {
+          this.backendApiService.refreshDocumentsNotAssignedObservable(this.authenticationService.getUser().id);
+          this.backendApiService.refreshDocumentsNotAssignedCountObservable(this.authenticationService.getUser().id);
+          this.onAssignSelectedDocument.emit();
+        });
       });
     }
   }
