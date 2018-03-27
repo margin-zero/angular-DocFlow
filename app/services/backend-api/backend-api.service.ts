@@ -52,6 +52,8 @@ export class BackendApiService implements OnInit {
   authorsObservable = new Subject<any>();
   documentsNotReadyObservable = new Subject<any>();
 
+  documentsNotReadyCountObservable = new Subject<any>();
+
   pathStepGroupsObservable = new Subject<any>();
   notPathStepGroupsObservable = new Subject<any>();
 
@@ -842,6 +844,25 @@ refreshDocumentsNotReadyObservable(userId: number): any {
 
 
 
+
+getDocumentsNotReadyCount(userId: number): Promise<number> {
+
+  const URL = API_URL + 'documentsnotreadycount/' + userId;
+
+  return this.http.get<ResponseNumber>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data[0]['COUNT(*)'] as Number)
+      .catch(this.handleError);
+}
+
+getDocumentsNotReadyCountObservable(): Observable<any> {
+  return this.documentsNotReadyCountObservable.asObservable();
+}
+
+refreshDocumentsNotReadyCountObservable(userId: number): any {
+  this.getDocumentsNotReadyCount(userId)
+  .then(count => this.documentsNotReadyCountObservable.next(count));
+}
 
 
 // -----------------------------------------------------------------------------------------------
