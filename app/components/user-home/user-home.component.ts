@@ -18,6 +18,8 @@ export class UserHomeComponent implements OnInit {
 
   documentsNotReady: Document[];
 
+  documentsNotReadyCount = 0;
+
   documentToDisplay: Document;
 
   showDocumentHistory = false;
@@ -36,6 +38,12 @@ export class UserHomeComponent implements OnInit {
     this.subscriptionManager.add(
       this.backendApiService.getDocumentsNotReadyObservable().subscribe( documents => {
         this.documentsNotReady = documents;
+      })
+    );
+
+    this.subscriptionManager.add(
+      this.backendApiService.getDocumentsNotReadyCountObservable().subscribe( count => {
+        this.documentsNotReadyCount = count;
       })
     );
 
