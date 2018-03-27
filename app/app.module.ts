@@ -99,6 +99,7 @@ import { ToolDisplaySelectedDocumentComponent } from './components/tool-display-
 import {
   ToolDisplaySelectedDocumentHistoryComponent
   } from './components/tool-display-selected-document-history/tool-display-selected-document-history.component';
+import { ToolSelectDocumentsNotAssignedComponent } from './components/tool-select-documents-not-assigned/tool-select-documents-not-assigned.component';
 
 
 
@@ -162,7 +163,8 @@ import {
     ToolSelectPathComponent,
     ToolSelectDocumentsNotReadyComponent,
     ToolDisplaySelectedDocumentComponent,
-    ToolDisplaySelectedDocumentHistoryComponent
+    ToolDisplaySelectedDocumentHistoryComponent,
+    ToolSelectDocumentsNotAssignedComponent
 
   ],
   imports: [
