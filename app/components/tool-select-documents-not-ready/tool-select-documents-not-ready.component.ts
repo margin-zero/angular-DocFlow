@@ -46,6 +46,8 @@ export class ToolSelectDocumentsNotReadyComponent implements OnInit {
     );
 
     this.backendApiService.refreshDocumentsNotReadyObservable(this.authenticationService.getUser().id);
+
+    this.backendApiService.refreshDocumentsNotReadyCountObservable(this.authenticationService.getUser().id);
   }
 
 
