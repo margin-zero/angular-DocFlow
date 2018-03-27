@@ -51,8 +51,10 @@ export class BackendApiService implements OnInit {
   actionsObservable = new Subject<any>();
   authorsObservable = new Subject<any>();
   documentsNotReadyObservable = new Subject<any>();
+  documentsNotAssignedObservable = new Subject<any>();
 
   documentsNotReadyCountObservable = new Subject<any>();
+  documentsNotAssignedCountObservable = new Subject<any>();
 
   pathStepGroupsObservable = new Subject<any>();
   notPathStepGroupsObservable = new Subject<any>();
@@ -851,7 +853,7 @@ getDocumentsNotReadyCount(userId: number): Promise<number> {
 
   return this.http.get<ResponseNumber>(URL)
       .toPromise()
-      .then(apiResponse => apiResponse.data[0]['COUNT(*)'] as Number)
+      .then(apiResponse => apiResponse.data[0][0] as Number)
       .catch(this.handleError);
 }
 
@@ -862,6 +864,76 @@ getDocumentsNotReadyCountObservable(): Observable<any> {
 refreshDocumentsNotReadyCountObservable(userId: number): any {
   this.getDocumentsNotReadyCount(userId)
   .then(count => this.documentsNotReadyCountObservable.next(count));
+}
+
+
+
+
+getDocumentsNotAssigned(userId: number): Promise<Document[]> {
+
+  const URL = API_URL + 'documentsnotassigned/' + userId;
+
+  return this.http.get<ResponseDocument>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data as Document[])
+      .catch(this.handleError);
+}
+
+
+getDocumentsNotAssignedObservable(): Observable<any> {
+  return this.documentsNotAssignedObservable.asObservable();
+}
+
+
+refreshDocumentsNotAssignedObservable(userId: number): any {
+  this.getDocumentsNotAssigned(userId)
+  .then(documents => this.documentsNotAssignedObservable.next(documents));
+}
+
+
+
+
+getDocumentsNotAssignedCount(userId: number): Promise<number> {
+
+  const URL = API_URL + 'documentsnotassignedcount/' + userId;
+
+  return this.http.get<ResponseNumber>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data[0][0] as Number)
+      .catch(this.handleError);
+}
+
+getDocumentsNotAssignedCountObservable(): Observable<any> {
+  return this.documentsNotAssignedCountObservable.asObservable();
+}
+
+refreshDocumentsNotAssignedCountObservable(userId: number): any {
+  this.getDocumentsNotAssignedCount(userId)
+  .then(count => this.documentsNotAssignedCountObservable.next(count));
+}
+
+
+
+makeDocumentReady(documentId: number): Promise<ResponseData> {
+
+  const URL = API_URL + 'makedocumentready/' + documentId;
+
+  return this.http
+      .post<ResponseData>(URL, {'ready': 'TRUE', 'id': documentId, 'assigned_user': null }, {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+}
+
+makeDocumentAssigned(documentId: number, userId: number): Promise<ResponseData> {
+
+  const URL = API_URL + 'makedocumentassigned/' + documentId;
+
+  return this.http
+      .post<ResponseData>(URL, {'id': documentId, 'assigned_user': userId }, {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
 }
 
 
@@ -879,16 +951,6 @@ getDocumentHistory(documentId: number): Promise<DocumentHistory[]> {
       .catch(this.handleError);
 }
 
-makeDocumentReady(documentId: number): Promise<ResponseData> {
-
-  const URL = API_URL + 'makedocumentready/' + documentId;
-
-  return this.http
-      .post<ResponseData>(URL, {'ready': 'TRUE', 'id': documentId }, {headers: this.headers})
-      .toPromise()
-      .then(apiResponse => apiResponse as ResponseData)
-      .catch(this.handleError);
-}
 
 createDocumentHistoryEntry(documentHistoryEntry: DocumentHistory): Promise<ResponseData> {
 
