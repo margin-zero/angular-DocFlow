@@ -100,6 +100,7 @@ import {
   ToolDisplaySelectedDocumentHistoryComponent
   } from './components/tool-display-selected-document-history/tool-display-selected-document-history.component';
 import { ToolSelectDocumentsNotAssignedComponent } from './components/tool-select-documents-not-assigned/tool-select-documents-not-assigned.component';
+import { ToolSelectDocumentsAssignedComponent } from './components/tool-select-documents-assigned/tool-select-documents-assigned.component';
 
 
 
@@ -164,7 +165,8 @@ import { ToolSelectDocumentsNotAssignedComponent } from './components/tool-selec
     ToolSelectDocumentsNotReadyComponent,
     ToolDisplaySelectedDocumentComponent,
     ToolDisplaySelectedDocumentHistoryComponent,
-    ToolSelectDocumentsNotAssignedComponent
+    ToolSelectDocumentsNotAssignedComponent,
+    ToolSelectDocumentsAssignedComponent
 
   ],
   imports: [
