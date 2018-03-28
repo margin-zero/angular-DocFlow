@@ -7,7 +7,7 @@
                 <a class="nav-link active" id="documents-not-ready-tab" data-toggle="tab" href="#documents-not-ready" role="tab" aria-controls="niezatwierdzone" aria-selected="true">Niezatwierdzone ({{documentsNotReadyCount}})</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="documents-assigned-tab" data-toggle="tab" href="#documents-assigned" role="tab" aria-controls="zarezerwowane" aria-selected="false">Zarezerwowane</a>
+                <a class="nav-link" id="documents-assigned-tab" data-toggle="tab" href="#documents-assigned" role="tab" aria-controls="zarezerwowane" aria-selected="false">Zarezerwowane ({{documentsAssignedCount}})</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" id="documents-not-assigned-tab" data-toggle="tab" href="#documents-not-assigned" role="tab" aria-controls="niezarezerwowane" aria-selected="false">Niezarezerwowane ({{documentsNotAssignedCount}})</a>
@@ -17,7 +17,10 @@
               <div class="tab-pane fade show active border" id="documents-not-ready" role="tabpanel" aria-labelledby="niezatwierdzone-tab">
                 <dcf-tool-select-documents-not-ready [documentsPerPage]="10" (onSelectDocument)="onSelectDocumentNotReady($event)"></dcf-tool-select-documents-not-ready>
               </div>
-              <div class="tab-pane fade" id="documents-assigned" role="tabpanel" aria-labelledby="zarezerwowane-tab">...</div>
+              <div class="tab-pane fade" id="documents-assigned" role="tabpanel" aria-labelledby="zarezerwowane-tab">
+                <dcf-tool-select-documents-assigned [documentsPerPage]="10" (onSelectDocument)="onSelectDocumentAssigned($event)"></dcf-tool-select-documents-assigned>
+              </div>
+
               <div class="tab-pane fade" id="documents-not-assigned" role="tabpanel" aria-labelledby="niezarezerwowane-tab">
                 <dcf-tool-select-documents-not-assigned [documentsPerPage]="10" (onSelectDocument)="onSelectDocumentNotAssigned($event)"></dcf-tool-select-documents-not-assigned>
               </div>
@@ -33,7 +36,9 @@
                     [documentToDisplay]='documentToDisplay' 
                     (onDeleteSelectedDocument)="onDeleteSelectedDocument($event)" 
                     (onAcceptSelectedDocument)="onAcceptSelectedDocument($event)"
-                    (onAssignSelectedDocument)="onAssignSelectedDocument($event)">
+                    (onAssignSelectedDocument)="onAssignSelectedDocument($event)"
+                    (onReAssignSelectedDocument)="onReAssignSelectedDocument($event)"
+                    >
                 </dcf-tool-display-selected-document>
 
                 <dcf-tool-display-selected-document-history *ngIf="showDocumentHistory" [documentToDisplay]='documentToDisplay'></dcf-tool-display-selected-document-history>

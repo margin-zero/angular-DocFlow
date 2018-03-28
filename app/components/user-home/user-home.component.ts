@@ -18,9 +18,11 @@ export class UserHomeComponent implements OnInit {
 
   documentsNotReady: Document[];
   documentsNotAssigned: Document[];
+  documentsAssigned: Document[];
 
   documentsNotReadyCount = 0;
   documentsNotAssignedCount = 0;
+  documentsAssignedCount = 0;
 
   documentToDisplay: Document;
 
@@ -37,11 +39,13 @@ export class UserHomeComponent implements OnInit {
 
   ngOnInit() {
 
+    /*
     this.subscriptionManager.add(
       this.backendApiService.getDocumentsNotReadyObservable().subscribe( documents => {
         this.documentsNotReady = documents;
       })
     );
+    */
 
     this.subscriptionManager.add(
       this.backendApiService.getDocumentsNotReadyCountObservable().subscribe( count => {
@@ -55,6 +59,11 @@ export class UserHomeComponent implements OnInit {
       })
     );
 
+    this.subscriptionManager.add(
+      this.backendApiService.getDocumentsAssignedCountObservable().subscribe( count => {
+        this.documentsAssignedCount = count;
+      })
+    );
   }
 
    onSelectDocumentNotReady(document: Document) {
@@ -63,6 +72,11 @@ export class UserHomeComponent implements OnInit {
    }
 
    onSelectDocumentNotAssigned(document: Document) {
+    this.documentToDisplay = document;
+    this.showDocumentHistory = false;
+   }
+
+   onSelectDocumentAssigned(document: Document) {
     this.documentToDisplay = document;
     this.showDocumentHistory = false;
    }
@@ -77,7 +91,10 @@ export class UserHomeComponent implements OnInit {
 
    onAssignSelectedDocument() {
     this.documentToDisplay = null;
-    alert('trzeba dorobić aktualizację zarezerwowanych dokumentów');
+   }
+
+   onReAssignSelectedDocument() {
+    this.documentToDisplay = null;
    }
 
    toggleShowDocumentHistory() {
