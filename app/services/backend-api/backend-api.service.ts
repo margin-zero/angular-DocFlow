@@ -52,9 +52,11 @@ export class BackendApiService implements OnInit {
   authorsObservable = new Subject<any>();
   documentsNotReadyObservable = new Subject<any>();
   documentsNotAssignedObservable = new Subject<any>();
+  documentsAssignedObservable = new Subject<any>();
 
   documentsNotReadyCountObservable = new Subject<any>();
   documentsNotAssignedCountObservable = new Subject<any>();
+  documentsAssignedCountObservable = new Subject<any>();
 
   pathStepGroupsObservable = new Subject<any>();
   notPathStepGroupsObservable = new Subject<any>();
@@ -914,6 +916,53 @@ refreshDocumentsNotAssignedCountObservable(userId: number): any {
 
 
 
+
+getDocumentsAssigned(userId: number): Promise<Document[]> {
+
+  const URL = API_URL + 'documentsassigned/' + userId;
+
+  return this.http.get<ResponseDocument>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data as Document[])
+      .catch(this.handleError);
+}
+
+
+getDocumentsAssignedObservable(): Observable<any> {
+  return this.documentsAssignedObservable.asObservable();
+}
+
+
+refreshDocumentsAssignedObservable(userId: number): any {
+  this.getDocumentsAssigned(userId)
+  .then(documents => this.documentsAssignedObservable.next(documents));
+}
+
+
+
+
+getDocumentsAssignedCount(userId: number): Promise<number> {
+
+  const URL = API_URL + 'documentsassignedcount/' + userId;
+
+  return this.http.get<ResponseNumber>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data[0][0] as Number)
+      .catch(this.handleError);
+}
+
+getDocumentsAssignedCountObservable(): Observable<any> {
+  return this.documentsAssignedCountObservable.asObservable();
+}
+
+refreshDocumentsAssignedCountObservable(userId: number): any {
+  this.getDocumentsAssignedCount(userId)
+  .then(count => this.documentsAssignedCountObservable.next(count));
+}
+
+
+
+
 makeDocumentReady(documentId: number): Promise<ResponseData> {
 
   const URL = API_URL + 'makedocumentready/' + documentId;
@@ -947,7 +996,7 @@ getDocumentHistory(documentId: number): Promise<DocumentHistory[]> {
 
   return this.http.get<ResponseDocumentHistory>(URL)
       .toPromise()
-      .then(apiResponse => apiResponse.data[0] as DocumentHistory)
+      .then(apiResponse => apiResponse.data as DocumentHistory[])
       .catch(this.handleError);
 }
 
