@@ -986,6 +986,17 @@ makeDocumentAssigned(documentId: number, userId: number): Promise<ResponseData> 
 }
 
 
+makeDocumentNotAssigned(documentId: number): Promise<ResponseData> {
+
+  const URL = API_URL + 'makedocumentnotassigned/' + documentId;
+
+  return this.http
+      .post<ResponseData>(URL, {'id': documentId }, {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
+}
+
 // -----------------------------------------------------------------------------------------------
 //          DOCUMENTS_HISTORY API
 // -----------------------------------------------------------------------------------------------
