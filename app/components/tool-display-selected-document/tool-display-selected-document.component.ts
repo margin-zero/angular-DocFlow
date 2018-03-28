@@ -21,6 +21,7 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
   @Output() onDeleteSelectedDocument = new EventEmitter();
   @Output() onAcceptSelectedDocument = new EventEmitter();
   @Output() onAssignSelectedDocument = new EventEmitter();
+  @Output() onReAssignSelectedDocument = new EventEmitter();
 
   private _documentToDisplay: Document;
 
@@ -114,9 +115,38 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
         .then(() => {
           this.backendApiService.refreshDocumentsNotAssignedObservable(this.authenticationService.getUser().id);
           this.backendApiService.refreshDocumentsNotAssignedCountObservable(this.authenticationService.getUser().id);
+          this.backendApiService.refreshDocumentsAssignedObservable(this.authenticationService.getUser().id);
+          this.backendApiService.refreshDocumentsAssignedCountObservable(this.authenticationService.getUser().id);
           this.onAssignSelectedDocument.emit();
         });
       });
     }
   }
+
+
+  reAssignDocument() {
+    const message = 'Wybierz OK aby potwierdzić zwrot dokumentu lub ANULUJ aby zrezygnować ze zwrotu.';
+    if (window.confirm(message)) {
+       this.backendApiService.makeDocumentNotAssigned(this.documentToDisplay.id)
+      .then( () => {
+        const documentHistoryEntry = new DocumentHistory();
+        documentHistoryEntry.document_id = this.documentToDisplay.id;
+        documentHistoryEntry.user_id = this.authenticationService.getUser().id;
+        documentHistoryEntry.user_name = this.authenticationService.getUser().username;
+        documentHistoryEntry.operation_date = this.globalFunctionsService.getCurrentDateStr();
+        documentHistoryEntry.pathstep = this.pathstep.name;
+        documentHistoryEntry.action = 'Anulowanie rezerwacji dokumentu';
+
+        this.backendApiService.createDocumentHistoryEntry(documentHistoryEntry)
+        .then(() => {
+          this.backendApiService.refreshDocumentsNotAssignedObservable(this.authenticationService.getUser().id);
+          this.backendApiService.refreshDocumentsNotAssignedCountObservable(this.authenticationService.getUser().id);
+          this.backendApiService.refreshDocumentsAssignedObservable(this.authenticationService.getUser().id);
+          this.backendApiService.refreshDocumentsAssignedCountObservable(this.authenticationService.getUser().id);
+          this.onReAssignSelectedDocument.emit();
+        });
+      });
+    }
+  }
+
 }
