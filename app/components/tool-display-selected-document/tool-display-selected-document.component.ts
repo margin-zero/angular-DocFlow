@@ -90,6 +90,9 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
         .then(() => {
           this.backendApiService.refreshDocumentsNotReadyObservable(this.authenticationService.getUser().id);
           this.backendApiService.refreshDocumentsNotReadyCountObservable(this.authenticationService.getUser().id);
+          this.backendApiService.refreshDocumentsNotAssignedObservable(this.authenticationService.getUser().id);
+          this.backendApiService.refreshDocumentsNotAssignedCountObservable(this.authenticationService.getUser().id);
+
           this.onAcceptSelectedDocument.emit();
         });
 

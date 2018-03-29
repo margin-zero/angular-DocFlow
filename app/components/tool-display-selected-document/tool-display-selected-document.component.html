@@ -1,8 +1,20 @@
 <h1 class="m-0 p-0">{{documentToDisplay.name}}</h1>
 <p class="h5 mt-0 mb-0 p-0 text-muted">{{documentToDisplay.id}}<span *ngIf="documentToDisplay.register"> / {{documentToDisplay.register}}</span> / {{documentToDisplay.input_date}}</p>
-<p *ngIf="documentToDisplay.ready==='FALSE'" class="text-danger mt-0 mb-3">dokument niezatwierdzony</p>
-<p *ngIf="documentToDisplay.ready==='TRUE' && documentToDisplay.assigned_user === null" class="text-primary mt-0 mb-3">dokument niezarezerwowany</p>
-<p *ngIf="documentToDisplay.ready==='TRUE' && documentToDisplay.assigned_user === authenticationService.getUser().id" class="text-success mt-0 mb-3">dokument zarezerwowany</p>
+
+<div class="row mb-1">
+    <div class="col-12 col-lg-8">
+        <p *ngIf="documentToDisplay.ready==='FALSE'" class="text-danger mt-0 mb-1">dokument niezatwierdzony</p>
+        <p *ngIf="documentToDisplay.ready==='TRUE' && documentToDisplay.assigned_user === null" class="text-danger mt-0 mb-1">dokument niezarezerwowany</p>
+        <p *ngIf="documentToDisplay.ready==='TRUE' && documentToDisplay.assigned_user === authenticationService.getUser().id" class="text-primary mt-0 mb-1">dokument zarezerwowany</p>
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <button *ngIf="documentToDisplay.ready==='TRUE' && documentToDisplay.assigned_user === null" class="app-cursor-pointer btn btn-primary btn-sm col-12 col-lg-auto float-md-right" (click)="assignDocument()" tabindex="1">zarezerwuj</button>
+        <button *ngIf="documentToDisplay.ready==='TRUE' && documentToDisplay.assigned_user === authenticationService.getUser().id" class="app-cursor-pointer btn btn-primary btn-sm col-12 col-lg-auto float-md-right" (click)="reAssignDocument()" tabindex="1">anuluj rezerwację</button>
+    </div>
+</div>
+
+
 
 <table class="table table-sm  table-bordered">
     <tbody>
@@ -66,17 +78,5 @@
         <button class="app-cursor-pointer btn btn-primary btn-sm col-12 col-md-auto mb-1 float-md-right" (click)="acceptDocument()" tabindex="1">zatwierdź</button>
         <button class="app-cursor-pointer btn btn-primary btn-sm col-12 col-md-auto mb-1 mr-1 float-md-right" (click)="router.navigate(['../../resetpassword',document.id], { relativeTo: currentRoute })" tabindex="2">edycja</button>
         <button class="app-cursor-pointer btn btn-danger  btn-sm col-12 col-md-auto mb-1 float-md-left" (click)="deleteDocument()" tabindex="3">usuń dokument</button>
-    </div>
-</div>
-
-<div *ngIf="documentToDisplay.ready==='TRUE' && documentToDisplay.assigned_user === null" class="form-group row">
-    <div class="col-12">
-        <button class="app-cursor-pointer btn btn-primary btn-sm col-12 col-md-auto mb-1 float-md-right" (click)="assignDocument()" tabindex="1">zarezerwuj do realizacji</button>
-    </div>
-</div>
-
-<div *ngIf="documentToDisplay.ready==='TRUE' && documentToDisplay.assigned_user === authenticationService.getUser().id" class="form-group row">
-    <div class="col-12">
-        <button class="app-cursor-pointer btn btn-primary btn-sm col-12 col-md-auto mb-1 float-md-right" (click)="reAssignDocument()" tabindex="1">zwolnij rezerwację dokumentu</button>
     </div>
 </div>
