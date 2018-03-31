@@ -532,6 +532,16 @@ getPathStepsCount(pathId: number): Promise<number> {
       .catch(this.handleError);
 }
 
+getNextPathStepId(pathId: number, pathstepId: number): Promise<Number> {
+
+  const URL = API_URL + 'nextpathstep/' + pathId + '/' + pathstepId;
+
+  return this.http.get<ResponseNumber>(URL)
+      .toPromise()
+      .then(apiResponse => { if (apiResponse.data[0][0]) { return apiResponse.data[0][0]; } else { return pathstepId; }})
+      .catch(this.handleError);
+}
+
 
 // -----------------------------------------------------------------------------------------------
 //          PATHSTEPS GROUPS API
@@ -963,15 +973,23 @@ refreshDocumentsAssignedCountObservable(userId: number): any {
 
 
 
-makeDocumentReady(documentId: number): Promise<ResponseData> {
+makeDocumentReady(document: Document): Promise<ResponseData> {
 
-  const URL = API_URL + 'makedocumentready/' + documentId;
+  const URL = API_URL + 'makedocumentready';
 
-  return this.http
-      .post<ResponseData>(URL, {'ready': 'TRUE', 'id': documentId, 'assigned_user': null }, {headers: this.headers})
+  return new Promise((resolve, reject) => {
+    this.getNextPathStepId(document.path_id, document.pathstep_id)
+      .then( nextPathStepId => resolve(nextPathStepId) )
+      .catch(this.handleError);
+    })
+    .then( nextPathStepId =>
+      this.http.post<ResponseData>(URL, {'ready': 'TRUE', 'id': document.id, 'pathstep_id': nextPathStepId }, {headers: this.headers})
       .toPromise()
       .then(apiResponse => apiResponse as ResponseData)
-      .catch(this.handleError);
+      .catch(this.handleError)
+    )
+    .catch(this.handleError);
+
 }
 
 makeDocumentAssigned(documentId: number, userId: number): Promise<ResponseData> {
