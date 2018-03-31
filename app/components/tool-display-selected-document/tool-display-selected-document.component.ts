@@ -76,8 +76,10 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
   acceptDocument() {
     const message = 'Wybierz OK aby zatwierdzić dokument lub ANULUJ aby zrezygnować z zatwierdzenia.';
     if (window.confirm(message)) {
-      this.backendApiService.makeDocumentReady(this.documentToDisplay.id)
+
+      this.backendApiService.makeDocumentReady(this.documentToDisplay)
       .then( () => {
+
         const documentHistoryEntry = new DocumentHistory();
         documentHistoryEntry.document_id = this.documentToDisplay.id;
         documentHistoryEntry.user_id = this.authenticationService.getUser().id;
