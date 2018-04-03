@@ -80,3 +80,24 @@
         <button class="app-cursor-pointer btn btn-danger  btn-sm col-12 col-md-auto mb-1 float-md-left" (click)="deleteDocument()" tabindex="3">usuń dokument</button>
     </div>
 </div>
+
+
+
+<section *ngIf="documentToDisplay.ready === 'TRUE'" class="border p-2 mb-2 app-bgcolor-lightgray">
+
+    <h3>{{pathstep.name}}</h3>
+
+    <form #f="ngForm" class="form-inline" (ngSubmit)="doPathStepAction()">
+        <div class="form-group mb-2">
+            <label for="action" class="mr-2">Akcja</label>
+            <select name="action" class="form-control form-control-sm mr-2" id="action" [(ngModel)]="selectedAction" tabindex="1" value="2">
+                <option *ngIf="pathstep.action_next==='TRUE'" value="1">Wykonaj i przekaż dalej</option>
+                <option *ngIf="pathstep.action_archive==='TRUE'" value="2">Wykonaj i archiwizuj</option>
+                <option *ngIf="pathstep.action_cancel==='TRUE'" value="3">Odrzuć</option>
+                <option *ngIf="pathstep.action_change==='TRUE'" value="4">Przekaż do innej ścieżki</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-sm btn-primary mb-2">wykonaj</button>
+    </form>
+
+</section>

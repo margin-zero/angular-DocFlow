@@ -36,7 +36,13 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
     .then( path => this.path = path);
 
     this.backendApiService.getPathStep(document.pathstep_id)
-    .then( pathstep => this.pathstep = pathstep);
+    .then( pathstep => {
+      this.pathstep = pathstep;
+      if (pathstep.action_change === 'TRUE') { this.selectedAction = 4; }
+      if (pathstep.action_cancel === 'TRUE') { this.selectedAction = 3; }
+      if (pathstep.action_archive === 'TRUE') { this.selectedAction = 2; }
+      if (pathstep.action_next === 'TRUE') { this.selectedAction = 1; }
+    });
 
     this.backendApiService.getPathSteps(document.path_id)
     .then( pathsteps => this.pathsteps = pathsteps);
@@ -50,6 +56,8 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
   path: Path = new Path();
   pathstep: PathStep = new PathStep();
   pathsteps: PathStep[] = [];
+
+  selectedAction: any;
 
   constructor(
     private backendApiService: BackendApiService,
@@ -152,6 +160,11 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
         });
       });
     }
+  }
+
+
+  doPathStepAction() {
+    alert(1 * this.selectedAction);
   }
 
 }
