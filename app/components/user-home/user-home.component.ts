@@ -97,6 +97,10 @@ export class UserHomeComponent implements OnInit {
     this.documentToDisplay = null;
    }
 
+   onDoPathStepAction() {
+    this.documentToDisplay = null;
+   }
+
    toggleShowDocumentHistory() {
      this.showDocumentHistory = !this.showDocumentHistory;
    }

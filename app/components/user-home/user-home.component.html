@@ -38,11 +38,12 @@
                     (onAcceptSelectedDocument)="onAcceptSelectedDocument($event)"
                     (onAssignSelectedDocument)="onAssignSelectedDocument($event)"
                     (onReAssignSelectedDocument)="onReAssignSelectedDocument($event)"
+                    (onDoPathStepAction)="onDoPathStepAction($event)"
                     >
                 </dcf-tool-display-selected-document>
 
                 <dcf-tool-display-selected-document-history *ngIf="showDocumentHistory" [documentToDisplay]='documentToDisplay'></dcf-tool-display-selected-document-history>
-                <button (click)="toggleShowDocumentHistory()" class="btn btn-sm app-cursor-pointer float-right" *ngIf="documentToDisplay.ready==='TRUE'">
+                <button (click)="toggleShowDocumentHistory()" class="btn btn-sm app-cursor-pointer mb-2" *ngIf="documentToDisplay.ready==='TRUE'">
                   <span *ngIf="showDocumentHistory">pokaż dokument</span>
                   <span *ngIf="!showDocumentHistory">pokaż historię</span>
                 </button>
