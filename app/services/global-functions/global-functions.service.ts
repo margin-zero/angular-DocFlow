@@ -16,7 +16,11 @@ export class GlobalFunctionsService {
       currentDateString += ('0' + (currentDate.getMonth() + 1));
     }
 
-    currentDateString += '-' + currentDate.getDate();
+    if (currentDate.getDate() > 9) {
+      currentDateString += '-' + currentDate.getDate();
+    } else {
+      currentDateString += '-0' + currentDate.getDate();
+    }
 
     return currentDateString;
   }
