@@ -36,6 +36,8 @@ import {
 
 // CONSTANTS
 import { API_URL } from '../../constants/global-constants';
+import { FormModelPathStepAction } from '../../datatypes/form-model-classes';
+
 
 
 
@@ -538,10 +540,21 @@ getNextPathStepId(pathId: number, pathstepId: number): Promise<Number> {
 
   return this.http.get<ResponseNumber>(URL)
       .toPromise()
-      .then(apiResponse => { if (apiResponse.data[0][0]) { return apiResponse.data[0][0]; } else { return pathstepId; }})
+      .then(apiResponse => {
+        if (typeof apiResponse.data[0] !== 'undefined') { return apiResponse.data[0][0]; } else { return pathstepId; }})
       .catch(this.handleError);
 }
 
+getPrevPathStepId(pathId: number, pathstepId: number): Promise<Number> {
+
+  const URL = API_URL + 'prevpathstep/' + pathId + '/' + pathstepId;
+
+  return this.http.get<ResponseNumber>(URL)
+      .toPromise()
+      .then(apiResponse => {
+        if (typeof apiResponse.data[0] !== 'undefined') { return apiResponse.data[0][0]; } else { return pathstepId; }})
+      .catch(this.handleError);
+}
 
 // -----------------------------------------------------------------------------------------------
 //          PATHSTEPS GROUPS API
@@ -994,7 +1007,7 @@ makeDocumentReady(document: Document): Promise<ResponseData> {
 
 makeDocumentAssigned(documentId: number, userId: number): Promise<ResponseData> {
 
-  const URL = API_URL + 'makedocumentassigned/' + documentId;
+  const URL = API_URL + 'makedocumentassigned';
 
   return this.http
       .post<ResponseData>(URL, {'id': documentId, 'assigned_user': userId }, {headers: this.headers})
@@ -1006,7 +1019,7 @@ makeDocumentAssigned(documentId: number, userId: number): Promise<ResponseData> 
 
 makeDocumentNotAssigned(documentId: number): Promise<ResponseData> {
 
-  const URL = API_URL + 'makedocumentnotassigned/' + documentId;
+  const URL = API_URL + 'makedocumentnotassigned';
 
   return this.http
       .post<ResponseData>(URL, {'id': documentId }, {headers: this.headers})
@@ -1014,6 +1027,104 @@ makeDocumentNotAssigned(documentId: number): Promise<ResponseData> {
       .then(apiResponse => apiResponse as ResponseData)
       .catch(this.handleError);
 }
+
+
+
+doDocumentActionNext(document: Document, pathStepAction: FormModelPathStepAction): Promise<ResponseData> {
+
+  const URL = API_URL + 'actionnext';
+
+  return new Promise((resolve, reject) => {
+    this.getNextPathStepId(document.path_id, document.pathstep_id)
+    .then( nextPathStepId => {
+        this.http.post<ResponseData>(URL, {
+          'id': document.id,
+          'pathstep_id': nextPathStepId,
+          'message': pathStepAction.message
+        }, {headers: this.headers})
+        .toPromise()
+        .then(apiResponse => resolve(apiResponse))
+        .catch(this.handleError);
+    })
+    .catch(this.handleError);
+  })
+  .then(apiResponse => apiResponse as ResponseData)
+  .catch(this.handleError);
+}
+
+
+
+doDocumentActionArchive(document: Document, pathStepAction: FormModelPathStepAction): Promise<ResponseData> {
+
+  const URL = API_URL + 'actionarchive';
+
+  return new Promise((resolve, reject) => {
+    this.getNextPathStepId(document.path_id, document.pathstep_id)
+    .then( nextPathStepId => {
+        this.http.post<ResponseData>(URL, {
+          'id': document.id,
+          'pathstep_id': nextPathStepId,
+          'message': pathStepAction.message,
+          'closed': 'TRUE'
+        }, {headers: this.headers})
+        .toPromise()
+        .then(apiResponse => resolve(apiResponse))
+        .catch(this.handleError);
+    })
+    .catch(this.handleError);
+  })
+  .then(apiResponse => apiResponse as ResponseData)
+  .catch(this.handleError);
+}
+
+
+
+doDocumentActionCancel(document: Document, pathStepAction: FormModelPathStepAction): Promise<ResponseData> {
+
+  const URL = API_URL + 'actioncancel';
+
+  return new Promise((resolve, reject) => {
+    this.getPrevPathStepId(document.path_id, document.pathstep_id)
+    .then( prevPathStepId => {
+        this.http.post<ResponseData>(URL, {
+          'id': document.id,
+          'pathstep_id': prevPathStepId,
+          'message': pathStepAction.message
+        }, {headers: this.headers})
+        .toPromise()
+        .then(apiResponse => resolve(apiResponse))
+        .catch(this.handleError);
+    })
+    .catch(this.handleError);
+  })
+  .then(apiResponse => apiResponse as ResponseData)
+  .catch(this.handleError);
+}
+
+
+
+doDocumentActionChange(document: Document, pathStepAction: FormModelPathStepAction): Promise<ResponseData> {
+
+  const URL = API_URL + 'actioncancel';
+
+  return new Promise((resolve, reject) => {
+    this.getPrevPathStepId(document.path_id, document.pathstep_id)
+    .then( prevPathStepId => {
+        this.http.post<ResponseData>(URL, {
+          'id': document.id,
+          'pathstep_id': prevPathStepId,
+          'message': pathStepAction.message
+        }, {headers: this.headers})
+        .toPromise()
+        .then(apiResponse => resolve(apiResponse))
+        .catch(this.handleError);
+    })
+    .catch(this.handleError);
+  })
+  .then(apiResponse => apiResponse as ResponseData)
+  .catch(this.handleError);
+}
+
 
 // -----------------------------------------------------------------------------------------------
 //          DOCUMENTS_HISTORY API
@@ -1031,7 +1142,8 @@ getDocumentHistory(documentId: number): Promise<DocumentHistory[]> {
 
 
 createDocumentHistoryEntry(documentHistoryEntry: DocumentHistory): Promise<ResponseData> {
-
+  console.log('zaczynamy createDocumentHistoryEntry');
+  console.log(documentHistoryEntry);
   const URL = API_URL + 'documenthistoryentry';
 
   return this.http
