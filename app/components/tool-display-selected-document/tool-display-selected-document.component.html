@@ -83,21 +83,42 @@
 
 
 
-<section *ngIf="documentToDisplay.ready === 'TRUE'" class="border p-2 mb-2 app-bgcolor-lightgray">
 
-    <h3>{{pathstep.name}}</h3>
-
-    <form #f="ngForm" class="form-inline" (ngSubmit)="doPathStepAction()">
-        <div class="form-group mb-2">
-            <label for="action" class="mr-2">Akcja</label>
-            <select name="action" class="form-control form-control-sm mr-2" id="action" [(ngModel)]="selectedAction" tabindex="1" value="2">
-                <option *ngIf="pathstep.action_next==='TRUE'" value="1">Wykonaj i przekaż dalej</option>
-                <option *ngIf="pathstep.action_archive==='TRUE'" value="2">Wykonaj i archiwizuj</option>
-                <option *ngIf="pathstep.action_cancel==='TRUE'" value="3">Odrzuć</option>
-                <option *ngIf="pathstep.action_change==='TRUE'" value="4">Przekaż do innej ścieżki</option>
-            </select>
+<section *ngIf="documentToDisplay.ready === 'TRUE' && documentToDisplay.assigned_user !== null" class="border app-bgcolor-lightgray mb-2 px-2 py-0">
+    
+    <div class="row">
+        <div class="col">
+            <h3>{{pathstep.name}}</h3>
         </div>
-        <button type="submit" class="btn btn-sm btn-primary mb-2">wykonaj</button>
+    </div>
+
+    <form #f="ngForm" class="form" (ngSubmit)="submitForm(f.value, f.valid)">
+        
+        <div class="form-group row">
+            <label for="actionId" class="col-12 col-lg-2 col-form-label">Akcja</label>
+            <div class="col">
+                <select name="actionId" class="form-control form-control-sm" id="actionId" [(ngModel)]="formModel.actionId" tabindex="2" #actionId="ngModel">
+                    <option *ngIf="pathstep.action_next==='TRUE'" value="1">Wykonaj i przekaż dalej</option>
+                    <option *ngIf="pathstep.action_archive==='TRUE'" value="2">Wykonaj i archiwizuj</option>
+                    <option *ngIf="pathstep.action_cancel==='TRUE'" value="3">Odrzuć</option>
+                    <option *ngIf="pathstep.action_change==='TRUE'" value="4">Przekaż do innej ścieżki</option>
+                </select> 
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="message" class="col-lg-2 col-form-label">wiadomość</label>
+            <div class="col">
+                <textarea [(ngModel)]="formModel.message" name="message" class="form-control form-control-sm" #message="ngModel" id="message" rows="2"  tabindex="3"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col">
+                <button type="submit" class="btn btn-sm btn-primary col-12 col-lg-auto float-lg-right mb-0">wykonaj</button>
+            </div>
+        </div>
+
     </form>
 
 </section>

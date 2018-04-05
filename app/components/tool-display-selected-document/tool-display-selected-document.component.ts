@@ -10,6 +10,7 @@ import { Author } from '../../datatypes/author';
 import { Path } from '../../datatypes/path';
 import { Document } from '../../datatypes/document';
 import { DocumentHistory } from '../../datatypes/documenthistory';
+import { FormModelPathStepAction } from '../../datatypes/form-model-classes';
 
 @Component({
   selector: 'dcf-tool-display-selected-document',
@@ -22,6 +23,7 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
   @Output() onAcceptSelectedDocument = new EventEmitter();
   @Output() onAssignSelectedDocument = new EventEmitter();
   @Output() onReAssignSelectedDocument = new EventEmitter();
+  @Output() onDoPathStepAction = new EventEmitter();
 
   private _documentToDisplay: Document;
 
@@ -38,10 +40,12 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
     this.backendApiService.getPathStep(document.pathstep_id)
     .then( pathstep => {
       this.pathstep = pathstep;
-      if (pathstep.action_change === 'TRUE') { this.selectedAction = 4; }
-      if (pathstep.action_cancel === 'TRUE') { this.selectedAction = 3; }
-      if (pathstep.action_archive === 'TRUE') { this.selectedAction = 2; }
-      if (pathstep.action_next === 'TRUE') { this.selectedAction = 1; }
+      if (pathstep.action_change === 'TRUE') { this.formModel.actionId = 4; }
+      if (pathstep.action_cancel === 'TRUE') { this.formModel.actionId = 3; }
+      if (pathstep.action_archive === 'TRUE') { this.formModel.actionId = 2; }
+      if (pathstep.action_next === 'TRUE') { this.formModel.actionId = 1; }
+
+      this.formModel.message = this.documentToDisplay.message;
     });
 
     this.backendApiService.getPathSteps(document.path_id)
@@ -57,7 +61,7 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
   pathstep: PathStep = new PathStep();
   pathsteps: PathStep[] = [];
 
-  selectedAction: any;
+  formModel: FormModelPathStepAction = new FormModelPathStepAction();
 
   constructor(
     private backendApiService: BackendApiService,
@@ -164,7 +168,57 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
 
 
   doPathStepAction() {
-    alert(1 * this.selectedAction);
+    const message = 'Wybierz OK aby potwierdzić wykonanie akcji lub ANULUJ aby zrezygnować.';
+    if (window.confirm(message)) {
+
+      if (1 * this.formModel.actionId === 1) {
+        this.backendApiService.doDocumentActionNext(this.documentToDisplay, this.formModel)
+        .then( () => this.createDocumentHistoryEntry('Wykonaj i przekaż dalej') );
+      }
+
+      if (1 * this.formModel.actionId === 2) {
+        this.backendApiService.doDocumentActionArchive(this.documentToDisplay, this.formModel)
+        .then( () => this.createDocumentHistoryEntry('Wykonaj i archiwizuj') );
+      }
+
+      if (1 * this.formModel.actionId === 3) {
+        this.backendApiService.doDocumentActionCancel(this.documentToDisplay, this.formModel)
+        .then( () => this.createDocumentHistoryEntry('Odrzuć') );
+      }
+
+      if (1 * this.formModel.actionId === 4) {
+        this.backendApiService.doDocumentActionChange(this.documentToDisplay, this.formModel)
+        .then( () => this.createDocumentHistoryEntry('Przekaż do innej ścieżki') );
+      }
+
+      this.onDoPathStepAction.emit();
+   }
+ }
+
+
+ createDocumentHistoryEntry(action: string) {
+
+    const documentHistoryEntry = new DocumentHistory();
+
+    documentHistoryEntry.document_id = this.documentToDisplay.id;
+    documentHistoryEntry.user_id = this.authenticationService.getUser().id;
+    documentHistoryEntry.user_name = this.authenticationService.getUser().username;
+    documentHistoryEntry.operation_date = this.globalFunctionsService.getCurrentDateStr();
+    documentHistoryEntry.pathstep = this.pathstep.name;
+    documentHistoryEntry.action = action;
+
+    this.backendApiService.createDocumentHistoryEntry(documentHistoryEntry)
+    .then(() => {
+      this.backendApiService.refreshDocumentsNotAssignedObservable(this.authenticationService.getUser().id);
+      this.backendApiService.refreshDocumentsNotAssignedCountObservable(this.authenticationService.getUser().id);
+      this.backendApiService.refreshDocumentsAssignedObservable(this.authenticationService.getUser().id);
+      this.backendApiService.refreshDocumentsAssignedCountObservable(this.authenticationService.getUser().id);
+    });
+ }
+
+
+  submitForm(formData: FormModelPathStepAction, isValid: boolean) {
+    if (isValid) { this.doPathStepAction(); }
   }
 
 }
