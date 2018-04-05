@@ -138,3 +138,12 @@ export class FormModelEditDocument extends Document {
         this.message = '';
     }
 }
+
+export class FormModelPathStepAction {
+    actionId: number;
+    message: string;
+    constructor() {
+        this.actionId = 0;
+        this.message = '';
+    }
+}
