@@ -147,3 +147,30 @@ export class FormModelPathStepAction {
         this.message = '';
     }
 }
+
+export class FormModelDocumentSearch {
+    id_start: number;
+    id_end: number;
+    name: string;
+    register: string;
+    input_date_start: string;
+    input_date_end: string;
+    author_id: number;
+    id_by_author: string;
+    date_by_author_start: string;
+    date_by_author_end: string;
+    path_id: number;
+    constructor() {
+        this.id_start = 0;
+        this.id_end = 999999999999;
+        this.name = '%';
+        this.register = '%';
+        this.input_date_start = '1900-01-01';
+        this.input_date_end = '1900-01-01';
+        this.author_id = 0;
+        this.id_by_author = '%';
+        this.date_by_author_start = '1900-01-01';
+        this.date_by_author_end = '1900-01-01';
+        this.path_id = 0;
+    }
+}
