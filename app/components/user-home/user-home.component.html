@@ -4,24 +4,29 @@
 
             <ul class="nav nav-tabs" id="userHomeTab" role="tablist">
               <li class="nav-item">
-                <a class="nav-link active" id="documents-not-ready-tab" data-toggle="tab" href="#documents-not-ready" role="tab" aria-controls="niezatwierdzone" aria-selected="true">Niezatwierdzone ({{documentsNotReadyCount}})</a>
+                <a class="nav-link" [ngClass]="{'active': documentsNotReadyCount > 0 || (documentsAssignedCount === 0 && documentsNotAssignedCount === 0) }" id="documents-not-ready-tab" data-toggle="tab" href="#documents-not-ready" role="tab" aria-controls="niezatwierdzone" aria-selected="true">Niezatwierdzone ({{documentsNotReadyCount}})</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="documents-assigned-tab" data-toggle="tab" href="#documents-assigned" role="tab" aria-controls="zarezerwowane" aria-selected="false">Zarezerwowane ({{documentsAssignedCount}})</a>
+                <a class="nav-link" [ngClass]="{'show active': documentsNotReadyCount === 0 && documentsAssignedCount > 0 }" id="documents-assigned-tab" data-toggle="tab" href="#documents-assigned" role="tab" aria-controls="zarezerwowane" aria-selected="false">Zarezerwowane ({{documentsAssignedCount}})</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="documents-not-assigned-tab" data-toggle="tab" href="#documents-not-assigned" role="tab" aria-controls="niezarezerwowane" aria-selected="false">Niezarezerwowane ({{documentsNotAssignedCount}})</a>
+                <a class="nav-link" [ngClass]="{'show active': documentsNotReadyCount === 0 && documentsAssignedCount === 0 && documentsNotAssignedCount > 0 }" id="documents-not-assigned-tab" data-toggle="tab" href="#documents-not-assigned" role="tab" aria-controls="niezarezerwowane" aria-selected="false">Niezarezerwowane ({{documentsNotAssignedCount}})</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="documents-closed-tab" data-toggle="tab" href="#documents-closed" role="tab" aria-controls="zamknięte" aria-selected="false">Archiwum</a>
               </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-              <div class="tab-pane fade show active border" id="documents-not-ready" role="tabpanel" aria-labelledby="niezatwierdzone-tab">
+              <div [ngClass]="{'show active': documentsNotReadyCount > 0 || (documentsAssignedCount === 0 && documentsNotAssignedCount === 0) }" class="tab-pane fade border" id="documents-not-ready" role="tabpanel" aria-labelledby="niezatwierdzone-tab">
                 <dcf-tool-select-documents-not-ready [documentsPerPage]="10" (onSelectDocument)="onSelectDocumentNotReady($event)"></dcf-tool-select-documents-not-ready>
               </div>
-              <div class="tab-pane fade" id="documents-assigned" role="tabpanel" aria-labelledby="zarezerwowane-tab">
+              <div [ngClass]="{'show active': documentsNotReadyCount === 0 && documentsAssignedCount > 0 }" class="tab-pane fade border" id="documents-assigned" role="tabpanel" aria-labelledby="zarezerwowane-tab">
                 <dcf-tool-select-documents-assigned [documentsPerPage]="10" (onSelectDocument)="onSelectDocumentAssigned($event)"></dcf-tool-select-documents-assigned>
               </div>
-
-              <div class="tab-pane fade" id="documents-not-assigned" role="tabpanel" aria-labelledby="niezarezerwowane-tab">
+              <div [ngClass]="{'show active': documentsNotReadyCount === 0 && documentsAssignedCount === 0 && documentsNotAssignedCount > 0 }" class="tab-pane fade border" id="documents-not-assigned" role="tabpanel" aria-labelledby="niezarezerwowane-tab">
+                <dcf-tool-select-documents-not-assigned [documentsPerPage]="10" (onSelectDocument)="onSelectDocumentNotAssigned($event)"></dcf-tool-select-documents-not-assigned>
+              </div>
+              <div class="tab-pane fade border" id="documents-closed" role="tabpanel" aria-labelledby="archiwum-tab">
                 <dcf-tool-select-documents-not-assigned [documentsPerPage]="10" (onSelectDocument)="onSelectDocumentNotAssigned($event)"></dcf-tool-select-documents-not-assigned>
               </div>
             </div>
