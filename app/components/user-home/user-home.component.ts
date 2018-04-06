@@ -81,6 +81,11 @@ export class UserHomeComponent implements OnInit {
     this.showDocumentHistory = false;
    }
 
+   onSelectDocumentClosed(document: Document) {
+    this.documentToDisplay = document;
+    this.showDocumentHistory = false;
+   }
+
    onDeleteSelectedDocument() {
      this.documentToDisplay = null;
    }
