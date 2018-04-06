@@ -1,0 +1,273 @@
+<ng-container *ngIf="formModel">
+{{ formModel | json}}
+
+
+<section class="container-fluid">
+
+
+  <form #f="ngForm" novalidate (ngSubmit)="submitForm(f.valid)" id="myForm" name="myForm" class="p-2 mt-2">
+
+  <div class="row">
+    <div class="col">
+      <h4>Wprowadź kryteria wyszukiwania</h4>
+    </div>
+  </div>
+
+    
+  <div class="form-group row">
+      <label class="col-lg-3 col-form-label col-form-label-sm">dokument id od:</label>
+
+      <div class="col-lg-3">
+  
+        <input type="number" class="form-control form-control-sm" name="id_start" [(ngModel)]="formModel.id_start" id="id_start"
+            required #idstart="ngModel" tabindex="1" autofocus>
+
+        <small class="text-danger" [hidden]="idstart.valid">
+            <span *ngIf="idstart.errors && idstart.errors.required">pole jest wymagane</span>
+        </small>
+
+      </div>
+
+
+      <label class="col-lg-3 col-form-label col-form-label-sm">dokument id do:</label>
+
+      <div class="col-lg-3">
+  
+        <input type="number" class="form-control form-control-sm" name="id_end" [(ngModel)]="formModel.id_end" id="id_end"
+            required #idend="ngModel" tabindex="2">
+
+        <small class="text-danger" [hidden]="idend.valid">
+            <span *ngIf="idend.errors && idend.errors.required">pole jest wymagane</span>
+        </small>
+
+      </div>
+
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-lg-3 col-form-label col-form-label-sm">nazwa dokumentu:</label>
+
+    <div class="col-lg-9">
+
+      <input type="text" class="form-control form-control-sm" name="name" [(ngModel)]="formModel.name" id="name"
+          required #name="ngModel" tabindex="3" placeholder='wprowadź nazwę dokumentu'>
+
+      <small class="text-danger" [hidden]="name.valid">
+          <span *ngIf="name.errors && name.errors.required">pole jest wymagane</span>
+      </small>
+
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-lg-3 col-form-label col-form-label-sm">rejestr:</label>
+
+    <div class="col-lg-9">
+
+      <input type="text" class="form-control form-control-sm" name="register" [(ngModel)]="formModel.register" id="register"
+          required #register="ngModel" tabindex="4" placeholder='wprowadź szukany rejestr'>
+
+      <small class="text-danger" [hidden]="register.valid">
+          <span *ngIf="register.errors && register.errors.required">pole jest wymagane</span>
+      </small>
+
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-lg-3 col-form-label col-form-label-sm">wprowadzony od:</label>
+
+    <div class="col-lg-3">
+
+      <input type="date" class="form-control form-control-sm" name="input_date_start" [(ngModel)]="formModel.input_date_start" id="input_date_start"
+          required #inputdatestart="ngModel" tabindex="5">
+
+      <small class="text-danger" [hidden]="inputdatestart.valid">
+          <span *ngIf="inputdatestart.errors && inputstartstart.errors.required">pole jest wymagane</span>
+      </small>
+
+    </div>
+
+
+    <label class="col-lg-3 col-form-label col-form-label-sm">wprowadzony do:</label>
+
+    <div class="col-lg-3">
+
+      <input type="date" class="form-control form-control-sm" name="input_date_end" [(ngModel)]="formModel.input_date_end" id="input_date_end"
+          required #inputdateend="ngModel" tabindex="6">
+
+      <small class="text-danger" [hidden]="inputdateend.valid">
+          <span *ngIf="inputdateend.errors && inputdateend.errors.required">pole jest wymagane</span>
+      </small>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="form-group row">
+      <label class="col-lg-2 col-form-label">ścieżka obiegu<span class="float-right"><button type="button" class="btn btn-sm btn-primary app-cursor-pointer" title="pokaż/ukryj listę ścieżek obiegu dokumentów" (click)="toggleShowToolSelectPath()" tabindex="2">(...)</button></span></label>
+      <label class="col col-form-label">
+          <ng-container *ngIf="selectedPath">
+              {{selectedPath.name}}
+          </ng-container>
+          <ng-container *ngIf="!selectedPath">
+              <span class="text-danger">Wybierz ścieżkę obiegu dla nowego dokumentu.</span>
+          </ng-container>
+          <dcf-tool-select-path *ngIf="showToolSelectPath" (onSelectPath)="onSelectPath($event)"></dcf-tool-select-path>
+      </label>
+  </div>
+
+  
+  <div class="form-group row">
+      <label for="name" class="col-lg-2 col-form-label">nazwa dokumentu</label>
+      <div class="col">
+  
+          <input type="text" class="form-control" name="name" [(ngModel)]="formModel.name" id="name"
+              required validateNoLeadingSpaces #name="ngModel"
+              placeholder="nazwa dokumentu (wymagana)" tabindex="3" autofocus>
+  
+          <small class="text-danger" [hidden]="name.valid">
+              <span *ngIf="name.errors && name.errors.required">Nazwa dokumentu jest wymagana. </span>
+              <span *ngIf="name.errors && name.errors.validateNoLeadingSpaces">Nazwa dokumentu nie może rozpoczynać się ani kończyć spacją.</span>
+          </small>
+      </div>
+  </div>
+  
+  <div class="form-group row">
+      <label for="id_by_author" class="col-lg-2 col-form-label">nr. wg wystawcy</label>
+      <div class="col">
+          <input type="text" class="form-control" name="id_by_author" [(ngModel)]="formModel.id_by_author" id="id_by_author"
+              #idbyauthor="ngModel"
+              placeholder="numer według wystawcy" tabindex="4">
+      </div>
+  </div>
+
+  <div class="form-group row">
+      <label for="date_by_author" class="col-lg-2 col-form-label">data wg wystawcy</label>
+      <div class="col">
+          <input type="date" class="form-control" name="date_by_author" [(ngModel)]="formModel.date_by_author" id="date_by_author"
+              required #datebyauthor="ngModel"
+              placeholder="data według wystawcy" tabindex="5">
+          <small class="text-danger" [hidden]="datebyauthor.valid">
+              <span *ngIf="datebyauthor.errors && datebyauthor.errors.required">Data wystawienia dokumentu jest wymagana. </span>
+          </small>
+      </div>
+  </div>
+
+  <div class="form-group row">
+      <label for="additional_info" class="col-lg-2 col-form-label">dodatkowe informacje</label>
+      <div class="col">
+          <textarea [(ngModel)]="formModel.additional_info" name="additional_info" class="form-control" id="additional_info" rows="3"  tabindex="6"></textarea>
+      </div>
+  </div>
+
+  <div class="form-group row">
+      <label for="input_date" class="col-lg-2 col-form-label">data wprowadzenia</label>
+      <div class="col">
+          <input type="date" class="form-control" name="input_date" [(ngModel)]="formModel.input_date" id="input_date"
+              required #inputdate="ngModel"
+              placeholder="data wprowadzenia" tabindex="7">
+          <small class="text-danger" [hidden]="inputdate.valid">
+              <span *ngIf="inputdate.errors && inputdate.errors.required">Data wprowadzenia dokumentu jest wymagana. </span>
+          </small>
+      </div>
+  </div>
+
+  <div class="form-group row">
+      <label for="register" class="col-lg-2 col-form-label">rejestr</label>
+      <div class="col">
+          <input type="text" class="form-control" name="register" [(ngModel)]="formModel.register" id="register"
+              #register="ngModel"
+              placeholder="rejestr dokumentów" tabindex="8">
+      </div>
+  </div>
+
+  <div class="form-group row">
+      <label for="file_path" class="col-lg-2 col-form-label">plik dokumentu</label>
+      <div class="col">
+          <input type="text" class="form-control" name="file_path" [(ngModel)]="formModel.file_path" id="file_path"
+              #filepath="ngModel"
+              placeholder="plik dokumentu" tabindex="9">
+      </div>
+  </div>
+
+  <div class="form-group row">
+      <label for="message" class="col-lg-2 col-form-label">wiadomość</label>
+      <div class="col">
+          <textarea [(ngModel)]="formModel.message" name="message" class="form-control" id="message" rows="3"  tabindex="10"></textarea>
+      </div>
+  </div>
+
+  
+  <div class="form-group row">
+      <div class="col-lg-2"></div>
+      <div class="col-12 col-lg-10">
+          <dcf-ui-admin-form-buttons  [formButtons]="formButtonConfiguration"></dcf-ui-admin-form-buttons>
+      </div>
+  </div>
+
+</form>
+
+</section>
+
+
+</ng-container>
+
+
+
+
+
+
+
+<ng-container *ngIf="documentsFound">
+
+  <table class="table table-sm table-hover">
+    <thead>
+      <tr>
+        <th scope="col"><small><b>id / rejestr</b></small></th>
+        <th scope="col"><small><b>wprowadzony</b></small></th>
+        <th scope="col"><small><b>nr. wg wystawcy</b></small></th>
+        <th scope="col"><small><b>nazwa</b></small></th>
+      </tr>
+    </thead>
+    <tbody>
+  
+      <ng-container *ngFor="let document of documentsFound; let i = index">
+          
+          <!-- display only elements from current page -->
+          <tr *ngIf="(i >= (page-1)*documentsPerPage) && (i <= (page*documentsPerPage)-1)" (click)="selectDocument(document)" class="app-cursor-pointer">
+              <td><small>{{document.id}}<span *ngIf="document.register"> / {{document.register}}</span></small></td>
+              <td><small>{{document.input_date}}</small></td>
+              <td><small>{{document.id_by_author}}</small></td>
+              <td><small>{{document.name}}</small></td>
+          </tr>
+  
+      </ng-container>
+  
+    </tbody>
+  </table>
+  
+  <nav>
+    <ul class="pagination pagination-sm justify-content-center">
+  
+      <li [ngClass]="{'disabled app-cursor-not-allowed': page === 1}" class="page-item">
+          <input type="button" [ngClass]="{'app-cursor-pointer': page > 1}" class="page-link" (click)="setPage(page-1)" value="&laquo;">
+      </li>
+  
+      <li [ngClass]="{'active': pageArray[i] === page }" class="page-item" *ngFor="let element of pageArray; let i = index">
+          <input type="button" [ngClass]="{'app-cursor-pointer': pageArray[i] !== page }" class="page-link" (click)="setPage(pageArray[i])" value="{{pageArray[i]}}">
+      </li>
+        
+      <li [ngClass]="{'disabled app-cursor-not-allowed': page === pageArray[pageArray.length-1]}" class="page-item">
+          <input type="button" [ngClass]="{'app-cursor-pointer': page < pageArray[pageArray.length-1]}" class="page-link" (click)="setPage(page+1)" value="&raquo;">
+      </li>
+  
+    </ul>
+  </nav>
+  
+  </ng-container>
