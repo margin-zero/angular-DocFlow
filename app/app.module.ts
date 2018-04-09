@@ -104,6 +104,7 @@ import {
   } from './components/tool-select-documents-not-assigned/tool-select-documents-not-assigned.component';
 import { ToolSelectDocumentsAssignedComponent } from './components/tool-select-documents-assigned/tool-select-documents-assigned.component';
 import { ToolSelectDocumentsClosedComponent } from './components/tool-select-documents-closed/tool-select-documents-closed.component';
+import { ToolSelectPathAllComponent } from './components/tool-select-path-all/tool-select-path-all.component';
 
 
 
@@ -170,7 +171,8 @@ import { ToolSelectDocumentsClosedComponent } from './components/tool-select-doc
     ToolDisplaySelectedDocumentHistoryComponent,
     ToolSelectDocumentsNotAssignedComponent,
     ToolSelectDocumentsAssignedComponent,
-    ToolSelectDocumentsClosedComponent
+    ToolSelectDocumentsClosedComponent,
+    ToolSelectPathAllComponent
 
   ],
   imports: [
