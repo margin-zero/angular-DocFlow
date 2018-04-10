@@ -1,0 +1,14 @@
+<!-- buttons STACKED -->
+<section *ngIf="formButtons.group.isStacked">
+    <input type="button" (click)="handleSubmit()" value="{{formButtons.submit.value}}" [disabled]="formButtons.submit.disabled" [ngClass]="{'app-cursor-pointer': !formButtons.submit.disabled, 'app-cursor-not-allowed': formButtons.submit.disabled}" class="btn btn-primary btn-sm mb-1 col-12" tabindex="997">
+    <input type="button" (click)="handleCancel()" value="{{formButtons.cancel.value}}" class="app-cursor-pointer btn btn-danger btn-sm mb-1 col-12" tabindex="998">
+    <input *ngIf="formButtons.reset.isVisible" type="button" (click)="handleReset()" value="{{formButtons.reset.value}}"  class="app-cursor-pointer btn btn-outline-secondary btn-sm mb-1 col-12" tabindex="999">
+</section>
+
+
+<!-- buttons HORIZONTAL -->
+<section *ngIf="!formButtons.group.isStacked">
+    <input type="button" (click)="handleSubmit()" value="{{formButtons.submit.value}}" [disabled]="formButtons.submit.disabled" [ngClass]="{'app-cursor-pointer': !formButtons.submit.disabled, 'app-cursor-not-allowed': formButtons.submit.disabled}" class="btn btn-primary btn-sm mb-1 col-12 col-md-3 col-lg-2 float-md-right" tabindex="997">
+    <input type="button" (click)="handleCancel()" value="{{formButtons.cancel.value}}" class="app-cursor-pointer btn btn-danger btn-sm mb-1 col-12 col-md-3 col-lg-2" tabindex="998">
+    <input *ngIf="formButtons.reset.isVisible" type="button" (click)="handleReset()"  value="{{formButtons.reset.value}}"  class="app-cursor-pointer btn btn-outline-secondary btn-sm mb-1 col-12 col-md-3 col-lg-2" tabindex="999">
+</section>
