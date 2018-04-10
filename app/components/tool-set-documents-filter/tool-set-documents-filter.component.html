@@ -1,0 +1,201 @@
+<section class="container-fluid">
+
+  {{ formModel | json}}
+
+  <form #f="ngForm" novalidate (ngSubmit)="submitForm(f.valid)" id="myForm" name="myForm" class="p-2 mt-2">
+
+  <div class="row mb-2">
+    <div class="col">
+        <dcf-ui-user-tool-header [headerConfiguration]='headerConfiguration'></dcf-ui-user-tool-header>
+    </div>
+  </div>
+
+    
+  <div class="form-group row">
+      <label class="col-lg-3 col-form-label col-form-label-sm">dokument id od:</label>
+
+      <div class="col-lg-3">
+  
+        <input type="number" class="form-control form-control-sm" name="id_start" [(ngModel)]="formModel.id_start" id="id_start"
+            required #idstart="ngModel" tabindex="1" autofocus>
+
+        <small class="text-danger" [hidden]="idstart.valid">
+            <span *ngIf="idstart.errors && idstart.errors.required">pole jest wymagane</span>
+        </small>
+
+      </div>
+
+
+      <label class="col-lg-3 col-form-label col-form-label-sm">dokument id do:</label>
+
+      <div class="col-lg-3">
+  
+        <input type="number" class="form-control form-control-sm" name="id_end" [(ngModel)]="formModel.id_end" id="id_end"
+            required #idend="ngModel" tabindex="2">
+
+        <small class="text-danger" [hidden]="idend.valid">
+            <span *ngIf="idend.errors && idend.errors.required">pole jest wymagane</span>
+        </small>
+
+      </div>
+
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-lg-3 col-form-label col-form-label-sm">nazwa dokumentu:</label>
+
+    <div class="col-lg-9">
+
+      <input type="text" class="form-control form-control-sm" name="name" [(ngModel)]="formModel.name" id="name"
+          required #name="ngModel" tabindex="3" placeholder='wprowadź nazwę dokumentu'>
+
+      <small class="text-danger" [hidden]="name.valid">
+          <span *ngIf="name.errors && name.errors.required">pole jest wymagane</span>
+      </small>
+
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-lg-3 col-form-label col-form-label-sm">rejestr:</label>
+
+    <div class="col-lg-9">
+
+      <input type="text" class="form-control form-control-sm" name="register" [(ngModel)]="formModel.register" id="register"
+          required #register="ngModel" tabindex="4" placeholder='wprowadź szukany rejestr'>
+
+      <small class="text-danger" [hidden]="register.valid">
+          <span *ngIf="register.errors && register.errors.required">pole jest wymagane</span>
+      </small>
+
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="col-lg-3 col-form-label col-form-label-sm">wprowadzony od:</label>
+
+    <div class="col-lg-3">
+
+      <input type="date" class="form-control form-control-sm" name="input_date_start" [(ngModel)]="formModel.input_date_start" id="input_date_start"
+          required #inputdatestart="ngModel" tabindex="5">
+
+      <small class="text-danger" [hidden]="inputdatestart.valid">
+          <span *ngIf="inputdatestart.errors && inputdatestart.errors.required">pole jest wymagane</span>
+      </small>
+
+    </div>
+
+
+    <label class="col-lg-3 col-form-label col-form-label-sm">wprowadzony do:</label>
+
+    <div class="col-lg-3">
+
+      <input type="date" class="form-control form-control-sm" name="input_date_end" [(ngModel)]="formModel.input_date_end" id="input_date_end"
+          required #inputdateend="ngModel" tabindex="6">
+
+      <small class="text-danger" [hidden]="inputdateend.valid">
+          <span *ngIf="inputdateend.errors && inputdateend.errors.required">pole jest wymagane</span>
+      </small>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="form-group row">
+    <label class="col-lg-3 col-form-label col-form-label-sm">wystawca<span class="float-right"><button type="button" class="btn btn-sm btn-primary app-cursor-pointer" title="pokaż/ukryj listę wystawców dokumentów" (click)="toggleShowToolSelectAuthor()" tabindex="7">(...)</button></span></label>
+
+    <label class="col-lg-9 col-form-label">
+        <ng-container *ngIf="selectedAuthor">
+            <button type="button" class="float-right btn btn-sm text-danger" (click)="clearSelectedAuthor()">&times;</button>
+            {{selectedAuthor.full_name}}<br />
+                <small>{{selectedAuthor.address}}</small>
+        </ng-container>
+        <ng-container *ngIf="!selectedAuthor">
+            <small>dowolny wystawca</small>
+        </ng-container>
+    </label>
+
+    <dcf-tool-select-author class="col-12" *ngIf="showToolSelectAuthor" (onSelectAuthor)="onSelectAuthor($event)"></dcf-tool-select-author>
+  </div>
+
+  
+  <div class="form-group row">
+    <label class="col-lg-3 col-form-label col-form-label-sm">nr. wg. wystawcy</label>
+
+    <div class="col-lg-9">
+
+      <input type="text" class="form-control form-control-sm" name="id_by_author" [(ngModel)]="formModel.id_by_author" id="id_by_author"
+          required #idbyauthor="ngModel" tabindex="8" placeholder='wprowadź numer wg wystawcy'>
+
+      <small class="text-danger" [hidden]="idbyauthor.valid">
+          <span *ngIf="idbyauthor.errors && idbyauthor.errors.required">pole jest wymagane</span>
+      </small>
+
+    </div>
+  </div>
+
+
+
+  <div class="form-group row">
+    <label class="col-lg-3 col-form-label col-form-label-sm">wystawiony od:</label>
+
+    <div class="col-lg-3">
+
+      <input type="date" class="form-control form-control-sm" name="date_by_author_start" [(ngModel)]="formModel.date_by_author_start" id="date_by_author_start"
+          required #datebyauthorstart="ngModel" tabindex="9">
+
+      <small class="text-danger" [hidden]="datebyauthorstart.valid">
+          <span *ngIf="datebyauthorstart.errors && datebyauthorstart.errors.required">pole jest wymagane</span>
+      </small>
+
+    </div>
+
+
+    <label class="col-lg-3 col-form-label col-form-label-sm">wystawiony do:</label>
+
+    <div class="col-lg-3">
+
+      <input type="date" class="form-control form-control-sm" name="date_by_author_end" [(ngModel)]="formModel.date_by_author_end" id="date_by_author_end"
+          required #datebyauthorend="ngModel" tabindex="10">
+
+      <small class="text-danger" [hidden]="datebyauthorend.valid">
+          <span *ngIf="datebyauthorend.errors && datebyauthorend.errors.required">pole jest wymagane</span>
+      </small>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="form-group row">
+    <label class="col-lg-3 col-form-label col-form-label-sm">ścieżka obiegu<span class="float-right"><button type="button" class="btn btn-sm btn-primary app-cursor-pointer" title="pokaż/ukryj listę ścieżek obiegu dokumentów" (click)="toggleShowToolSelectPath()" tabindex="11">(...)</button></span></label>
+
+    <label class="col-lg-9 col-form-label">
+        <ng-container *ngIf="selectedPath">
+            <small><button type="button" class="float-right btn btn-sm text-danger" (click)="clearSelectedPath()">&times;</button> {{selectedPath.name}}</small><br />
+        </ng-container>
+        <ng-container *ngIf="!selectedPath">
+            <small>dowolna ścieżka obiegu</small>
+        </ng-container>
+    </label>
+
+    <dcf-tool-select-path-all class="col-12" *ngIf="showToolSelectPath" (onSelectPath)="onSelectPath($event)"></dcf-tool-select-path-all>
+  </div>
+
+  <dcf-ui-user-tool-set-form-buttons  
+      [formButtons]="formButtonConfiguration"
+      (onReset)="onResetClick($event)" 
+      (onCancel)="onCancelClick($event)"
+      (onSubmit)="onSubmitClick($event)"
+      >
+  </dcf-ui-user-tool-set-form-buttons>
+
+  </form>
+
+</section>
