@@ -90,40 +90,5 @@ export class ToolSelectDocumentsClosedComponent implements OnInit {
     this.onSelectDocument.emit(document);
   }
 
-  toggleShowToolSelectAuthor() {
-    this.showToolSelectAuthor = !this.showToolSelectAuthor;
-  }
-
-  onSelectAuthor(author: Author) {
-    this.selectedAuthor = author;
-    this.showToolSelectAuthor = false;
-
-    this.formModel.author_id = author.id;
-  }
-
-
-  toggleShowToolSelectPath() {
-    this.showToolSelectPath = !this.showToolSelectPath;
-  }
-
-  onSelectPath(path: Path) {
-    this.selectedPath = path;
-    this.showToolSelectPath = false;
-
-    this.formModel.path_id = path.id;
-  }
-
-
-  clearSelectedPath() {
-    this.selectedPath = null;
-    this.formModel.path_id = 0;
-  }
-
-  clearSelectedAuthor() {
-    this.selectedAuthor = null;
-    this.formModel.author_id = 0;
-  }
-
-
 
 }
