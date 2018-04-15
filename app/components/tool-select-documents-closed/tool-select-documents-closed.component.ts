@@ -1,15 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
-import { AuthenticationService } from '../../services/authentication/authentication.service';
-import { GlobalFunctionsService } from '../../services/global-functions/global-functions.service';
 
 import { ComponentSubscriptionManager } from '../../common-classes/component-subscription-manager.class';
 import { UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
 
 import { Document } from '../../datatypes/document';
-import { Author } from '../../datatypes/author';
-import { Path } from '../../datatypes/path';
 
 import { FormModelDocumentSearch } from '../../datatypes/form-model-classes';
 
@@ -21,10 +17,11 @@ import { FormModelDocumentSearch } from '../../datatypes/form-model-classes';
 export class ToolSelectDocumentsClosedComponent implements OnInit {
 
   @Input() documentsPerPage: number;
+  @Input() documentsFilter: FormModelDocumentSearch;
+
   @Output() onSelectDocument = new EventEmitter<Document>();
 
   documentsFound: Document[];
-  formModel: FormModelDocumentSearch = new FormModelDocumentSearch();
 
   page: number;
   totalPages: number;
@@ -32,38 +29,24 @@ export class ToolSelectDocumentsClosedComponent implements OnInit {
   headerConfiguration = new UiAdminHeaderConfiguration( { headerText: 'Wybierz dokument' } );
   pageArray = [];
 
-  showToolSelectAuthor = false;
-  selectedAuthor: Author = null;
-
-  showToolSelectPath = false;
-  selectedPath: Path = null;
-
-
   constructor(
     private backendApiService: BackendApiService,
-    private authenticationService: AuthenticationService,
     private subscriptionManager: ComponentSubscriptionManager,
-    private globalFunctions: GlobalFunctionsService
   ) { }
 
   ngOnInit() {
     this.page = 1;
     this.totalPages = 0;
-    this.formModel.input_date_end = this.globalFunctions.getCurrentDateStr();
-    this.formModel.date_by_author_end = this.globalFunctions.getCurrentDateStr();
 
     this.subscriptionManager.add(
-      this.backendApiService.getDocumentsAssignedObservable().subscribe( documents => {
+      this.backendApiService.getDocumentsClosedObservable().subscribe( documents => {
         this.documentsFound = documents;
-
         this.setTotalPages(documents.length);
         this.setPageArray();
       })
     );
 
-    this.backendApiService.refreshDocumentsAssignedObservable(this.authenticationService.getUser().id);
-
-    this.backendApiService.refreshDocumentsAssignedCountObservable(this.authenticationService.getUser().id);
+    this.backendApiService.refreshDocumentsClosedObservable(this.documentsFilter);
   }
 
 
