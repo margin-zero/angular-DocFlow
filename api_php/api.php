@@ -593,6 +593,7 @@ class DocFlowAPI extends SQLite3
                     $this->query_string = 'SELECT * 
                     FROM documents
                     WHERE documents.assigned_user IS NULL
+                    AND documents.closed = "FALSE"
                     AND documents.pathstep_id IN 
                     ( SELECT pathstep_id FROM pathsteps_groups 
                         WHERE group_id IN (SELECT group_id FROM users_groups WHERE user_id='.$this->param1.' AND group_id IS NOT NULL)
@@ -604,6 +605,7 @@ class DocFlowAPI extends SQLite3
                     $this->query_string = 'SELECT COUNT(*) 
                     FROM documents 
                     WHERE documents.assigned_user IS NULL
+                    AND documents.closed = "FALSE"
                     AND documents.pathstep_id IN 
                     ( SELECT pathstep_id FROM pathsteps_groups 
                         WHERE group_id IN (SELECT group_id FROM users_groups WHERE user_id='.$this->param1.' AND group_id IS NOT NULL)
