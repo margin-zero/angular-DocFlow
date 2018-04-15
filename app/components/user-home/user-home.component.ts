@@ -7,6 +7,8 @@ import { AuthenticationService } from '../../services/authentication/authenticat
 import { ComponentSubscriptionManager } from '../../common-classes/component-subscription-manager.class';
 
 import { Document } from '../../datatypes/document';
+import { FormModelDocumentSearch } from '../../datatypes/form-model-classes';
+import { GlobalFunctionsService } from '../../services/global-functions/global-functions.service';
 
 @Component({
   selector: 'dcf-user-home',
@@ -16,9 +18,9 @@ import { Document } from '../../datatypes/document';
 })
 export class UserHomeComponent implements OnInit {
 
-  documentsNotReady: Document[];
-  documentsNotAssigned: Document[];
-  documentsAssigned: Document[];
+  // documentsNotReady: Document[];
+  // documentsNotAssigned: Document[];
+  // documentsAssigned: Document[];
 
   documentsNotReadyCount = 0;
   documentsNotAssignedCount = 0;
@@ -28,7 +30,12 @@ export class UserHomeComponent implements OnInit {
 
   showDocumentHistory = false;
 
+  showClosedDocumentsFilter = false;
+
+  documentsFilter: FormModelDocumentSearch = new FormModelDocumentSearch();
+
   constructor(
+    private globalFunctions: GlobalFunctionsService,
     private currentRoute: ActivatedRoute,
     private router: Router,
     private backendApiService: BackendApiService,
@@ -38,14 +45,6 @@ export class UserHomeComponent implements OnInit {
 
 
   ngOnInit() {
-
-    /*
-    this.subscriptionManager.add(
-      this.backendApiService.getDocumentsNotReadyObservable().subscribe( documents => {
-        this.documentsNotReady = documents;
-      })
-    );
-    */
 
     this.subscriptionManager.add(
       this.backendApiService.getDocumentsNotReadyCountObservable().subscribe( count => {
@@ -64,49 +63,70 @@ export class UserHomeComponent implements OnInit {
         this.documentsAssignedCount = count;
       })
     );
+
+    this.initDocumentsFilterData();
   }
 
-   onSelectDocumentNotReady(document: Document) {
+  initDocumentsFilterData() {
+    // this.documentsFilter.input_date_end = this.globalFunctions.getCurrentDateStr();
+    this.documentsFilter.date_by_author_end = this.globalFunctions.getCurrentDateStr();
+  }
+
+
+  onSelectDocumentNotReady(document: Document) {
       this.documentToDisplay = document;
       this.showDocumentHistory = false;
-   }
+  }
 
-   onSelectDocumentNotAssigned(document: Document) {
+  onSelectDocumentNotAssigned(document: Document) {
     this.documentToDisplay = document;
     this.showDocumentHistory = false;
-   }
+  }
 
-   onSelectDocumentAssigned(document: Document) {
+  onSelectDocumentAssigned(document: Document) {
     this.documentToDisplay = document;
     this.showDocumentHistory = false;
-   }
+  }
 
-   onSelectDocumentClosed(document: Document) {
+  onSelectDocumentClosed(document: Document) {
     this.documentToDisplay = document;
     this.showDocumentHistory = false;
-   }
+  }
 
-   onDeleteSelectedDocument() {
-     this.documentToDisplay = null;
-   }
-
-   onAcceptSelectedDocument() {
+  onDeleteSelectedDocument() {
     this.documentToDisplay = null;
-   }
+  }
 
-   onAssignSelectedDocument() {
+  onAcceptSelectedDocument() {
     this.documentToDisplay = null;
-   }
+  }
 
-   onReAssignSelectedDocument() {
+  onAssignSelectedDocument() {
     this.documentToDisplay = null;
-   }
+  }
 
-   onDoPathStepAction() {
+  onReAssignSelectedDocument() {
     this.documentToDisplay = null;
-   }
+  }
 
-   toggleShowDocumentHistory() {
-     this.showDocumentHistory = !this.showDocumentHistory;
-   }
+  onDoPathStepAction() {
+    this.documentToDisplay = null;
+  }
+
+  toggleShowDocumentHistory() {
+    this.showDocumentHistory = !this.showDocumentHistory;
+  }
+
+  toggleShowClosedDocumentsFilter() {
+    this.showClosedDocumentsFilter = !this.showClosedDocumentsFilter;
+  }
+
+  onCancelDocumentsFilter() {
+    this.toggleShowClosedDocumentsFilter();
+  }
+
+  onSubmitDocumentsFilter(filter: FormModelDocumentSearch) {
+    this.backendApiService.refreshDocumentsClosedObservable(filter);
+    this.toggleShowClosedDocumentsFilter();
+  }
 }

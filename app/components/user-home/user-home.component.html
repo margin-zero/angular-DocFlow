@@ -27,8 +27,28 @@
                 <dcf-tool-select-documents-not-assigned [documentsPerPage]="10" (onSelectDocument)="onSelectDocumentNotAssigned($event)"></dcf-tool-select-documents-not-assigned>
               </div>
               <div class="tab-pane fade border" id="documents-closed" role="tabpanel" aria-labelledby="archiwum-tab">
-                <dcf-tool-set-documents-filter></dcf-tool-set-documents-filter>
-                <dcf-tool-select-documents-closed [documentsPerPage]="10" (onSelectDocument)="onSelectDocumentClosed($event)"></dcf-tool-select-documents-closed>
+                
+                <div class="clearfix">
+                  <button type="button" class="btn btn-sm float-right m-2" (click)="toggleShowClosedDocumentsFilter()">
+                  <span *ngIf="!showClosedDocumentsFilter">pokaż filtr</span>
+                  <span *ngIf="showClosedDocumentsFilter">ukryj filtr</span>
+                  </button>                    
+                </div>
+                
+
+                <dcf-tool-set-documents-filter 
+                  *ngIf="showClosedDocumentsFilter"
+                  [(documentsFilter)]="documentsFilter"
+                  (onFormCancel)="onCancelDocumentsFilter()"  
+                  (onFormSubmit)="onSubmitDocumentsFilter($event)"
+                ></dcf-tool-set-documents-filter>
+
+                <dcf-tool-select-documents-closed 
+                  *ngIf="!showClosedDocumentsFilter" 
+                  [documentsPerPage]="10" 
+                  [documentsFilter]="documentsFilter"
+                  (onSelectDocument)="onSelectDocumentClosed($event)"
+                ></dcf-tool-select-documents-closed>
               </div>
             </div>
 
