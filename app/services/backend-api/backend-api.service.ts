@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 
 import { Observable } from 'rxjs/Observable';
@@ -36,7 +36,7 @@ import {
 
 // CONSTANTS
 import { API_URL } from '../../constants/global-constants';
-import { FormModelPathStepAction } from '../../datatypes/form-model-classes';
+import { FormModelPathStepAction, FormModelDocumentSearch } from '../../datatypes/form-model-classes';
 
 
 
@@ -55,6 +55,7 @@ export class BackendApiService implements OnInit {
   documentsNotReadyObservable = new Subject<any>();
   documentsNotAssignedObservable = new Subject<any>();
   documentsAssignedObservable = new Subject<any>();
+  documentsClosedObservable = new Subject<any>();
 
   documentsNotReadyCountObservable = new Subject<any>();
   documentsNotAssignedCountObservable = new Subject<any>();
@@ -986,6 +987,34 @@ refreshDocumentsAssignedCountObservable(userId: number): any {
 
 
 
+getDocumentsClosed(filter: FormModelDocumentSearch): Promise<Document[]> {
+
+  const URL = API_URL + 'documentsclosed';
+
+  // we use POST instead of GET because we can only pass 2 parameters using GET query string (3 including action)
+  return this.http
+      .post<ResponseDocument>(URL, JSON.stringify(filter), {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse.data as Document[])
+      .catch(this.handleError);
+}
+
+
+getDocumentsClosedObservable(): Observable<any> {
+  return this.documentsClosedObservable.asObservable();
+}
+
+
+refreshDocumentsClosedObservable(filter: FormModelDocumentSearch): any {
+  this.getDocumentsClosed(filter)
+  .then(documents => this.documentsClosedObservable.next(documents));
+}
+
+
+
+
+
+
 makeDocumentReady(document: Document): Promise<ResponseData> {
 
   const URL = API_URL + 'makedocumentready';
@@ -1152,75 +1181,5 @@ createDocumentHistoryEntry(documentHistoryEntry: DocumentHistory): Promise<Respo
       .then(apiResponse => apiResponse as ResponseData)
       .catch(this.handleError);
 }
-
-
-/*
-getAuthors(): Promise<Author[]> {
-
-  const URL = API_URL + 'authors';
-
-  return this.http.get<ResponseAuthor>(URL)
-      .toPromise()
-      .then(apiResponse => apiResponse.data as Author[])
-      .catch(this.handleError);
-}
-
-
-getAuthorsObservable(): Observable<any> {
-  return this.authorsObservable.asObservable();
-}
-
-
-refreshAuthorsObservable(): any {
-  this.getAuthors()
-  .then(authors => this.authorsObservable.next(authors));
-}
-
-
-getAuthor(authorId: number): Promise<Author> {
-
-  const URL = API_URL + 'author/' + authorId;
-
-  return this.http.get<ResponseAuthor>(URL)
-      .toPromise()
-      .then(apiResponse => apiResponse.data[0] as Author)
-      .catch(this.handleError);
-}
-
-updateAuthor(author: Author): Promise<ResponseData> {
-
-  const URL = API_URL + 'author/' + author.id;
-
-  return this.http
-      .post<ResponseData>(URL, JSON.stringify(author), {headers: this.headers})
-      .toPromise()
-      .then(apiResponse => apiResponse as ResponseData)
-      .catch(this.handleError);
-}
-
-createAuthor(author: Author): Promise<ResponseData> {
-
-  const URL = API_URL + 'author';
-
-  return this.http
-      .put<ResponseData>(URL, JSON.stringify(author), {headers: this.headers})
-      .toPromise()
-      .then(apiResponse => apiResponse as ResponseData)
-      .catch(this.handleError);
-}
-
-
-deleteAuthor(id: number): Promise<ResponseData> {
-
-  const URL = API_URL + 'author/' + id;
-
-  return this.http
-      .delete<ResponseData>(URL)
-      .toPromise()
-      .then(apiResponse => apiResponse as ResponseData)
-      .catch(this.handleError);
-
-}
-*/
 
 }
