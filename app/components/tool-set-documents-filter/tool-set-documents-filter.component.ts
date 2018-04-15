@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 
 import { GlobalFunctionsService } from '../../services/global-functions/global-functions.service';
 
@@ -8,6 +8,7 @@ import { Path } from '../../datatypes/path';
 import { FormModelDocumentSearch } from '../../datatypes/form-model-classes';
 import { UiAdminFormButtonConfiguration, UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
 import { ComponentSubscriptionManager } from '../../common-classes/component-subscription-manager.class';
+import { BackendApiService } from '../../services/backend-api/backend-api.service';
 
 @Component({
   selector: 'dcf-tool-set-documents-filter',
@@ -18,9 +19,13 @@ export class ToolSetDocumentsFilterComponent implements OnInit {
 
   @ViewChild('f') form: any;
 
-  formButtonConfiguration: UiAdminFormButtonConfiguration = new UiAdminFormButtonConfiguration({});
+  @Input() documentsFilter: FormModelDocumentSearch;
+  @Output() documentsFilterChange = new EventEmitter<FormModelDocumentSearch>();
 
-  formModel: FormModelDocumentSearch = new FormModelDocumentSearch();
+  @Output() onFormCancel = new EventEmitter();
+  @Output() onFormSubmit = new EventEmitter<FormModelDocumentSearch>();
+
+  formButtonConfiguration: UiAdminFormButtonConfiguration = new UiAdminFormButtonConfiguration({});
 
   showToolSelectAuthor = false;
   selectedAuthor: Author = null;
@@ -32,23 +37,37 @@ export class ToolSetDocumentsFilterComponent implements OnInit {
 
   constructor(
     private globalFunctions: GlobalFunctionsService,
+    private backendApiService: BackendApiService,
     private subscriptionManager: ComponentSubscriptionManager
   ) { }
 
   ngOnInit() {
-
-    this.initFormModelData();
 
     this.subscriptionManager.add(
       this.form.statusChanges.subscribe(value => {
         this.formButtonConfiguration.submit.disabled = (value !== 'VALID');
       })
     );
+
+    this.subscriptionManager.add(
+      this.form.valueChanges.subscribe( () => this.documentsFilterChange.emit(this.documentsFilter))
+    );
+
+    if (this.documentsFilter.author_id > 0) {
+    this.backendApiService.getAuthor(this.documentsFilter.author_id)
+      .then( author => this.selectedAuthor = author);
+    }
+
+    if (this.documentsFilter.path_id > 0) {
+      this.backendApiService.getPath(this.documentsFilter.path_id)
+        .then( path => this.selectedPath = path);
+      }
+
   }
 
   initFormModelData() {
-    this.formModel.input_date_end = this.globalFunctions.getCurrentDateStr();
-    this.formModel.date_by_author_end = this.globalFunctions.getCurrentDateStr();
+    // this.documentsFilter.input_date_end = this.globalFunctions.getCurrentDateStr();
+    this.documentsFilter.date_by_author_end = this.globalFunctions.getCurrentDateStr();
   }
 
   toggleShowToolSelectAuthor() {
@@ -59,7 +78,7 @@ export class ToolSetDocumentsFilterComponent implements OnInit {
     this.selectedAuthor = author;
     this.showToolSelectAuthor = false;
 
-    this.formModel.author_id = author.id;
+    this.documentsFilter.author_id = author.id;
   }
 
 
@@ -71,34 +90,34 @@ export class ToolSetDocumentsFilterComponent implements OnInit {
     this.selectedPath = path;
     this.showToolSelectPath = false;
 
-    this.formModel.path_id = path.id;
+    this.documentsFilter.path_id = path.id;
   }
 
 
   clearSelectedPath() {
     this.selectedPath = null;
-    this.formModel.path_id = 0;
+    this.documentsFilter.path_id = 0;
   }
 
   clearSelectedAuthor() {
     this.selectedAuthor = null;
-    this.formModel.author_id = 0;
+    this.documentsFilter.author_id = 0;
   }
 
 
   onResetClick() {
-    this.formModel = new FormModelDocumentSearch();
+    this.documentsFilter = new FormModelDocumentSearch();
     this.initFormModelData();
     this.clearSelectedAuthor();
     this.clearSelectedPath();
   }
 
   onCancelClick() {
-    alert('kliknąłeś CANCEL');
+    this.onFormCancel.emit();
   }
 
   onSubmitClick() {
-    alert('kliknąłeś SUBMIT');
+    this.onFormSubmit.emit(this.documentsFilter);
   }
 
 
