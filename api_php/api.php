@@ -448,7 +448,50 @@ class DocFlowAPI extends SQLite3
                     $this->preparedQuery->bindValue(':message', $receivedData->message, SQLITE3_TEXT);
                     break;
 
+                case 'documentsclosed':
+                    
+                    $additional_conditions = ' ';
+                    
+                    if ($receivedData->author_id > 0) { 
+                        $additional_conditions = $additional_conditions.'AND author_id = :author_id ';
+                    } else {
+                        $additional_conditions = $additional_conditions.'AND author_id > :author_id ';
+                    };
 
+                    if ($receivedData->path_id > 0) { 
+                        $additional_conditions = $additional_conditions.'AND path_id = :path_id ';
+                    } else {
+                        $additional_conditions = $additional_conditions.'AND path_id > :path_id ';
+                    };
+
+
+                    $this->preparedQuery = $this->prepare('SELECT * FROM documents
+                    WHERE
+                    documents.id >= :id_start
+                    AND documents.id <= :id_end
+                    AND documents.name LIKE :name
+                    AND documents.register LIKE :register
+                    AND documents.input_date >= :input_date_start
+                    AND documents.input_date <= :input_date_end
+                    AND documents.id_by_author LIKE :id_by_author
+                    AND documents.date_by_author >= :date_by_author_start
+                    AND documents.date_by_author <= :date_by_author_end
+                    AND documents.closed = "TRUE" '.$additional_conditions.'
+                    ORDER BY input_date, author_id, id_by_author');
+
+                    $this->preparedQuery->bindValue(':id_start', $receivedData->id_start, SQLITE3_INTEGER);
+                    $this->preparedQuery->bindValue(':id_end', $receivedData->id_end, SQLITE3_INTEGER);
+                    $this->preparedQuery->bindValue(':name', $receivedData->name, SQLITE3_TEXT);
+                    $this->preparedQuery->bindValue(':register', $receivedData->register, SQLITE3_TEXT);
+                    $this->preparedQuery->bindValue(':input_date_start', $receivedData->input_date_start, SQLITE3_TEXT);
+                    $this->preparedQuery->bindValue(':input_date_end', $receivedData->input_date_end, SQLITE3_TEXT);
+                    $this->preparedQuery->bindValue(':id_by_author', $receivedData->id_by_author, SQLITE3_TEXT);
+                    $this->preparedQuery->bindValue(':date_by_author_start', $receivedData->date_by_author_start, SQLITE3_TEXT);
+                    $this->preparedQuery->bindValue(':date_by_author_end', $receivedData->date_by_author_end, SQLITE3_TEXT);
+                    $this->preparedQuery->bindValue(':author_id', $receivedData->author_id, SQLITE3_INTEGER);
+                    $this->preparedQuery->bindValue(':path_id', $receivedData->path_id, SQLITE3_INTEGER);
+
+                    break;
             }
 
         } // EndIf for $request_method === 'POST'
@@ -457,6 +500,8 @@ class DocFlowAPI extends SQLite3
 
         if ($this->requestMethod === 'GET') {
         
+            $receivedData = json_decode(file_get_contents("php://input"));
+
             switch($this->action) {
             
                 case 'login': 
@@ -636,7 +681,6 @@ class DocFlowAPI extends SQLite3
                     ORDER BY step_order DESC
                     LIMIT 1';
                     break;
-
             }
         } // EndIf for $request_method === 'GET'
     }
@@ -707,6 +751,29 @@ class DocFlowAPI extends SQLite3
                     $full_response->message = 'akcja zakończyła się błędem: '.$this->action;
                 }
             }
+
+
+
+            // if POST and action = documentsclosed -----------------------------
+
+            if (($this->requestMethod === 'POST') and ($this->action === 'documentsclosed')) {
+                while ($row = $select_result->fetchArray()) {
+                    $results[] = $row;
+                }
+                
+                $full_response->data = $results;
+                
+                if ($results !== false) { $full_response->status = 'OK'; }
+
+                if (!$results) { 
+                    $full_response->status = 'ERROR'; 
+                    $full_response->message = 'Brak rekordów spełniających warunek';
+                }
+
+            }
+
+
+
 
 
             if ($this->requestMethod === 'PUT') {
