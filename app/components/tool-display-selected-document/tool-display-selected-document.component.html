@@ -3,78 +3,134 @@
 
 <div class="row mb-1">
     <div class="col-12 col-lg-8">
-        <p *ngIf="documentToDisplay.ready==='FALSE'" class="text-danger mt-0 mb-1">dokument niezatwierdzony</p>
-        <p *ngIf="documentToDisplay.ready==='TRUE' && documentToDisplay.assigned_user === null" class="text-danger mt-0 mb-1">dokument niezarezerwowany</p>
-        <p *ngIf="documentToDisplay.ready==='TRUE' && documentToDisplay.assigned_user === authenticationService.getUser().id" class="text-primary mt-0 mb-1">dokument zarezerwowany</p>
+        <p *ngIf="documentToDisplay.ready==='FALSE' && documentToDisplay.closed==='FALSE'" class="text-danger mt-0 mb-1">dokument niezatwierdzony</p>
+        <p *ngIf="documentToDisplay.ready==='TRUE' && documentToDisplay.assigned_user === null && documentToDisplay.closed==='FALSE'" class="text-danger mt-0 mb-1">dokument niezarezerwowany</p>
+        <p *ngIf="documentToDisplay.ready==='TRUE' && documentToDisplay.assigned_user === authenticationService.getUser().id && documentToDisplay.closed==='FALSE'" class="text-primary mt-0 mb-1">dokument zarezerwowany</p>
+        <p *ngIf="documentToDisplay.closed==='TRUE'" class="text-success mt-0 mb-1">dokument zamknięty</p>
     </div>
 
     <div class="col-12 col-lg-4">
-        <button *ngIf="documentToDisplay.ready==='TRUE' && documentToDisplay.assigned_user === null" class="app-cursor-pointer btn btn-primary btn-sm col-12 col-lg-auto float-md-right" (click)="assignDocument()" tabindex="1">zarezerwuj</button>
+        <button *ngIf="documentToDisplay.ready==='TRUE' && documentToDisplay.assigned_user === null && documentToDisplay.closed==='FALSE'" class="app-cursor-pointer btn btn-primary btn-sm col-12 col-lg-auto float-md-right" (click)="assignDocument()" tabindex="1">zarezerwuj</button>
         <button *ngIf="documentToDisplay.ready==='TRUE' && documentToDisplay.assigned_user === authenticationService.getUser().id" class="app-cursor-pointer btn btn-primary btn-sm col-12 col-lg-auto float-md-right" (click)="reAssignDocument()" tabindex="1">anuluj rezerwację</button>
     </div>
 </div>
 
 
+<hr class="mx-0 my-2">
 
-<table class="table table-sm  table-bordered">
-    <tbody>
+
+<div class="row">
+    <div class="col-xl-3">
+        <p class="m-0"><small><b>wystawca</b></small></p>
+    </div>
+    <div class="col-xl-9">
+        <p class="m-0">{{author.name}}<br /><small>{{author.address}}</small></p>
+    </div>
+</div>
+
+
+<hr class="mx-0 my-2">
+
+
+<div class="row">
+    <div class="col-xl-3">
+        <p class="m-0"><small><b>nr. wystawcy</b></small></p>
+    </div>
+    <div class="col-xl-9">
+        <p class="m-0">{{documentToDisplay.id_by_author}}</p>
+    </div>
+</div>
+
+
+<hr class="mx-0 my-2">
+
+
+<div class="row">
+    <div class="col-xl-3">
+        <p class="m-0"><small><b>wystawiony dnia</b></small></p>
+    </div>
+    <div class="col-xl-9">
+        <p class="m-0">{{documentToDisplay.date_by_author}}</p>
+    </div>
+</div>
+    
+    
+<hr class="mx-0 my-2">
+    
+    
+<div class="row">
+    <div class="col-xl-3">
+        <p class="m-0"><small><b>dod. info.</b></small></p>
+    </div>
+    <div class="col-xl-9">
+        <p class="m-0">{{documentToDisplay.additional_info}}</p>
+    </div>
+</div>
         
-        <tr>
-            <th scope="row" class="app-col-narrow"><small><b>wystawca</b></small></th>
-            <td class="app-col-wide">{{author.name}}<br /><small>{{author.address}}</small></td>
-        </tr>
+        
+<hr class="mx-0 my-2">
+    
 
-        <tr>
-            <th scope="row" class="app-col-narrow"><small><b>nr. wg wystawcy</b></small></th>
-            <td class="app-col-wide">{{documentToDisplay.id_by_author}}</td>
-        </tr>
+<div class="row">
+    <div class="col-xl-3">
+        <p class="m-0"><small><b>plik</b></small></p>
+    </div>
+    <div class="col-xl-9">
+        <p class="m-0"><a href="{{documentToDisplay.file_path}}">pobierz</a></p>
+    </div>
+</div>
+            
+            
+<hr class="mx-0 my-2">
+        
+    
+<div class="row">
+    <div class="col-xl-3">
+        <p class="m-0"><small><b>wiadomość</b></small></p>
+    </div>
+    <div class="col-xl-9">
+        <p class="m-0">{{documentToDisplay.message}}</p>
+    </div>
+</div>
+                
+                
+<hr class="mx-0 my-2">
+            
+        
+<div class="row">
+    <div class="col-xl-3">
+        <p class="m-0"><small><b>ścieżka obiegu</b></small></p>
+    </div>
+    <div class="col-xl-9">
+        <p class="m-0">{{path.name}}</p>
+    </div>
+</div>
 
-        <tr>
-            <th scope="row" class="app-col-narrow"><small><b>wystawiony dnia</b></small></th>
-            <td class="app-col-wide">{{documentToDisplay.date_by_author}}</td>
-        </tr>
 
-        <tr>
-            <th scope="row" class="app-col-narrow"><small><b>dod. informacje</b></small></th>
-            <td class="app-col-wide">{{documentToDisplay.additional_info}}</td>
-        </tr>
 
-        <tr>
-            <th scope="row" class="app-col-narrow"><small><b>ścieżka obiegu</b></small></th>
-            <td class="app-col-wide">{{path.name}}</td>
-        </tr>
+<ng-container *ngIf="documentToDisplay.ready === 'TRUE' && documentToDisplay.assigned_user === null" >
 
-        <tr>
-            <th scope="row" class="app-col-narrow"><small><b>akcja w ścieżce</b></small></th>
-            <td class="app-col-wide">{{pathstep.name}}</td>
-        </tr>
+    <hr class="mx-0 my-2">    
 
-        <tr>
-            <th scope="row" class="app-col-narrow"><small><b>plik</b></small></th>
-            <td class="app-col-wide"><a href="{{documentToDisplay.file_path}}">pobierz</a></td>
-        </tr>
 
-        <tr>
-            <th scope="row" class="app-col-narrow"><small><b>zatwierdzony</b></small></th>
-            <td [ngClass]="{'text-success': documentToDisplay.ready === 'TRUE', 'text-danger': documentToDisplay.ready === 'FALSE' }" class="app-col-wide">{{documentToDisplay.ready === 'TRUE' ? 'TAK' : 'NIE'}}</td>
-        </tr>
+    <div class="row">
+        <div class="col-xl-3">
+            <p class="m-0"><small><b>akcja w ścieżce</b></small></p>
+        </div>
+        <div class="col-xl-9">
+            <p class="m-0">{{pathstep.name}}</p>
+        </div>
+    </div>
+                                    
 
-        <tr>
-            <th scope="row" class="app-col-narrow"><small><b>zamknięty</b></small></th>
-            <td [ngClass]="{'text-success': documentToDisplay.closed === 'TRUE', 'text-danger': documentToDisplay.closed === 'FALSE' }" class="app-col-wide">{{documentToDisplay.closed === 'TRUE' ? 'TAK' : 'NIE'}}</td>
-        </tr>
+    <hr class="mx-0 my-2">
 
-        <tr>
-            <th scope="row" class="app-col-narrow"><small><b>wiadomość</b></small></th>
-            <td class="app-col-wide">{{documentToDisplay.message}}</td>
-        </tr>
-
-    </tbody>
-</table>
+</ng-container>
 
 
 <div *ngIf="documentToDisplay.ready==='FALSE'" class="form-group row">
     <div class="col-12">
+        <hr class="mx-0 my-2">
         <button class="app-cursor-pointer btn btn-primary btn-sm col-12 col-md-auto mb-1 float-md-right" (click)="acceptDocument()" tabindex="1">zatwierdź</button>
         <button class="app-cursor-pointer btn btn-primary btn-sm col-12 col-md-auto mb-1 mr-1 float-md-right" (click)="router.navigate(['../../resetpassword',document.id], { relativeTo: currentRoute })" tabindex="2">edycja</button>
         <button class="app-cursor-pointer btn btn-danger  btn-sm col-12 col-md-auto mb-1 float-md-left" (click)="deleteDocument()" tabindex="3">usuń dokument</button>
@@ -84,7 +140,7 @@
 
 
 
-<section *ngIf="documentToDisplay.ready === 'TRUE' && documentToDisplay.assigned_user !== null" class="border app-bgcolor-lightgray mb-2 px-2 py-0">
+<section *ngIf="documentToDisplay.ready === 'TRUE' && documentToDisplay.assigned_user !== null && documentToDisplay.closed==='FALSE'" class="border app-bgcolor-lightgray my-2 px-2 py-0">
     
     <div class="row">
         <div class="col">
