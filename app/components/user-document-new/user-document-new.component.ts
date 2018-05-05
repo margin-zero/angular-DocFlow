@@ -17,7 +17,7 @@ import { AuthenticationService } from '../../services/authentication/authenticat
 import { GlobalFunctionsService } from '../../services/global-functions/global-functions.service';
 
 import { ComponentSubscriptionManager } from '../../common-classes/component-subscription-manager.class';
-import { UiAdminFormButtonConfiguration, UiAdminHeaderConfiguration } from '../../datatypes/ui-element-classes';
+import { UiAdminFormButtonConfiguration } from '../../datatypes/ui-element-classes';
 
 
 @Component({
