@@ -30,7 +30,9 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
+    // TYMCZASOWE WARTOŚCI - Trzeba usunąć
+    this.formModel.password = 'user';
+    this.formModel.username = 'user';
   }
 
 
