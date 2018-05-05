@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { BackendApiService } from '../../services/backend-api/backend-api.service';
 import { ComponentSubscriptionManager } from '../../common-classes/component-subscription-manager.class';
@@ -67,7 +68,9 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
     private backendApiService: BackendApiService,
     private componentSubscriptionManager: ComponentSubscriptionManager,
     private globalFunctionsService: GlobalFunctionsService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private currentRoute: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
