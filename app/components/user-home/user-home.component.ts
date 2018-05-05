@@ -18,10 +18,6 @@ import { GlobalFunctionsService } from '../../services/global-functions/global-f
 })
 export class UserHomeComponent implements OnInit {
 
-  // documentsNotReady: Document[];
-  // documentsNotAssigned: Document[];
-  // documentsAssigned: Document[];
-
   documentsNotReadyCount = 0;
   documentsNotAssignedCount = 0;
   documentsAssignedCount = 0;
@@ -68,7 +64,6 @@ export class UserHomeComponent implements OnInit {
   }
 
   initDocumentsFilterData() {
-    // this.documentsFilter.input_date_end = this.globalFunctions.getCurrentDateStr();
     this.documentsFilter.date_by_author_end = this.globalFunctions.getCurrentDateStr();
   }
 
