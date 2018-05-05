@@ -107,6 +107,7 @@ import { ToolSelectDocumentsClosedComponent } from './components/tool-select-doc
 import { ToolSelectPathAllComponent } from './components/tool-select-path-all/tool-select-path-all.component';
 import { ToolSetDocumentsFilterComponent } from './components/tool-set-documents-filter/tool-set-documents-filter.component';
 import { UiUserToolSetFormButtonsComponent } from './ui-components/user/ui-user-tool-set-form-buttons/ui-user-tool-set-form-buttons.component';
+import { UserDocumentEditComponent } from './components/user-document-edit/user-document-edit.component';
 
 
 
@@ -176,7 +177,8 @@ import { UiUserToolSetFormButtonsComponent } from './ui-components/user/ui-user-
     ToolSelectDocumentsClosedComponent,
     ToolSelectPathAllComponent,
     ToolSetDocumentsFilterComponent,
-    UiUserToolSetFormButtonsComponent
+    UiUserToolSetFormButtonsComponent,
+    UserDocumentEditComponent
 
   ],
   imports: [
