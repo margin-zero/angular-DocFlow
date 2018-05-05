@@ -47,6 +47,7 @@ import { UserComponent } from './components/user/user.component';
 import { UserHomeComponent } from './components/user-home/user-home.component';
 
 import { UserDocumentNewComponent } from './components/user-document-new/user-document-new.component';
+import { UserDocumentEditComponent } from './components/user-document-edit/user-document-edit.component';
 
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { IsAdminGuard, IsUserGuard, IsAuthenticatedGuard, PendingChangesGuard } from './services/router-guards/router-guards.service';
@@ -116,6 +117,8 @@ const routes: Routes = [
           { path: 'home', component: UserHomeComponent },
 
           { path: 'document/new', component: UserDocumentNewComponent, canDeactivate: [PendingChangesGuard] },
+
+          { path: 'document/edit/:documentId', component: UserDocumentEditComponent, canDeactivate: [PendingChangesGuard] },
 
     ] },
 
