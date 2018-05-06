@@ -61,6 +61,8 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
   path: Path = new Path();
   pathstep: PathStep = new PathStep();
   pathsteps: PathStep[] = [];
+  pathsToSend: Path[] = [];
+
 
   formModel: FormModelPathStepAction = new FormModelPathStepAction();
 
@@ -74,7 +76,8 @@ export class ToolDisplaySelectedDocumentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
+    this.backendApiService.getPathsToSend(this.documentToDisplay.path_id)
+    .then(pathsToSend => this.pathsToSend = pathsToSend);
   }
 
   deleteDocument() {

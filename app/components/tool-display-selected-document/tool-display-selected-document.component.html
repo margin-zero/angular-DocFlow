@@ -162,6 +162,16 @@
             </div>
         </div>
 
+        <div class="form-group row" *ngIf="formModel.actionId==='4'">
+            <label for="actionId" class="col-12 col-lg-2 col-form-label">Przekaż do</label>
+            <div class="col">
+                <select required name="sendToPath" class="form-control form-control-sm" id="sendToPath" [(ngModel)]="formModel.sendToPath" tabindex="3" #sendToPath="ngModel">
+                    <option *ngFor="let path of pathsToSend" value="{{path.id}}">{{path.name}}</option>
+                </select>
+            </div>
+        </div>
+    
+
         <div class="form-group row">
             <label for="message" class="col-lg-2 col-form-label">wiadomość</label>
             <div class="col">
@@ -171,7 +181,7 @@
 
         <div class="form-group row">
             <div class="col">
-                <button type="submit" class="btn btn-sm btn-primary col-12 col-lg-auto float-lg-right mb-0">wykonaj</button>
+                <button type="submit" [disabled]="!f.form.valid" [ngClass]="{'app-cursor-not-allowed': !f.form.valid}" true class="btn btn-sm btn-primary col-12 col-lg-auto float-lg-right mb-0">wykonaj</button>
             </div>
         </div>
 
