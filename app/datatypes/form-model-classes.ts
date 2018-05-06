@@ -142,9 +142,11 @@ export class FormModelEditDocument extends Document {
 export class FormModelPathStepAction {
     actionId: number;
     message: string;
+    sendToPath: number;
     constructor() {
         this.actionId = 0;
         this.message = '';
+        this.sendToPath = null;
     }
 }
 
