@@ -450,6 +450,16 @@ deletePath(id: number): Promise<ResponseData> {
 }
 
 
+getPathsToSend(currentPathId): Promise<Path[]> {
+
+  const URL = API_URL + 'pathstosend/' + currentPathId;
+
+  return this.http.get<ResponsePath>(URL)
+      .toPromise()
+      .then(apiResponse => apiResponse.data as Path[])
+      .catch(this.handleError);
+}
+
 // -----------------------------------------------------------------------------------------------
 //          PATHSTEPS API
 // -----------------------------------------------------------------------------------------------
@@ -1134,24 +1144,17 @@ doDocumentActionCancel(document: Document, pathStepAction: FormModelPathStepActi
 
 doDocumentActionChange(document: Document, pathStepAction: FormModelPathStepAction): Promise<ResponseData> {
 
-  const URL = API_URL + 'actioncancel';
+  const URL = API_URL + 'actionchange';
 
-  return new Promise((resolve, reject) => {
-    this.getPrevPathStepId(document.path_id, document.pathstep_id)
-    .then( prevPathStepId => {
-        this.http.post<ResponseData>(URL, {
-          'id': document.id,
-          'pathstep_id': prevPathStepId,
-          'message': pathStepAction.message
-        }, {headers: this.headers})
-        .toPromise()
-        .then(apiResponse => resolve(apiResponse))
-        .catch(this.handleError);
-    })
-    .catch(this.handleError);
-  })
-  .then(apiResponse => apiResponse as ResponseData)
-  .catch(this.handleError);
+  return this.http
+      .post<ResponseData>(URL, {
+        'id': document.id,
+        'path_id': pathStepAction.sendToPath,
+        'message': pathStepAction.message
+      }, {headers: this.headers})
+      .toPromise()
+      .then(apiResponse => apiResponse as ResponseData)
+      .catch(this.handleError);
 }
 
 
